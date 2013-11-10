@@ -7,7 +7,9 @@
 #include <QPrinter>
 #include <QPrintDialog>
 #include <config.h>
+#include <aide.h>
 #include <QTextStream>
+#include <QProgressBar>
 
 namespace Ui {
 class fenetrePrincipale;
@@ -44,10 +46,19 @@ private slots:
 
     void on_actionAccueil_triggered();
 
+    void on_pageWeb_loadProgress(int progress);
+
+    void on_pageWeb_loadFinished(bool arg1);
+
+    void on_actionUtilisation_triggered();
+
+    void chargement();
 private:
     Ui::fenetrePrincipale *ui;
     Config *c;
+    aide *a;
     QString *lien;
+    QProgressBar *barreProgresse;
 };
 
 #endif // FENETREPRINCIPALE_H

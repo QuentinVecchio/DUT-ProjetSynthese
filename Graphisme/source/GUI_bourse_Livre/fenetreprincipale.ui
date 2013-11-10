@@ -40,6 +40,9 @@
         <string>qrc:/icones/accueil.html</string>
        </url>
       </property>
+      <property name="renderHints">
+       <set>QPainter::Qt4CompatiblePainting|QPainter::SmoothPixmapTransform|QPainter::TextAntialiasing</set>
+      </property>
      </widget>
     </item>
    </layout>

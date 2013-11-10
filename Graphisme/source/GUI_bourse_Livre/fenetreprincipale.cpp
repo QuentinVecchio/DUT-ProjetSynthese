@@ -6,6 +6,8 @@ fenetrePrincipale::fenetrePrincipale(QWidget *parent) :
     ui(new Ui::fenetrePrincipale)
 {
     ui->setupUi(this);
+    this->barreProgresse = new QProgressBar();
+    ui->statusBar->addWidget(this->barreProgresse);
 }
 
 fenetrePrincipale::~fenetrePrincipale()
@@ -17,6 +19,7 @@ void fenetrePrincipale::on_actionConfigServeur_triggered()
 {
     this->c = new Config();
     this->c->show();
+    QObject::connect(this->c,SIGNAL(accepted()),this,SLOT(chargement()));
 }
 
 void fenetrePrincipale::on_actionVue_initialie_triggered()
@@ -101,4 +104,35 @@ void fenetrePrincipale::on_actionAccueil_triggered()
         }
     }
     configServeur.close();
+}
+
+void fenetrePrincipale::on_pageWeb_loadProgress(int progress)
+{
+    this->barreProgresse->show();
+    this->barreProgresse->setValue(progress);
+}
+
+void fenetrePrincipale::on_pageWeb_loadFinished(bool arg1)
+{
+    if(arg1)
+    {
+        this->barreProgresse->hide();
+    }
+    else
+    {
+        QMessageBox::warning(this,"Erreur 404","Erreur, page non trouvée, veuillez reconfigurer le serveur.");
+        this->barreProgresse->hide();
+        ui->pageWeb->setUrl(QUrl(":/icones/accueil.html"));
+    }
+}
+
+void fenetrePrincipale::on_actionUtilisation_triggered()
+{
+    this->a = new aide();
+    this->a->show();
+}
+
+void fenetrePrincipale::chargement()
+{
+    ui->actionAccueil->trigger();
 }

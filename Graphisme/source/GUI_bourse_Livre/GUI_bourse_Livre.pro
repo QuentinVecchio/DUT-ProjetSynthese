@@ -14,13 +14,16 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         fenetreprincipale.cpp \
-    config.cpp
+    config.cpp \
+    aide.cpp
 
 HEADERS  += fenetreprincipale.h \
-    config.h
+    config.h \
+    aide.h
 
 FORMS    += fenetreprincipale.ui \
-    config.ui
+    config.ui \
+    aide.ui
 
 RESOURCES += \
     ressource.qrc
