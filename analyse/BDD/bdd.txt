@@ -1,21 +1,13 @@
-Utilisateurs(id, username, password, status)
-Associations(id, name)
-Parents(id, name, address, phoneNumber, mail, association_id)
-Transactions(id, date, modePaiement, typeFacture, utilisateur_id)
-Filieres(id, name)
-Classes(id, name, filiere_id)
-Matieres(id, name, classe_id)
-Livres(id, name, ISBN, prixNeuf, matiere_id)
-Etats(id, etat, prixEtatBon, prixEtatMoyen, prixEtatMediocre)
-Enregistrements(id, date, etat_id, livre_id, quantite, transaction_id)
-ComposeFacture(transaction_id, enregistrement_id, qteAchat)
-
-Question du franglais:
-	Tout en anglais ? Tout en français ?
-	Anglais:  -> cakePHP
-
-Question du champs date dans enregistrement
-
-Utilisateur ? Ou plutôt opérateur ? (admin = opérateur ++)
+Utilisateurs(no_util, lofin, motDePasse, statut)
+Associations(no_assoc, nom_assoc)
+Parents(no_parent, nom, adresse, telephone, no_assoc)
+Transactions(no_transaction, date, modePaiement, typeFacture, solde)
+Filieres(num_filiere, nom_filiere)
+Classes(num_classe, nom_classe, num_filiere)
+Matieres(id_mat, nom_mat, num_classe)
+Livres(no_livre, nom_livre, ISBN, id_mat)
+Etats(no_etat, nom_etat, reduc)
+Enregistrements(no_enre, no_etat, no_livre, qte, no_transaction)
+ComposeFacture(tno_transaction, no_enre, qteAchat)
 
 
