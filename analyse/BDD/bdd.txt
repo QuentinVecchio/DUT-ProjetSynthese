@@ -1,13 +1,21 @@
-Utilisateurs(no_util, lofin, motDePasse, statut)
+Utilisateurs(no_util, login, motDePasse, statut)
+
 Associations(no_assoc, nom_assoc)
-Parents(no_parent, nom, adresse, telephone, no_assoc)
-Transactions(no_transaction, date, modePaiement, typeFacture, solde)
+
+Parents(no_parent, nom, adresse, telephone, no_assoc#)
+Transactions(no_transaction, date, modePaiement, typeFacture, solde, no_util#)
 Filieres(num_filiere, nom_filiere)
-Classes(num_classe, nom_classe, num_filiere)
-Matieres(id_mat, nom_mat, num_classe)
-Livres(no_livre, nom_livre, ISBN, id_mat)
+
+Classes(num_classe, nom_classe, num_filiere#)
+
+Matieres(id_mat, nom_mat, num_classe#)
+
+Livres(no_livre, nom_livre, ISBN, id_mat#)
+
 Etats(no_etat, nom_etat, reduc)
-Enregistrements(no_enre, no_etat, no_livre, qte, no_transaction)
-ComposeFacture(tno_transaction, no_enre, qteAchat)
+
+Enregistrements(no_enre, no_etat#, no_livre#, qte, no_transaction#)
+
+ComposeFacture(no_transaction#, no_enre#, qteAchat)
 
 
