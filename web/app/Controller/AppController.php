@@ -53,8 +53,8 @@ class AppController extends Controller {
 		$res = true;
 		if(isset($this->request->params['prefix'])){
 			if($this->request->params['prefix'] == 'admin'){
-		  		$res = $user['User']['status'] == 'admin';
-			}else{
+		  		$res = $user['status'] == 'admin';		
+		  	}else{
 				$res = false;
 			}
 		}
