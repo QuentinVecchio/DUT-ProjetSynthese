@@ -1,4 +1,4 @@
 .*~
-^app/tmp/cache/.*$
+^web/app/tmp/cache/.*$
 
-^app/tmp/logs/error.txt$
+^web/app/tmp/logs/error.log$
