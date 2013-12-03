@@ -1,0 +1,20 @@
+2013-12-03 09:46:10 Error: [MissingControllerException] Controller class UsersController could not be found.
+Exception Attributes: array (
+  'class' => 'UsersController',
+  'plugin' => NULL,
+)
+Request URL: /web/users/login
+Stack Trace:
+#0 /Users/quentin.vecchio/Desktop/Projet de synthèse/web/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2013-12-03 09:46:30 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /web/users/login
+Stack Trace:
+#0 /Users/quentin.vecchio/Desktop/Projet de synthèse/web/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /Users/quentin.vecchio/Desktop/Projet de synthèse/web/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /Users/quentin.vecchio/Desktop/Projet de synthèse/web/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
