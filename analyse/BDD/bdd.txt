@@ -1,9 +1,9 @@
 Utilisateurs(no_util, login, motDePasse, statut)
 
-Associations(no_assoc, nom_assoc)
+Associations(no_assoc, nom_assoc, adresse_assoc, telephone_assoc, mail_assoc)
 
 Parents(no_parent, nom, adresse, telephone, no_assoc#)
-Transactions(no_transaction, date, modePaiement, typeFacture, solde, no_util#)
+Transactions(no_transaction, date, modePaiement, typeFacture, solde, no_util#, no_parent#)
 Filieres(num_filiere, nom_filiere)
 
 Classes(num_classe, nom_classe, num_filiere#)
