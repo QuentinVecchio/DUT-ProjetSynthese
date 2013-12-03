@@ -66,8 +66,8 @@ class DATABASE_CONFIG {
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'root',
-		'password' => '',
-		'database' => 'clin1u_bourse_livre',
+		'password' => 'root',
+		'database' => 'bourse_livre',
 		'prefix' => '',
 		//'encoding' => 'utf8',
 	);
