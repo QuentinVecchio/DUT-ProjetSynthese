@@ -11,10 +11,11 @@
   		</tr>
 		</thead>
    	<tbody>
+   		<?php foreach ($listLivre as $k => $v):?>
       	<tr>
-        	<td></td>
-        	<td></td>
-        	<td></td>
+        	<td><?php echo $v['Book']['name'] ?></td>
+        	<td><?php echo $v['Book']['ISBN'] ?></td>
+        	<td>test</td>
         	<td>
         		<div class="btn-group">
 				  	<button type="button" class="btn btn-primary">Actions</button>
@@ -29,5 +30,6 @@
 				</div>
 			</td>
     	</tr>       
+    <?php endforeach; ?>
   	</tbody>
 </table>
