@@ -58,7 +58,7 @@ class UsersController extends AppController {
 		if(!empty($this->data)){
 			if($this->Auth->login()){
 				$this->Session->setFlash('Vous êtes connecté', 'message', array('type' => 'success'));
-				$this->redirect('/');
+				$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => true));
 			}
 		}
 	}

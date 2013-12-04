@@ -16,13 +16,13 @@
         <li> <a href="#" class="glyphicon glyphicon-user"></a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-        <li> <a href="#" class="pull-right glyphicon glyphicon-off"></a></li>
+        <li><?php echo $this->Html->link('', array('controller' => 'users', 'action' => 'logout', 'admin' => false),
+                                            array('class' => 'pull-right glyphicon glyphicon-off')) ?></li>
     </ul>   
   </div>
 </nav>
 <?php else: ?>
-<!-- ################################################ Menu opérateur ################################################ -->
-<br>
+  
 <nav class="navbar navbar-inverse" role="navigation">
   <div class="navbar-header">
     <a class="navbar-brand" href="#">Gestion Bourse aux Livres</a>
