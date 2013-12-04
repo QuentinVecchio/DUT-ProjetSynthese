@@ -5,6 +5,8 @@ body
 #container{
 	width: 1200px;
 	margin: 0 auto;
+	background-color: #fff;
+	padding: 10px;
 }
 #UserLoginForm
 {
@@ -20,4 +22,9 @@ body
 [class*="span"] {
    margin-top: 25%;
    margin-bottom: 10px;
+}
+
+th,td
+{
+	text-align: center;
 }
