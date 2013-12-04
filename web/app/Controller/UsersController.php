@@ -32,7 +32,7 @@ class UsersController extends AppController {
 	*/
 	public function admin_delete($id){
 		if($this->User->delete($id)){
-				$this->Session->setFlash('Vous venez de supprimer une association !','message', array('type' => 'danger'));
+				$this->Session->setFlash('Vous venez de supprimer un utilisateur !','message', array('type' => 'danger'));
 				$this->redirect(array('action' => 'index'));			
 		}
 	}
@@ -45,7 +45,7 @@ class UsersController extends AppController {
 	public function admin_add(){
 		if(!empty($this->data)){
 			if($this->User->save($this->data)){
-				$this->Session->setFlash('<strong>Félicitation:</strong> Vous venez d\'ajouter une association !','message', array('type' => 'success'));
+				$this->Session->setFlash('<strong>Félicitation:</strong> Vous venez d\'ajouter un utilisateur !','message', array('type' => 'success'));
 				$this->redirect(array('action' => 'index'));
 			}
 		}
