@@ -29,6 +29,12 @@
 				    	</li>
 				    	<li>
 							<?php 
+									echo $this->Html->Link(' Edition livres',array('controller' => 'books', 'action' => 'index', $v['Grade']['id']),
+																	array('class' => 'glyphicon glyphicon-pencil'));
+							 ?>				    		
+				    	</li>				    	
+				    	<li>
+							<?php 
 									echo $this->Html->Link(' Suppression',
 													 array('controller' => 'grades', 'action' => 'delete', $v['Grade']['id']),
 													 array(	'confirm' => 'Etes-vous sûr de vouloir le supprimer ?',
@@ -45,6 +51,6 @@
   	</tbody>
 </table>
 <?php 
-	echo $this->Html->Link('Ajouter', array('controller' => 'grades', 'action' => 'add'), array('class' => 'btn btn-primary'));
+	echo $this->Html->Link('Ajouter', array('controller' => 'grades', 'action' => 'add', $idGrade), array('class' => 'btn btn-primary'));
  ?>
 

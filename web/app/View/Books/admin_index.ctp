@@ -33,3 +33,7 @@
     <?php endforeach; ?>
   	</tbody>
 </table>
+<?php 
+  echo $this->Html->Link('Ajouter', array('controller' => 'books', 'action' => 'add', $idSubject), array('class' => 'btn btn-primary'));
+ ?>
+

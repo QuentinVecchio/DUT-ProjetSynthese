@@ -5,6 +5,7 @@ class GradesController extends AppController{
 	public function admin_index($id){
 		$listGrade = $this->Grade->findAllBySectorId($id);
 		$this->set('listGrade', $listGrade);
+		$this->set('idGrade', $id);
 	}
 
 	public function admin_add($idSector){
@@ -13,6 +14,7 @@ class GradesController extends AppController{
 
 			if($this->Grade->save($this->data)){
 				$this->Session->setFlash('Classe ajoutée avec succès', 'message', array('type' => 'success'));
+				$this->redirect(array('controller' => 'grades', 'action' => 'index', $this->data['Grade']['sector_id']));
 			}
 		}
 	}
