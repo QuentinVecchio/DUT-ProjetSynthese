@@ -4,7 +4,7 @@
 		</caption>
 		<thead>
   		<tr>
-        	<th>Nom</th>
+        	<th class="thNom">Nom</th>
 
        	 	<th style="width : 115px">Réglages</th>
   		</tr>
@@ -21,10 +21,10 @@
     							<span class="sr-only">Toggle Dropdown</span>
   							</button>
 						  	<ul class="dropdown-menu" role="menu">
-						    	<li><?php echo $this->Html->Link('Edition', array('controller' => 'sectors', 'action' => 'edit', $v['Sector']['id']),
+						    	<li><?php echo $this->Html->Link(' Edition', array('controller' => 'sectors', 'action' => 'edit', $v['Sector']['id']),
 						    												array('class' => 'glyphicon glyphicon-pencil')); ?>
 						    	</li>
-						    	<li><?php echo $this->Html->Link('Suppression',
+						    	<li><?php echo $this->Html->Link(' Suppression',
 													 array('controller' => 'sectors', 'action' => 'delete', $v['Sector']['id']),
 													 array('confirm' => 'Etes-vous sûr de vouloir le supprimer ?',
 													 		'class' => 'glyphicon glyphicon-remove')); ?>
@@ -36,10 +36,8 @@
 		<?php endforeach; ?>
 	</tbody>
 </table>
-
 <?php 
-	echo $this->Html->Link('Ajouter', array('controller' => 'sectors', 'action' => 'add'), array('class' => 'btn btn-primary'));
+	echo $this->Html->Link(' ', array('controller' => 'sectors', 'action' => 'add'), array('class' => 'btn btn-primary glyphicon glyphicon-plus'));
  ?>
-
 
 

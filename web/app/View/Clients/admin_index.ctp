@@ -4,11 +4,11 @@
 		</caption>
 		<thead>
   		<tr>
-        	<th>Nom</th>
-       	 	<th>Adresse</th>
-       	 	<th>Adresse mail</th>
-       	 	<th>Téléphone</th>
-       	 	<th>Association</th>
+        	<th class="thNom">Nom</th>
+       	 	<th class="thAdresse">Adresse</th>
+       	 	<th class="thMail">Adresse mail</th>
+       	 	<th class="thTelephone">Téléphone</th>
+       	 	<th class="thAssoc">Association</th>
        	 	<th style="width : 115px">Réglages</th>
   		</tr>
 		</thead>

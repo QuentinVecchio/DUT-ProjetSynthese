@@ -8,7 +8,7 @@
 		foreach ($listEtat as $k =>$v): ?>
 		<li>
 			<?php 
-					echo $this->Html->Link('Edition:' .$v['Condition']['name'],
+					echo $this->Html->Link(' Edition:' .$v['Condition']['name'],
 													 array('controller' => 'conditions', 'action' => 'edit', $v['Condition']['id']));
 			 ?>
 		</li>
@@ -19,7 +19,7 @@
 		foreach ($listEtat as $k =>$v): ?>
 		<li>
 			<?php 
-					echo $this->Html->Link('Suppression:' .$v['Condition']['name'],
+					echo $this->Html->Link(' Suppression:' .$v['Condition']['name'],
 													 array('controller' => 'conditions', 'action' => 'delete', $v['Condition']['id']),
 													 array('confirm' => 'Etes-vous sûr de vouloir le supprimer ?'));
 			 ?>

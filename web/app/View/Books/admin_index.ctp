@@ -4,9 +4,9 @@
 		</caption>
 		<thead>
   		<tr>
-        	<th>Nom</th>
-       	 	<th>ISBN</th>
-       	 	<th>Matière</th>
+        	<th class="thNom">Nom</th>
+       	 	<th class="thISBN">ISBN</th>
+       	 	<th class="thMatiere">Matière</th>
        	 	<th style="width : 115px">Réglages</th>
   		</tr>
 		</thead>
@@ -24,8 +24,8 @@
 						<span class="sr-only">Toggle Dropdown</span>
 						</button>
 				  	<ul class="dropdown-menu" role="menu">
-				    	<li><a href="#" class="glyphicon glyphicon-pencil"> Edition</a></li>
-				    	<li><a href="#" class="glyphicon glyphicon-remove"> Suppression</a></li>
+				    	<li><a href="#" class="glyphicon glyphicon-pencil">Edition</a></li>
+				    	<li><a href="#" class="glyphicon glyphicon-remove">Suppression</a></li>
 				  	</ul>
 				</div>
 			</td>

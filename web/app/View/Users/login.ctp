@@ -1,4 +1,4 @@
-<div class="row">
+<div class="formulaire row">
 	<div class="span4 offset6">
 		<?php 
 		echo $this->Form->create('User');

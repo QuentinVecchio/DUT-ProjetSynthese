@@ -4,10 +4,10 @@
 		</caption>
 		<thead>
   		<tr>
-        	<th>Nom</th>
-       	 	<th>Adresse</th>
-       	 	<th>Adresse mail</th>
-       	 	<th>Téléphone</th>
+        	<th class="thNom">Nom</th>
+       	 	<th class="thAdresse">Adresse</th>
+       	 	<th class="thMail">Adresse mail</th>
+       	 	<th class="thTelephone">Téléphone</th>
        	 	<th style="width : 115px">Réglages</th>
   		</tr>
 		</thead>
@@ -29,13 +29,13 @@
 				  	<ul class="dropdown-menu" role="menu">
 				    	<li>
 							<?php 
-									echo $this->Html->Link('Edition',array('controller' => 'associations', 'action' => 'edit', $v['Association']['id']),
+									echo $this->Html->Link(' Edition',array('controller' => 'associations', 'action' => 'edit', $v['Association']['id']),
 																	array('class' => 'glyphicon glyphicon-pencil'));
 							 ?>				    		
 				    	</li>
 				    	<li>
 							<?php 
-									echo $this->Html->Link('Suppression',
+									echo $this->Html->Link(' Suppression',
 													 array('controller' => 'associations', 'action' => 'delete', $v['Association']['id']),
 													 array(	'confirm' => 'Etes-vous sûr de vouloir le supprimer ?',
 													 		'class' => 'glyphicon glyphicon-remove'));
