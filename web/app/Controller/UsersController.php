@@ -23,7 +23,7 @@ class UsersController extends AppController {
 					$this->redirect(array('action' => 'index'));
 				}
 			}else{
-					$this->data = $this->User->findById($id);
+					$this->data = $this->User->findById($id, array('username', 'status'));
 			}
 	}
 
