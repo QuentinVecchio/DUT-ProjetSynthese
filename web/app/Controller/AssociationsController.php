@@ -33,8 +33,9 @@ class AssociationsController extends AppController{
 					$this->Session->setFlash('<strong>Félicitation:</strong> Vous venez de mettre à jour une association !','message', array('type' => 'success'));
 					$this->redirect(array('action' => 'index'));
 				}
+			}else{
+					$this->data = $this->Association->findById($id);
 			}
-		$this->data = $this->Association->findById($id);
 	}
 
 
