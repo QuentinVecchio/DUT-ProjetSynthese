@@ -44,5 +44,14 @@ class ClientsController extends AppController{
 	}
 
 
+	/**
+	*	Permet la suppression d'un parent
+	*/
+	public function admin_delete($id){
+		if($this->Client->delete($id)){
+				$this->Session->setFlash('Vous venez de supprimer un parent !','message', array('type' => 'danger'));
+				$this->redirect(array('action' => 'index'));			
+		}
+	}
 }
  ?>
