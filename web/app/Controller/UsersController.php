@@ -55,6 +55,7 @@ class UsersController extends AppController {
 	*	Connexion d'un utilisateur
 	*/
 	public function login() {
+		$this->layout = 'blank';
 		if(!empty($this->data)){
 			if($this->Auth->login()){
 				$this->Session->setFlash('Vous êtes connecté', 'message', array('type' => 'success'));
