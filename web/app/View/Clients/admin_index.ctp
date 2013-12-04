@@ -1,18 +1,18 @@
-		<table class="table table-bordered">
-			<caption>
-      			<h4>Liste des Parents</h4>
-   			</caption>
-   			<thead>
-	      		<tr>
-	            	<th>Nom</th>
-	           	 	<th>Adresse</th>
-	           	 	<th>Adresse mail</th>
-	           	 	<th>Téléphone</th>
-	           	 	<th>Association</th>
-	           	 	<th style="width : 115px">Réglages</th>
-	      		</tr>
-	   		</thead>
-		   	<tbody>
+<table class="table table-bordered">
+	<caption>
+			<h4>Liste des Parents</h4>
+		</caption>
+		<thead>
+  		<tr>
+        	<th>Nom</th>
+       	 	<th>Adresse</th>
+       	 	<th>Adresse mail</th>
+       	 	<th>Téléphone</th>
+       	 	<th>Association</th>
+       	 	<th style="width : 115px">Réglages</th>
+  		</tr>
+		</thead>
+   	<tbody>
 <?php 
 	foreach ($listParent as $k =>$v): ?>
 	          	<tr>
@@ -42,25 +42,8 @@
 					</td>
 	        	</tr>   
 <?php endforeach; ?>
-		  	</tbody>
-		</table>
-
-
-<ul>
-
-	<?php 
-		foreach ($listParent as $k =>$v): ?>
-		<li>
-			<?php 
-					echo $this->Html->Link('Suppression:' .$v['Client']['name'],
-													 array('controller' => 'clients', 'action' => 'delete', $v['Client']['id']),
-													 array('confirm' => 'Etes-vous sûr de vouloir le supprimer ?'));
-			 ?>
-		</li>
-	
-	<?php endforeach; ?>
-
-</ul>
+  	</tbody>
+</table>
 
 
 <?php 
