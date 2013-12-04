@@ -24,6 +24,9 @@
 						    	<li><?php echo $this->Html->Link(' Edition', array('controller' => 'sectors', 'action' => 'edit', $v['Sector']['id']),
 						    												array('class' => 'glyphicon glyphicon-pencil')); ?>
 						    	</li>
+						    	<li><?php echo $this->Html->Link(' Voir classes', array('controller' => 'grades', 'action' => 'index', $v['Sector']['id']),
+						    												array('class' => 'glyphicon glyphicon-pencil')); ?>
+						    	</li>						    	
 						    	<li><?php echo $this->Html->Link(' Suppression',
 													 array('controller' => 'sectors', 'action' => 'delete', $v['Sector']['id']),
 													 array('confirm' => 'Etes-vous sûr de vouloir le supprimer ?',
