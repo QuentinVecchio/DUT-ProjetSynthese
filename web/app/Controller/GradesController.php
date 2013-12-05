@@ -1,13 +1,18 @@
 <?php 
 class GradesController extends AppController{
 	
-
+	/**
+	*	Liste les classes
+	*/
 	public function admin_index($id){
 		$listGrade = $this->Grade->findAllBySectorId($id);
 		$this->set('listGrade', $listGrade);
 		$this->set('idGrade', $id);
 	}
 
+	/**
+	*	Ajoute une classe dans une filière donnée
+	*/
 	public function admin_add($idSector){
 		if(!empty($this->data)){
 			$this->request->data['Grade']['sector_id'] = $idSector;
@@ -19,6 +24,9 @@ class GradesController extends AppController{
 		}
 	}
 
+	/**
+	*	Edition d'une classe
+	*/
 	public function admin_edit($id){
 		if(!empty($this->data)){
 			$this->Grade->id = $id;
@@ -32,6 +40,9 @@ class GradesController extends AppController{
 	}
 
 
+	/**
+	*	Suppression d'une classe
+	*/
 	public function admin_delete($id){
 		$idSector = $this->Grade->findById($id);
 		$idSector = current($idSector)['sector_id'];

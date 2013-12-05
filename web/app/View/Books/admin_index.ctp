@@ -13,9 +13,9 @@
    	<tbody>
    		<?php foreach ($listLivre as $k => $v):?>
       	<tr>
-        	<td><?php echo $v['Book']['name'] ?></td>
-        	<td><?php echo $v['Book']['ISBN'] ?></td>
-        	<td>test</td>
+        	<td><?php echo $v['Book']['name']; ?></td>
+        	<td><?php echo $v['Book']['ISBN']; ?></td>
+        	<td><?php echo $v['Subject']['name'];?></td>
         	<td>
         		<div class="btn-group">
 				  	<button type="button" class="btn btn-primary">Actions</button>
@@ -24,8 +24,20 @@
 						<span class="sr-only">Toggle Dropdown</span>
 						</button>
 				  	<ul class="dropdown-menu" role="menu">
-				    	<li><a href="#" class="glyphicon glyphicon-pencil">Edition</a></li>
-				    	<li><a href="#" class="glyphicon glyphicon-remove">Suppression</a></li>
+              <li>
+              <?php 
+                  echo $this->Html->Link(' Edition',array('controller' => 'books', 'action' => 'edit', $v['Book']['id']),
+                                  array('class' => 'glyphicon glyphicon-pencil'));
+               ?>               
+              </li>
+              <li>
+              <?php 
+                  echo $this->Html->Link(' Suppression',
+                           array('controller' => 'books', 'action' => 'delete', $v['Book']['id']),
+                           array( 'confirm' => 'Etes-vous sûr de vouloir le supprimer ?',
+                              'class' => 'glyphicon glyphicon-remove'));
+               ?>               
+              </li>
 				  	</ul>
 				</div>
 			</td>

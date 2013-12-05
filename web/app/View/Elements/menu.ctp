@@ -6,13 +6,13 @@
   </div>
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
-		<li><?php echo $this->Html->Link('Opérateurs', array('controller' => 'users', 'action' => 'index')); ?></li>
-		<li><?php echo $this->Html->Link('Filières', array('controller' => 'sectors', 'action' => 'index')); ?></li>
+		<li><?php echo $this->Html->Link('Opérateurs', array('controller' => 'users', 'action' => 'index', 'admin' => true)); ?></li>
+		<li><?php echo $this->Html->Link('Filières', array('controller' => 'sectors', 'action' => 'index', 'admin' => true)); ?></li>
 		<li><?php echo $this->Html->Link('Livres', array('controller' => 'books', 'action' => 'index')); ?></li>
-		<li><?php echo $this->Html->Link('Parents', array('controller' => 'clients', 'action' => 'index')); ?></li>
-		<li><?php echo $this->Html->Link('Associations', array('controller' => 'associations', 'action' => 'index')); ?></li>
-		<li><?php echo $this->Html->Link('Factures', array('controller' => 'associations', 'action' => 'index')); ?></li>
-		<li><?php echo $this->Html->Link('Stock', array('controller' => 'associations', 'action' => 'index')); ?></li>
+		<li><?php echo $this->Html->Link('Parents', array('controller' => 'clients', 'action' => 'index', 'admin' => true)); ?></li>
+		<li><?php echo $this->Html->Link('Associations', array('controller' => 'associations', 'action' => 'index', 'admin' => true)); ?></li>
+		<li><?php echo $this->Html->Link('Factures', array('controller' => 'associations', 'action' => 'index', 'admin' => true)); ?></li>
+		<li><?php echo $this->Html->Link('Stock', array('controller' => 'associations', 'action' => 'index', 'admin' => true)); ?></li>
         <li> <a href="#" class="glyphicon glyphicon-user"></a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
