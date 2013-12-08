@@ -28,6 +28,11 @@
 				<?php echo $this->Form->radio('status', array('operateur' => 'operateur', 'admin' => 'administrateur'),
 														 array('legend' => false, 'value' => $typeUtil));?>
 			</div>
+			<?php 
+					if ($this->Form->isFieldError('status')) {
+					    echo $this->Form->error('status');
+					}
+			 ?>
 
 			<?php echo $this->Form->button('Ajouter', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;')); ?>
 		</fieldset>

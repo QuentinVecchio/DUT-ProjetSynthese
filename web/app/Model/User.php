@@ -15,7 +15,11 @@ class User extends AppModel{
 					'rule' => 'checkEqualPassWord',
 					'message' => 'Les deux mots de passe sont différents',
 					'allowEmpty' => true
-				)			
+				),
+			'status' => array(
+					'rule' => 'notTheLastOne',
+					'message' => 'C\'est le dernier des administrateurs, il ne peut pas être changé'
+				)
 			);
 
 	public function beforeSave($options = array()) {
@@ -26,6 +30,18 @@ class User extends AppModel{
 			unset($this->data['User']['password']);
 		}
 	    return true;
+	}
+
+	public function notTheLastOne($check){
+		if($check['status'] == 'operateur'){
+			$tmp = $this->findAllByStatus('admin');
+			if(count($tmp) == 1){
+					if($this->data['User']['id'] == $tmp[0]['User']['id']){
+						return false;
+					}
+			}
+		}
+		return true;
 	}
 
 	
@@ -44,6 +60,16 @@ class User extends AppModel{
 	public function afterValidate(){
 		unset($this->data[$this->alias]['passwordOld']);
 		unset($this->data[$this->alias]['password2']);
+	}
+
+	public function beforeDelete($cascade = true) {
+		$tmp = $this->findAllByStatus('admin');
+		if(count($tmp) == 1){
+				if($this->id == $tmp[0]['User']['id']){
+					return false;
+				}
+		}
+	  return true;
 	}
 
 } ?>
