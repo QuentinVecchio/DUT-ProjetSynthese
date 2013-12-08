@@ -4,7 +4,7 @@
 			echo $this->Form->create('Association', array('class' => 'form-horizontal', 'role' => 'form'));
 		?>
 		<fieldset>
-			<legend>Ajout d'une Association</legend>
+			<legend>Ajout d'une association</legend>
 			<div class="form-group">
 				<?php echo $this->Form->input('name', array('placeholder' => 'Nom','input' => array('class' => 'form-control'),'label' => array('text' => 'Nom :', 'class' => 'col-sm-4 control-label'),'div' => array('class' => 'col-sm-10'))); ?>
 			</div>

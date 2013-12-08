@@ -4,7 +4,7 @@
 			echo $this->Form->create('User', array('class' => 'form-horizontal', 'role' => 'form'));
 		?>
 		<fieldset>
-			<legend>Ajout d'un Utilisateur</legend>	
+			<legend>Edition d'un utilisateur</legend>	
 			<div class="form-group">
 				<?php echo $this->Form->input('username', array('input' => array('class' => 'form-control'),'label' => array('text' => 'Identifiant :', 'class' => 'col-sm-4 control-label'),'div' => array('class' => 'col-sm-10'))); ?>
 			</div>

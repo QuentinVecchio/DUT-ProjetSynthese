@@ -4,7 +4,7 @@
 		echo $this->Form->create('Condition', array('class' => 'form-horizontal', 'role' => 'form'));
 	?>
 		<fieldset>
-				<legend>Edition d'une Condition</legend>	
+				<legend>Edition d'un état</legend>	
 				<div class="form-group">
 					<?php echo echo $this->Form->input('name','input' => array('class' => 'form-control'),'label' => array('text' => 'Nom :', 'class' => 'col-sm-4 control-label'),'div' => array('class' => 'col-sm-10')));?>
 				</div>

@@ -4,7 +4,7 @@
 			echo $this->Form->create('Grade', array('class' => 'form-horizontal', 'role' => 'form'));
 		?>
 		<fieldset>
-			<legend>Ajout d'une Classe</legend>	
+			<legend>Edition d'une classe</legend>	
 			<div class="form-group">
 				<?php echo $this->Form->input('name', array('input' => array('class' => 'form-control'),'label' => array('text' => 'Nom de la classe:', 'class' => 'col-sm-4 control-label'),'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
