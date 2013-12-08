@@ -23,8 +23,9 @@ class UsersController extends AppController {
 					$this->redirect(array('action' => 'index'));
 				}
 			}else{
-					$this->data = $this->User->findById($id, array('username', 'status'));
+					$this->data = $this->User->findById($id, array('username', 'status', 'id'));
 			}
+			$this->set('typeUtil',$this->data['User']['status']);
 	}
 
 	/**
