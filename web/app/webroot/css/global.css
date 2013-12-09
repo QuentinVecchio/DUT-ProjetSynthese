@@ -1,0 +1,45 @@
+body 
+{
+   background-color: rgba(192,192,192,0.4);
+}
+#container{
+	width: 1200px;
+	margin: 0 auto;
+	background-color: #fff;
+	padding: 10px;
+}
+.formulaire
+{
+	background: rgba(192,192,192,0.4);
+	border: 0.2px solid black;
+	text-align: center;
+	box-shadow: 1px 1px 6px #555;
+}
+.formulaire legend
+{
+	background: rgba(192,192,192,0.7);
+}
+#Userformulaire
+{
+   margin-top: 15%;
+}
+th,td
+{
+	text-align: center;
+}
+.thNom, .thStatut, .thISBN, .thMail, .thTelephone, .thAssoc
+{
+	width: 150px;
+}
+.thMatiere, .thAdresse
+{
+	width: 200px;
+}
+.labelForm
+{
+	color : red;
+}
+.champsForm
+{
+	text-align: center;
+}
