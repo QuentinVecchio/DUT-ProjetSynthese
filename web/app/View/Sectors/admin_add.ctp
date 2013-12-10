@@ -6,7 +6,9 @@
 		<fieldset>
 			<legend>Ajout d'une Filière</legend>	
 			<div class="form-group">
-				<?php echo $this->Form->input('name', array('placeholder' => 'Nom','input' => array('class' => 'form-control'),'label' => array('text' => 'Nom de la filière :', 'class' => 'col-sm-4 control-label'),'div' => array('class' => 'col-sm-10'))); ?>
+				<?php echo $this->Form->input('name', array('placeholder' => 'Nom','input' => array('class' => 'form-control'),
+																'label' => array('text' => 'Nom de la filière', 'class' => 'col-sm-4 control-label'),
+																'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
 			<?php echo $this->Form->button('Ajouter', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;')); ?>
 		</fieldset>

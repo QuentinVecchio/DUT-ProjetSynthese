@@ -8,6 +8,10 @@ body
 	background-color: #fff;
 	padding: 10px;
 }
+h4
+{
+	font-size: 3em;
+}
 .formulaire
 {
 	background: rgba(192,192,192,0.4);

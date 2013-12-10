@@ -6,10 +6,14 @@
 		<fieldset>
 			<legend>Ajout d'un utilisateur</legend>	
 			<div class="form-group">
-				<?php echo $this->Form->input('username', array('placeholder' => 'Identifiant','input' => array('class' => 'form-control'),'label' => array('text' => 'Identifiant :', 'class' => 'col-sm-4 control-label'),'div' => array('class' => 'col-sm-10'))); ?>
+				<?php echo $this->Form->input('username', array('placeholder' => 'Identifiant','input' => array('class' => 'form-control'),
+																	'label' => array('text' => 'Identifiant ', 'class' => 'col-sm-4 control-label'),
+																	'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
 			<div class="form-group">
-				<?php echo $this->Form->input('password', array('placeholder' => 'Mot de passe','input' => array('class' => 'form-control'),'label' => array('text' => 'Mot de passe :', 'class' => 'col-sm-4 control-label'), 'div' => array('class' => 'col-sm-10'))); ?>
+				<?php echo $this->Form->input('password', array('placeholder' => 'Mot de passe','input' => array('class' => 'form-control'),
+																	'label' => array('text' => 'Mot de passe ', 'class' => 'col-sm-4 control-label'), 
+																	'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
 			<div class="form-group">
 				<?php echo $this->Form->radio('status', array('operateur' => 'operateur', 'admin' => 'administrateur'), array('legend' => false, 'value' => 'operateur'));?>

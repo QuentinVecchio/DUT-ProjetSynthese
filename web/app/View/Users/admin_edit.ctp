@@ -7,21 +7,21 @@
 			<legend>Edition d'un utilisateur</legend>	
 			<div class="form-group">
 				<?php echo $this->Form->input('id', array('div' => array('style' => 'display:none;'))); ?>
-				<?php echo $this->Form->input('username', array('input' => array('class' => 'form-control'),'label' => array('text' => 'Identifiant :', 'class' => 'col-sm-5 control-label'),'div' => array('class' => 'col-sm-10'))); ?>
+				<?php echo $this->Form->input('username', array('input' => array('class' => 'form-control'),'label' => array('text' => 'Identifiant', 'class' => 'col-sm-5 control-label'),'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
 			<div class="form-group">
 				<?php echo $this->Form->input('passwordOld', array('type' => 'password', 'input' => array('class' => 'form-control'),
-																	'label' => array('text' => 'Ancien mot de passe :', 'class' => 'col-sm-5 control-label'),
+																	'label' => array('text' => 'Ancien mot de passe ', 'class' => 'col-sm-5 control-label'),
 																	'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
 			<div class="form-group">
 				<?php echo $this->Form->input('password', array('input' => array('class' => 'form-control'),
-																	'label' => array('text' => 'Nouveau mot de passe :', 'class' => 'col-sm-5 control-label'), 
+																	'label' => array('text' => 'Nouveau mot de passe ', 'class' => 'col-sm-5 control-label'), 
 																	'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
 			<div class="form-group">
 				<?php echo $this->Form->input('password2', array('type' => 'password', 'input' => array('class' => 'form-control'),
-																'label' => array('text' => 'Confirmation :', 'class' => 'col-sm-5 control-label'), 
+																'label' => array('text' => 'Confirmation ', 'class' => 'col-sm-5 control-label'), 
 																'div' => array('class' => 'col-sm-10'))); ?>
 			</div>						
 			<div class="form-group">

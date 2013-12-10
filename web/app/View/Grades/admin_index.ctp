@@ -1,6 +1,6 @@
 <table class="table table-bordered">
 	<caption>
-			<h4>Liste des classes</h4>
+			<h4>Liste des classes</h4><br>
 		</caption>
 		<thead>
   		<tr>

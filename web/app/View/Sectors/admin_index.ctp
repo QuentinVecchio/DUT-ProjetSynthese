@@ -1,6 +1,6 @@
 <table class="table table-bordered">
 	<caption>
-			<h4>Liste des filières</h4>
+			<h4>Liste des filières</h4><br>
 		</caption>
 		<thead>
   		<tr>
@@ -40,7 +40,7 @@
 	</tbody>
 </table>
 <?php 
-	echo $this->Html->Link(' ', array('controller' => 'sectors', 'action' => 'add'), array('class' => 'btn btn-primary glyphicon glyphicon-plus'));
+	echo $this->Html->Link('Ajouter', array('controller' => 'sectors', 'action' => 'add'), array('class' => 'btn btn-primary'));
  ?>
 
 
