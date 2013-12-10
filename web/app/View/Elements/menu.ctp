@@ -29,8 +29,10 @@
   </div>
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
-		<li class="divider-vertical"></li>
-	 	<li> <a href="#">Vente</a> </li>
+    <li class="divider-vertical"></li>
+    <li> <a href="#">Vente</a> </li>
+    <li class="divider-vertical"></li>
+	 	<li> <a href="#">Dépôt</a> </li>
 	 	<li class="divider-vertical"></li>
 		<li> <a href="#">Parents</a> </li>
 		<li class="divider-vertical"></li>
@@ -40,7 +42,8 @@
 	  	<li class="divider-vertical"></li>
 	</ul>
 	<ul class="nav navbar-nav navbar-right">
-        <li><a href="#" class="pull-right glyphicon glyphicon-off"></a></li>
+        <li><?php echo $this->Html->link('', array('controller' => 'users', 'action' => 'logout', 'admin' => false),
+                                            array('class' => 'pull-right glyphicon glyphicon-off')) ?></li>
     </ul> 
     </ul>   
   </div>

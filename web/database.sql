@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Mar 03 Décembre 2013 à 21:50
+-- Généré le: Dim 08 Décembre 2013 à 16:43
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.4.16
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `associations` (
   `phone` varchar(255) NOT NULL,
   `mail` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Contenu de la table `associations`
@@ -55,10 +55,19 @@ CREATE TABLE IF NOT EXISTS `books` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `ISBN` varchar(255) NOT NULL,
-  `subject_id` int(11) NOT NULL,
+  `subject_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `subjet_id` (`subject_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Contenu de la table `books`
+--
+
+INSERT INTO `books` (`id`, `name`, `ISBN`, `subject_id`) VALUES
+(1, 'Mon premier livre', '2567', 7),
+(4, 'test2', 'coucou', 1),
+(5, 't', 'r', NULL);
 
 -- --------------------------------------------------------
 
@@ -72,10 +81,20 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `address` varchar(255) NOT NULL,
   `mail` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
-  `association_id` int(11) NOT NULL,
+  `association_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `association_id` (`association_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Contenu de la table `clients`
+--
+
+INSERT INTO `clients` (`id`, `name`, `address`, `mail`, `phone`, `association_id`) VALUES
+(1, 'clin', 'cahahah', 'kljsljkl', 'jljkljlk', 2),
+(2, 'vecchio', 'cahahah', 'kljsljkl', 'jljkljlk', 1),
+(6, 't', 't', 't', 't', NULL),
+(7, 'a', 'a', 'a', 'a', NULL);
 
 -- --------------------------------------------------------
 
@@ -97,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `conditions` (
 INSERT INTO `conditions` (`id`, `name`, `reducing`) VALUES
 (1, 'Bon', 5),
 (2, 'Moyen', 10),
-(3, 'MÃ©diocre', 15);
+(3, 'Mediocre', 15);
 
 -- --------------------------------------------------------
 
@@ -111,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `grades` (
   `sector_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `sector_id` (`sector_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
 --
 -- Contenu de la table `grades`
@@ -122,7 +141,11 @@ INSERT INTO `grades` (`id`, `name`, `sector_id`) VALUES
 (2, 'Terminale', 1),
 (3, '1Ã¨re', 2),
 (4, 'Terminale', 1),
-(5, '1Ã¨re', 3);
+(5, '1Ã¨re', 3),
+(6, '2nd', 1),
+(14, '2nd', 4),
+(15, '1ere', 4),
+(16, 'Terminale', 4);
 
 -- --------------------------------------------------------
 
@@ -177,8 +200,7 @@ INSERT INTO `sectors` (`id`, `name`) VALUES
 (2, 'L'),
 (3, 'STL'),
 (4, 'STI'),
-(5, 'SSI'),
-(6, 'ES');
+(5, 'SSI');
 
 -- --------------------------------------------------------
 
@@ -192,18 +214,19 @@ CREATE TABLE IF NOT EXISTS `subjects` (
   `grade_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `grade_id` (`grade_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Contenu de la table `subjects`
 --
 
 INSERT INTO `subjects` (`id`, `name`, `grade_id`) VALUES
-(1, 'MathÃ©matique', 1),
+(1, 'MathÃ©matiques', 1),
 (2, 'Allemand', 2),
 (3, 'Anglais', 3),
 (4, 'FranÃ§ais', 5),
-(5, 'Physique', 4);
+(5, 'Physique', 4),
+(7, 'FranÃ§ais', 1);
 
 -- --------------------------------------------------------
 
@@ -236,14 +259,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Contenu de la table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `status`) VALUES
-(1, 'root', '577ea4df223bed7d8e6ab6d099eb3cbfbc00895a', 'admin');
+(1, 'root', '577ea4df223bed7d8e6ab6d099eb3cbfbc00895a', 'admin'),
+(2, 'test', 'c33238eb253815832987922eafddd535aed8dd8f', 'operateur'),
+(4, 'moi', 'be726632b300e27fb208743d1a81198ecf218f2d', 'operateur');
 
 --
 -- Contraintes pour les tables exportées
@@ -253,19 +278,19 @@ INSERT INTO `users` (`id`, `username`, `password`, `status`) VALUES
 -- Contraintes pour la table `books`
 --
 ALTER TABLE `books`
-  ADD CONSTRAINT `books_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`);
+  ADD CONSTRAINT `books_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE SET NULL;
 
 --
 -- Contraintes pour la table `clients`
 --
 ALTER TABLE `clients`
-  ADD CONSTRAINT `clients_ibfk_1` FOREIGN KEY (`association_id`) REFERENCES `associations` (`id`);
+  ADD CONSTRAINT `clients_ibfk_1` FOREIGN KEY (`association_id`) REFERENCES `associations` (`id`) ON DELETE SET NULL;
 
 --
 -- Contraintes pour la table `grades`
 --
 ALTER TABLE `grades`
-  ADD CONSTRAINT `grades_ibfk_1` FOREIGN KEY (`sector_id`) REFERENCES `sectors` (`id`);
+  ADD CONSTRAINT `grades_ibfk_1` FOREIGN KEY (`sector_id`) REFERENCES `sectors` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `records`
@@ -285,14 +310,14 @@ ALTER TABLE `rows`
 -- Contraintes pour la table `subjects`
 --
 ALTER TABLE `subjects`
-  ADD CONSTRAINT `subjects_ibfk_1` FOREIGN KEY (`grade_id`) REFERENCES `grades` (`id`);
+  ADD CONSTRAINT `subjects_ibfk_1` FOREIGN KEY (`grade_id`) REFERENCES `grades` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `transactions`
 --
 ALTER TABLE `transactions`
-  ADD CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`),
-  ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

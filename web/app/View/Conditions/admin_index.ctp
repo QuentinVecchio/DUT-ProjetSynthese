@@ -1,8 +1,4 @@
 <h1>Liste des états</h1>
-
-<?php 
-	debug($listEtat);
-?>
 <ul>
 	<?php 
 		foreach ($listEtat as $k =>$v): ?>
