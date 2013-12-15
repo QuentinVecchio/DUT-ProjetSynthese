@@ -29,9 +29,9 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 	<?php
 		echo $this->Html->meta('icon');
 
+		
+		echo $this->Html->css('bootstrap.min');
 		echo $this->Html->css('global');
-		echo $this->Html->css('bootstrap_min');
-
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
@@ -39,8 +39,8 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 </head>
 <body>
 	<div id="container">
+			<?php echo $this->Element('menu'); ?>
 		<div id="content">
-
 			<?php echo $this->Session->flash(); ?>
 
 			<?php echo $this->fetch('content'); ?>
@@ -49,6 +49,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 			<?php echo $this->element('sql_dump'); ?>
 		</footer>
 	</div>
-	<?php echo $this->Html->script('bootstrap_min'); ?>
+	<?php echo $this->Html->script('jquery_min'); ?>
+	<?php echo $this->Html->script('bootstrap.min'); ?>
 </body>
 </html>
