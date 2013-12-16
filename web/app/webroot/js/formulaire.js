@@ -12,6 +12,4 @@ function Controller($scope) {
   $scope.isUnchanged = function(user) {
     return angular.equals(user, $scope.master);
   };
- 
-  $scope.reset();
 }
