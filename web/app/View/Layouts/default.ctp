@@ -51,5 +51,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 	</div>
 	<?php echo $this->Html->script('jquery_min'); ?>
 	<?php echo $this->Html->script('bootstrap.min'); ?>
+	<?php echo $this->Html->script('http://code.angularjs.org/1.2.5/angular.min.js'); ?>
+	<?php echo $this->Html->script('formulaire'); ?>
 </body>
 </html>

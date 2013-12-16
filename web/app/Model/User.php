@@ -4,8 +4,11 @@ class User extends AppModel{
 	public $validate = array(
 			'username' => array(
 				'rule' => 'isUnique',
+				'required' => true,
 				'message' => 'Nom déjà utilisé'),
-
+			'password' => array(
+				'required' => true
+				),
 			'passwordOld' => array(
 					'rule' => 'checkCurrentPassWord',
 					'message' => 'Mot de passe incorrect',
