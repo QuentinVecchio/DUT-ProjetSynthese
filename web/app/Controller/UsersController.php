@@ -16,9 +16,10 @@ class UsersController extends AppController {
 	public function admin_edit($id){
 			if(!empty($this->data)){
 				$this->User->id = $id;
+				unset($this->request->data['submit']);
+				$this->request->data = array('User' => $this->request->data);				
 				if($this->User->save($this->data)){
-					$this->Session->setFlash('<strong>Félicitation:</strong> Vous venez de mettre à jour un utilisateur !',
-																				'message',
+					$this->Session->setFlash('<strong>Félicitation:</strong> Vous venez de mettre à jour un utilisateur !','message',
 																				array('type' => 'success'));
 					$this->redirect(array('action' => 'index'));
 				}
@@ -26,6 +27,7 @@ class UsersController extends AppController {
 					$this->data = $this->User->findById($id, array('username', 'status', 'id'));
 			}
 			$this->set('typeUtil',$this->data['User']['status']);
+			debug($this->data);
 	}
 
 	/**
@@ -50,6 +52,9 @@ class UsersController extends AppController {
 	*/
 	public function admin_add(){
 		if(!empty($this->data)){
+			unset($this->request->data['submit']);
+			$this->request->data = array('User' => $this->request->data);
+
 			if($this->User->save($this->data)){
 				$this->Session->setFlash('<strong>Félicitation:</strong> Vous venez d\'ajouter un utilisateur !','message', array('type' => 'success'));
 				$this->redirect(array('action' => 'index'));

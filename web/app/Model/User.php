@@ -3,23 +3,33 @@ class User extends AppModel{
 
 	public $validate = array(
 			'username' => array(
-				'rule' => 'isUnique',
-				'required' => true,
-				'message' => 'Nom déjà utilisé'),
-			'password' => array(
-				'required' => true
+				'unique' => array(
+							'rule' => 'isUnique',
+							'message' => 'Nom déjà utilisé'
+							),
+				'requis' => array(
+					'rule' => array('minLength', 2),
+					'on' => 'create',
+					'required' => true,
+					'message' => 'Nom requis (2 caractères minimum)')
 				),
 			'passwordOld' => array(
 					'rule' => 'checkCurrentPassWord',
 					'message' => 'Mot de passe incorrect',
 					'allowEmpty' => true
 				),
+			'password' => array(
+				'rule' =>  array('minLength', 5),
+				'on' => 'create',
+				'required' => true,
+				'message' => 'mot de passe requis (5 caractères minimum'),
 			'password2' => array(
 					'rule' => 'checkEqualPassWord',
 					'message' => 'Les deux mots de passe sont différents',
 					'allowEmpty' => true
 				),
 			'status' => array(
+					'on' =>'update',
 					'rule' => 'notTheLastOne',
 					'message' => 'C\'est le dernier des administrateurs, il ne peut pas être changé'
 				)

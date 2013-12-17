@@ -3,20 +3,21 @@
 		<?php
 			echo $this->Form->create('User', array('class' => 'form-horizontal', 'role' => 'form','name' => 'form'));
 		?>
-		<fieldset>
+		<fieldset ng-init="User=<?php if(isset($this->data['User']))echo htmlspecialchars(json_encode($this->data['User']));?>">
 			<legend>Edition d'un utilisateur</legend>	
 			<div class="form-group">
 				<?php echo $this->Form->input('id', array('div' => array('style' => 'display:none;'))); ?>
-				<?php echo $this->Form->input('username', array('ng-model'=>'nom', 'ng-minlength'=>2, 'ng-maxlength'=> '15',
-																'ng-pattern'=>'/^[a-zA-Z ]{1,}$/', 'name' => 'nom',
+				<?php echo $this->Form->input('username', array('ng-model'=>'User.username', 'ng-minlength'=>2, 'ng-maxlength'=> '15',
+																'name' => 'username',
+																'ng-pattern'=>'/^[a-zA-Z ]{1,}$/',
 																'input' => array('class' => 'form-control'),
 																'label' => array('text' => 'Identifiant', 'class' => 'col-sm-5 control-label'),
 																'div' => array('class' => 'col-sm-10'))); ?>
-			<div ng-show="form.nom.$dirty && form.nom.$invalid" class="col-sm-10">
-	        	<div ng-show="form.nom.$error.required">Saisir un nom d'utilisateur.</div>
-	        	<div ng-show="form.nom.$error.minlength">Nom trop petit.(2 caractères)</div>
-	        	<div ng-show="form.nom.$error.maxlength">Nom trop long.(15 caractères max)</div>
-	        	<div ng-show="form.nom.$error.pattern">Caractères incorrecte.</div>
+			<div ng-show="form.username.$dirty && form.username.$invalid" class="col-sm-10">
+	        	<div ng-show="form.username.$error.required">Saisir un nom d'utilisateur.</div>
+	        	<div ng-show="form.username.$error.minlength">Nom trop petit.(2 caractères)</div>
+	        	<div ng-show="form.username.$error.maxlength">Nom trop long.(15 caractères max)</div>
+	        	<div ng-show="form.username.$error.pattern">Caractères incorrecte.</div>
 	        </div>																	
 			</div>
 			<div class="form-group">
@@ -44,7 +45,8 @@
 					}
 			 ?>
 
-			<?php echo $this->Form->button('Ajouter', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;')); ?>
+			<?php echo $this->Form->button('Ajouter', array('class' => 'btn btn-large btn-block btn-success',
+															'style' => 'border-radius: 0px;','ng-disabled' => 'form.$invalid')); ?>
 		</fieldset>
 		<?php
 			echo $this->Form->end();
