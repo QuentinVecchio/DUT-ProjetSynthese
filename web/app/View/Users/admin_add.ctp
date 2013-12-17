@@ -17,7 +17,7 @@
 	        	<div ng-show="form.username.$error.required">Saisir un nom d'utilisateur.</div>
 	        	<div ng-show="form.username.$error.minlength">Nom trop petit.(2 caractères)</div>
 	        	<div ng-show="form.username.$error.maxlength">Nom trop long.(15 caractères max)</div>
-	        	<div ng-show="form.username.$error.pattern">Caractères incorrecte.</div>
+	        	<div ng-show="form.username.$error.pattern">Caractères incorrectes.</div>
 	        </div>																	
 			</div>
 			<div class="form-group">
@@ -38,7 +38,7 @@
 														array('legend' => false, 'value' => 'operateur', 'name' => 'status'));?>
 			</div>
 			<?php echo $this->Form->button('Ajouter', array('class' => 'btn btn-large btn-block btn-success',
-															'style' => 'border-radius: 0px;','name' =>'submit',
+															'style' => 'border-radius: 0px;',
 															'ng-disabled' => 'form.$invalid')); ?>
 		</fieldset>
 		<?php

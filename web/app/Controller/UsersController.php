@@ -16,7 +16,6 @@ class UsersController extends AppController {
 	public function admin_edit($id){
 			if(!empty($this->data)){
 				$this->User->id = $id;
-				unset($this->request->data['submit']);
 				$this->request->data = array('User' => $this->request->data);				
 				if($this->User->save($this->data)){
 					$this->Session->setFlash('<strong>Félicitation:</strong> Vous venez de mettre à jour un utilisateur !','message',
