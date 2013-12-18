@@ -11,6 +11,13 @@ class UsersController extends AppController {
 
 
 	/**
+	*	Page de choix entre administrateur et opérateur
+	*/
+	public function admin_choice(){
+		$this->layout = 'blank';
+	}
+
+	/**
 	*	Formulaire d'édition d'un utilisateur
 	*/
 	public function admin_edit($id){
@@ -69,7 +76,11 @@ class UsersController extends AppController {
 		if(!empty($this->data)){
 			if($this->Auth->login()){
 				$this->Session->setFlash('Vous êtes connecté', 'message', array('type' => 'success'));
-				$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => true));
+				if($this->Auth->user('status') == 'admin'){
+					$this->redirect(array('controller' => 'users', 'action' => 'choice', 'admin' => true));
+				}else{
+					$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => false));
+				}
 			}
 		}
 	}

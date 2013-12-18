@@ -13,7 +13,7 @@
 		<li><?php echo $this->Html->Link('Associations', array('controller' => 'associations', 'action' => 'index', 'admin' => true)); ?></li>
 		<li><?php echo $this->Html->Link('Factures', array('controller' => 'associations', 'action' => 'index', 'admin' => true)); ?></li>
 		<li><?php echo $this->Html->Link('Stock', array('controller' => 'associations', 'action' => 'index', 'admin' => true)); ?></li>
-        <li> <a href="#" class="glyphicon glyphicon-user"></a></li>
+        <li> <?php echo $this->Html->Link('', array('controller' => 'users', 'action' => 'choice', 'admin' => true), array('class' => 'glyphicon glyphicon-user')) ?></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
         <li><?php echo $this->Html->link('', array('controller' => 'users', 'action' => 'logout', 'admin' => false),
