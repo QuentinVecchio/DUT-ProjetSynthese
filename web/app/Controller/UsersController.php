@@ -79,7 +79,7 @@ class UsersController extends AppController {
 				if($this->Auth->user('status') == 'admin'){
 					$this->redirect(array('controller' => 'users', 'action' => 'choice', 'admin' => true));
 				}else{
-					$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => false));
+					$this->redirect(array('controller' => 'transactions', 'action' => 'sale', 'admin' => false));
 				}
 			}
 		}

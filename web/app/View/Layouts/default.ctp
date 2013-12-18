@@ -34,7 +34,6 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		echo $this->Html->css('global');
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
-		echo $this->fetch('script');
 	?>
 </head>
 <body>
@@ -52,6 +51,8 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 	<?php echo $this->Html->script('jquery_min'); ?>
 	<?php echo $this->Html->script('bootstrap.min'); ?>
 	<?php echo $this->Html->script('http://code.angularjs.org/1.2.5/angular.min.js'); ?>
+	<?php echo $this->Html->script('http://code.angularjs.org/1.2.5/angular-animate.min.js'); ?>
 	<?php echo $this->Html->script('formulaire'); ?>
+	<?php echo $this->fetch('script'); ?>
 </body>
 </html>
