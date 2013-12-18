@@ -2,7 +2,7 @@
 
 <nav class="navbar navbar-inverse" role="navigation">
   <div class="navbar-header">
-    <a class="navbar-brand" href="#">Gestion Bourse aux Livres</a>
+    <a class="navbar-brand" href="#">GBL</a>
   </div>
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
@@ -25,7 +25,7 @@
   
 <nav class="navbar navbar-inverse" role="navigation">
   <div class="navbar-header">
-    <a class="navbar-brand" href="#">Gestion Bourse aux Livres</a>
+    <a class="navbar-brand" href="#">GBL</a>
   </div>
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
