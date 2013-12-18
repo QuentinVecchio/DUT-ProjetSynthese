@@ -6,7 +6,7 @@
 		<fieldset ng-init="User=<?php if(isset($this->data['User']))echo htmlspecialchars(json_encode($this->data['User']));?>">
 			<legend>Edition d'un utilisateur</legend>	
 			<div class="form-group">
-				<?php echo $this->Form->input('id', array('div' => array('style' => 'display:none;'))); ?>
+				<?php echo $this->Form->input('id', array('div' => array('style' => 'display:none;'), 'name' => 'id', 'ng-model' => 'id')); ?>
 				<?php echo $this->Form->input('username', array('ng-model'=>'User.username', 'ng-minlength'=>2, 'ng-maxlength'=> '15',
 																'name' => 'username',
 																'ng-pattern'=>'/^[a-zA-Z ]{1,}$/',
@@ -22,22 +22,26 @@
 			</div>
 			<div class="form-group">
 				<?php echo $this->Form->input('passwordOld', array('type' => 'password', 'input' => array('class' => 'form-control'),
+																	'name' => 'passwordOld',
+																	'ng-model' => 'passwordOld',
 																	'label' => array('text' => 'Ancien mot de passe ', 'class' => 'col-sm-5 control-label'),
 																	'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
 			<div class="form-group">
 				<?php echo $this->Form->input('password', array('input' => array('class' => 'form-control'),
+																	'name' => 'password',
 																	'label' => array('text' => 'Nouveau mot de passe ', 'class' => 'col-sm-5 control-label'), 
 																	'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
 			<div class="form-group">
 				<?php echo $this->Form->input('password2', array('type' => 'password', 'input' => array('class' => 'form-control'),
+																'name' => 'password2',
 																'label' => array('text' => 'Confirmation ', 'class' => 'col-sm-5 control-label'), 
 																'div' => array('class' => 'col-sm-10'))); ?>
 			</div>						
 			<div class="form-group">
 				<?php echo $this->Form->radio('status', array('operateur' => 'operateur', 'admin' => 'administrateur'),
-														 array('legend' => false, 'value' => $typeUtil));?>
+														 array('legend' => false, 'value' => $typeUtil, 'name' => 'status'));?>
 			</div>
 			<?php 
 					if ($this->Form->isFieldError('status')) {

@@ -22,8 +22,9 @@ class UsersController extends AppController {
 	*/
 	public function admin_edit($id){
 			if(!empty($this->data)){
-				$this->User->id = $id;
-				$this->request->data = array('User' => $this->request->data);				
+				$this->User->id = $id;			
+				$this->request->data = array('User' => $this->request->data);	
+				
 				if($this->User->save($this->data)){
 					$this->Session->setFlash('<strong>Félicitation:</strong> Vous venez de mettre à jour un utilisateur !','message',
 																				array('type' => 'success'));
@@ -33,7 +34,6 @@ class UsersController extends AppController {
 					$this->data = $this->User->findById($id, array('username', 'status', 'id'));
 			}
 			$this->set('typeUtil',$this->data['User']['status']);
-			debug($this->data);
 	}
 
 	/**
