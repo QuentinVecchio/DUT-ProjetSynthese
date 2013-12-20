@@ -2,7 +2,7 @@
 	<div  class="glyphicon glyphicon-user" style="font-size : 5em; margin-top: 170px;"></div>
 	<br>Administrateur</a>
 </div>
-<div id="choixOpe" class="choixStat"><a href="#">
+<div id="choixOpe" class="choixStat"><a href="<?php echo $this->Html->url(array('controller' => 'transactions', 'action' => 'sale', 'admin' => false)); ?>">
 	<div  class="glyphicon glyphicon-book" style="font-size : 5em; margin-top: 170px;"></div>
 	<br>Opérateur</a>
 </div>
