@@ -2,18 +2,20 @@
 <div ng-app="todo" ng-controller="CtrlLivres">
 <section id="" ng-show="clicked" ng-init="clicked=false" class="container" style="clear:both;">
         <header id="header" ng-init="etats=<?php echo htmlentities(json_encode($test)); ?>">
-        	<div>
-        		{{etats[0].name}}
 
-        	</div>
+          <div ng-init="filieres=<?php echo htmlentities(json_encode($listFiliere)) ?>"></div>
+          <div ng-init="urlGetGrades='<?php echo $this->Html->url(array('controller' =>'transactions', 'action' => 'getGrades', 'full_base' => true)) ?>'"></div>
+          <div ng-init="urlGetBooks='<?php echo $this->Html->url(array('controller' =>'transactions', 'action' => 'getBooks', 'full_base' => true)) ?>'"></div>
+
           <h1>Choix des livres</h1>
             <form action="#" id="filieres-form" ng-submit="">
                 <span id="filieres-list">
-                  <strong>Filière</strong> : <select ng-selected="addLivre()" ng-init="filieres='<?php echo htmlentities(json_encode($listFiliere)) ?>'" ng-model="filiere" ng-options="f for f in filieres" required></select>
+                  <strong>Filière</strong> : <select  ng-model="choixFiliere" ng-options="value.sector.name for value in filieres track by value.sector.id" ng-change="updateGrades()" required></select>
                 </span>
 
                 <span id="classes-list">
-                 <strong>Classe</strong> : <select ng-init="" ng-model="classe" ng-options="c.name for c in classes" required></select>
+                 <strong>Classe</strong> : <select ng-model="choixClasse" ng-options="value.grade.name for value in classes track by value.grade.id"
+                  ng-change="updateBooks()"required></select>
                 </span>
             </form>
         </header>
@@ -23,7 +25,7 @@
           <ul class="list-unstyled">
             <li class="list-group-item" ng-repeat="livre in livres | orderBy:name" ng-class="{completed : livre.completed}">
                 <input type="checkbox" class="checkbox" ng-model="livre.completed">
-                <label class="form-control">{{livre.name}}</label>
+                <label class="form-control">{{livre.Subject.name}}: {{livre.book.name}}</label>
             </li>
           </ul>
 
@@ -69,9 +71,9 @@
                     <tbody>
                       <tr ng-repeat="achat in achats">
                         <td><a class="btn btn-danger" ng-click="removeAchat($index)" title="Supprimer cet achat" href="#">Supprimer</a></td>
-                        <td>{{achat.name}}</td>
-                        <td><select ng-model="achat.etat" ng-options="e.name for e in etats"></select></td>
-                        <td><input type="number" ng-model="achat.qte" style="width:50px; height:25px;"></td>
+                        <td>{{achat.Subject.name}}: {{achat.book.name}}</td>
+                        <td><select ng-model="achat.book.etat" ng-options="value.conditions.name for value in etats track by value.conditions.id"></select></td>
+                        <td><input type="number" ng-model="achat.book.qte" style="width:50px; height:25px;"></td>
                       </tr>
                     </tbody>
                 </table>
@@ -123,10 +125,10 @@
                     </thead>
                     <tbody>
                       <tr ng-repeat="achat in achats">
-                        <td>{{achat.name}}</td>
-                        <td>{{achat.etat}}</td>
-                        <td>{{achat.qte}}</td>
-                        <td>{{achat.prix*achat.qte}} €</td>
+                        <td>{{achat.Subject.name}}: {{achat.book.name}}</td>
+                        <td>{{achat.book.etat.conditions.name}}</td>
+                        <td>{{achat.book.qte}}</td>
+                        <td>{{((achat.book.prize- achat.book.prize*achat.book.etat.conditions.reducing / 100)*achat.book.qte) || 0}} €</td>
                       </tr>
                     </tbody>
                 </table>

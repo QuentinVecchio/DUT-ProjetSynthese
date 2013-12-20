@@ -20,12 +20,12 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	*
 	*/
 //	$scope.filieres = [  {"name": "S", "completed":false}, {"name": "STG", "completed":false}, {"name": "L", "completed":false} ];
-	$scope.livres = [ 
+	/*$scope.livres = [ 
 	{"name": "TosSVT", "completed":false, "prix": 25, "qte":0}, 
 	{"name": "CookMaths", "completed":false, "prix": 15, "qte":0}, 
 	{"name": "LearnPhp", "completed":false, "prix": 20, "qte":0} 
-	];
-	$scope.classes = [  {"name": "Seconde"}, {"name": "Première"}, {"name": "Terminale"} ];
+	];*/
+	//$scope.classes = [  {"name": "Seconde"}, {"name": "Première"}, {"name": "Terminale"} ];
 
 	/**
 	* $scope pour les achats
@@ -35,8 +35,13 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	$scope.achats = [];
 		
 	$scope.$watch('achats', function(){
+		console.log('oui');
+		$scope.mt = 0;
 		$scope.achats.forEach(function(achat){
-			$scope.mt += achat.prix;
+			var tmp = (achat.book.prize- achat.book.prize*achat.book.etat.conditions.reducing / 100)*achat.book.qte;
+			if(tmp != null){
+				$scope.mt += tmp;
+			}
 		}) // calcul du montant total TTC, pour le moment nombre d'achats 
 	}, true)
 
@@ -62,10 +67,25 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	}
 
 	$scope.removeAchat = function(index){
-		//alert(index);
 		$scope.achats.splice(index,1);
 
 	}
+
+	$scope.updateGrades = function(){
+		$http.get($scope.urlGetGrades+'/'+$scope.choixFiliere.sector.id).success(function(response) {
+				      	$scope.classes = response;
+				      	console.log($scope.classes);
+				    });			
+	}
+
+	$scope.updateBooks = function(){
+		$http.get($scope.urlGetBooks+'/'+$scope.choixClasse.grade.id).success(function(response) {
+						$scope.livres = response;
+						console.log($scope.livres);
+				    });			
+
+	}
+
 
 	/*$scope.addLivre = function(newbook){
 		$scope.livres.push({
@@ -84,6 +104,5 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 			livre.completed = allchecked;
 		})
 	}
-	console.log($scope.etats);
-	console.log($scope.filieres);
+	
 });
