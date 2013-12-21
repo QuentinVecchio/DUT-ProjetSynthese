@@ -11,6 +11,11 @@
 																							'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
 			<div class="form-group">
+				<?php echo $this->Form->input('prize', array('placeholder' => 'Prix','input' => array('class' => 'form-control'),
+																							'label' => array('text' => 'Prix', 'class' => 'col-sm-4 control-label'), 
+																							'div' => array('class' => 'col-sm-10'))); ?>
+			</div>
+			<div class="form-group">
 				<?php echo $this->Form->input('ISBN', array('placeholder' => 'ISBN','input' => array('class' => 'form-control'),
 																							'label' => array('text' => 'ISBN', 'class' => 'col-sm-4 control-label'), 
 																							'div' => array('class' => 'col-sm-10'))); ?>

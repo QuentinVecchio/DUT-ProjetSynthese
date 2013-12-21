@@ -4,7 +4,8 @@
 		</caption>
 		<thead>
   		<tr>
-        	<th class="thNom">Nom</th>
+          <th class="thNom">Nom</th>
+        	<th class="thNom">Prix</th>
        	 	<th class="thISBN">ISBN</th>
        	 	<th class="thMatiere">Matière</th>
        	 	<th style="width : 115px">Réglages</th>
@@ -13,7 +14,8 @@
    	<tbody>
    		<?php foreach ($listLivre as $k => $v):?>
       	<tr>
-        	<td><?php echo $v['Book']['name']; ?></td>
+          <td><?php echo $v['Book']['name']; ?></td>
+        	<td><?php echo $v['Book']['prize']; ?></td>
         	<td><?php echo $v['Book']['ISBN']; ?></td>
         	<td><?php echo $v['Subject']['name'];?></td>
         	<td>

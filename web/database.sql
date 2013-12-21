@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Dim 08 Décembre 2013 à 16:43
+-- Généré le: Sam 21 Décembre 2013 à 11:22
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.4.16
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `associations` (
   `phone` varchar(255) NOT NULL,
   `mail` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Contenu de la table `associations`
@@ -54,20 +54,23 @@ INSERT INTO `associations` (`id`, `name`, `address`, `phone`, `mail`) VALUES
 CREATE TABLE IF NOT EXISTS `books` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `prize` int(11) NOT NULL,
   `ISBN` varchar(255) NOT NULL,
   `subject_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `subjet_id` (`subject_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Contenu de la table `books`
 --
 
-INSERT INTO `books` (`id`, `name`, `ISBN`, `subject_id`) VALUES
-(1, 'Mon premier livre', '2567', 7),
-(4, 'test2', 'coucou', 1),
-(5, 't', 'r', NULL);
+INSERT INTO `books` (`id`, `name`, `prize`, `ISBN`, `subject_id`) VALUES
+(1, 'Mon premier livre', 20, '2567', 7),
+(4, 'test2', 45, 'coucou', 1),
+(5, 't', 15, 'r', NULL),
+(6, 'AnglaisFacile', 20, 'AA', 3),
+(7, 'Un second livre', 55, 'AAA', 1);
 
 -- --------------------------------------------------------
 
@@ -145,7 +148,8 @@ INSERT INTO `grades` (`id`, `name`, `sector_id`) VALUES
 (6, '2nd', 1),
 (14, '2nd', 4),
 (15, '1ere', 4),
-(16, 'Terminale', 4);
+(16, 'Terminale', 4),
+(17, 'Terminale', 10);
 
 -- --------------------------------------------------------
 
@@ -189,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `sectors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Contenu de la table `sectors`
@@ -200,7 +204,8 @@ INSERT INTO `sectors` (`id`, `name`) VALUES
 (2, 'L'),
 (3, 'STL'),
 (4, 'STI'),
-(5, 'SSI');
+(5, 'SSI'),
+(10, 'TEST');
 
 -- --------------------------------------------------------
 
@@ -214,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `subjects` (
   `grade_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `grade_id` (`grade_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Contenu de la table `subjects`
@@ -259,7 +264,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 --
 -- Contenu de la table `users`
@@ -268,7 +273,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`id`, `username`, `password`, `status`) VALUES
 (1, 'root', '577ea4df223bed7d8e6ab6d099eb3cbfbc00895a', 'admin'),
 (2, 'test', 'c33238eb253815832987922eafddd535aed8dd8f', 'operateur'),
-(4, 'moi', 'be726632b300e27fb208743d1a81198ecf218f2d', 'operateur');
+(4, 'moi', 'be726632b300e27fb208743d1a81198ecf218f2d', 'operateur'),
+(15, 'coucou', '1f6af4c3844c196c11fbae3bc00829e0af8780ad', 'operateur'),
+(16, 'operateur', '9f3a070b1c3be5d726026c278211372c0424fbe6', 'operateur');
 
 --
 -- Contraintes pour les tables exportées
