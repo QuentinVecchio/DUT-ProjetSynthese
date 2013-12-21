@@ -149,4 +149,9 @@
 $this->start('script');
 	echo $this->Html->script('ventes');
 $this->end();
+
+$this->start('css');
+  echo $this->Html->css('vente_depot');
+$this->end();
+
  ?>
