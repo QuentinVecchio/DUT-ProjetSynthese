@@ -29,7 +29,7 @@
 				    	</li>
 				    	<li>
 							<?php 
-									echo $this->Html->Link(' Edition matières',array('controller' => 'subjects', 'action' => 'index', $v['Grade']['id']),
+									echo $this->Html->Link(' Voir matières',array('controller' => 'subjects', 'action' => 'index', $v['Grade']['id']),
 																	array('class' => 'glyphicon glyphicon-pencil'));
 							 ?>				    		
 				    	</li>				    	
