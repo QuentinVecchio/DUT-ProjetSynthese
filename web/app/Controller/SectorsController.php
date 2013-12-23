@@ -28,12 +28,10 @@ class SectorsController extends AppController{
 		if(!empty($this->data)){
 			$this->Sector->id = $id;
 			$this->request->data = array('Sector' => $this->request->data);	
-			$this->Sector->data = $this->request->data;
-			$this->Sector->validates();
-			/*if($this->Sector->save($this->data)){
+			if($this->Sector->save($this->data)){
 				$this->Session->setFlash('<strong>Félicitation:</strong>Vous venez de mettre à jour une filière','message', array('type' => 'success'));
 				$this->redirect(array('action' => 'index'));
-			}*/
+			}
 		}else{
 			$this->data = $this->Sector->findById($id);
 		}
