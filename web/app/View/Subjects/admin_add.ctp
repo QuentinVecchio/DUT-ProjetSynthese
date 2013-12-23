@@ -9,7 +9,7 @@
 				<?php echo $this->Form->input('name', array('placeholder' => 'Nom','input' => array('class' => 'form-control'),
 																		'name' => 'name',
 																		'ng-model' => 'Subject.Subject.name',
-																		'ng-pattern' =>'/^[a-zA-Zéèêàâùûç- ]{3,}$/',
+																		'ng-pattern' =>'/^[a-zA-Zéèêàâùûç\- ]{3,}$/',
 																		'label' => array('text' => 'Nom de la matière', 'class' => 'col-sm-4 control-label'),
 																		'div' => array('class' => 'col-sm-10'))); ?>															
 			</div>
