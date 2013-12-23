@@ -15,13 +15,5 @@ class Subject extends AppModel{
 					)
 				)
 		);
-
-
-	public function isUniqueBy($options = array(), $value) {
-		$key = array_keys($options);
-		return !$this->find('count', array('conditions' => array($this->alias.'.'.current($key) => $options[current($key)],
-															 	$this->alias.'.'.$value => $this->data[$this->alias][$value])));
-	}
-
 }
  ?>

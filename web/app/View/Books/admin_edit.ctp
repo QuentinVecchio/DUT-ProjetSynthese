@@ -6,6 +6,8 @@
 		<fieldset>
 			<legend>Edition d'un livre</legend>
 			<div class="form-group">
+				<?php echo $this->Form->input('subject_id', array('type' => 'text',
+																				'div' => array('style' => 'display:none;'))); ?>				
 				<?php echo $this->Form->input('name', array('placeholder' => 'Nom','input' => array('class' => 'form-control'),
 																							'label' => array('text' => 'Nom', 'class' => 'col-sm-4 control-label'),
 																							'div' => array('class' => 'col-sm-10'))); ?>
