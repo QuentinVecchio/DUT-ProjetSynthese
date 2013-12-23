@@ -24,10 +24,15 @@ class BooksController extends AppController{
 	*/
 	public function admin_add($idGrade){
 		if(!empty($this->data)){
+
+			$this->request->data = array('Book' => $this->request->data);	
 			$this->request->data['Book']['subject_id'] = $idGrade;
+			debug($this->data);
 			if($this->Book->save($this->data)){
 				$this->Session->setFlash('Classe ajoutée avec succès', 'message', array('type' => 'success'));
 				$this->redirect(array('controller' => 'books', 'action' => 'index', $this->data['Book']['subject_id']));
+			}else{
+				$this->request->data['Book']['prize'] = intval($this->data['Book']['prize']);
 			}
 		}
 	}
@@ -38,6 +43,7 @@ class BooksController extends AppController{
 	public function admin_edit($id){
 		if(!empty($this->data)){
 			$this->Book->id = $id;
+			$this->request->data = array('Book' => $this->request->data);				
 			if($this->Book->save($this->data)){
 				$this->Session->setFlash('Matière modifiée avec succès', 'message', array('type' => 'success'));
 				$idSubject = current($this->Book->findById($id, array('subject_id')));
@@ -48,6 +54,7 @@ class BooksController extends AppController{
 		}else{
 			$this->data = $this->Book->findById($id);
 		}
+		$this->request->data['Book']['prize'] = intval($this->data['Book']['prize']);
 	}
 
 	/**

@@ -16,8 +16,8 @@ class SubjectsController extends AppController{
 	*/
 	public function admin_add($idSubject){
 		if(!empty($this->data)){
+			$this->request->data = array('Subject' => $this->request->data);	
 			$this->request->data['Subject']['grade_id'] = $idSubject;
-
 			if($this->Subject->save($this->data)){
 				$this->Session->setFlash('Matière ajoutée avec succès', 'message', array('type' => 'success'));
 				$this->redirect(array('controller' => 'subjects', 'action' => 'index', $this->data['Subject']['grade_id']));
@@ -31,6 +31,7 @@ class SubjectsController extends AppController{
 	public function admin_edit($id){
 		if(!empty($this->data)){
 			$this->Subject->id = $id;
+			$this->request->data = array('Subject' => $this->request->data);			
 			if($this->Subject->save($this->data)){
 				$this->Session->setFlash('Matière modifiée avec succès', 'message', array('type' => 'success'));
 				$idSubject = current($this->Subject->findById($id, array('grade_id')));

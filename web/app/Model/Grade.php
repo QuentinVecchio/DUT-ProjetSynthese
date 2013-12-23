@@ -10,17 +10,10 @@ class Grade extends AppModel{
 						'message' => 'Le nom de la classe doit être unique pour une filière donnée'
 					),
 				'correct' => array(
-						'rule' => '/^[a-z]{3,}$/i',
+						'rule' => '/^[a-zA-Zéèêàâùûç]{3,}$/i',
 						'message' => 'Le nom de la classe doit uniquement contenir des lettres'
 					)
 				)
 		);
-
-
-	public function isUniqueBy($options = array(), $value) {
-		$key = array_keys($options);
-		return !$this->find('count', array('conditions' => array($this->alias.'.'.current($key) => $options[current($key)],
-															 	$this->alias.'.'.$value => $this->data[$this->alias][$value])));
-	}
 }
  ?>

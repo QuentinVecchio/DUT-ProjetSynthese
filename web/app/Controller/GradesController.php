@@ -15,6 +15,7 @@ class GradesController extends AppController{
 	*/
 	public function admin_add($idSector){
 		if(!empty($this->data)){
+			$this->request->data = array('Grade' => $this->request->data);	
 			$this->request->data['Grade']['sector_id'] = $idSector;
 
 			if($this->Grade->save($this->data)){
@@ -29,6 +30,7 @@ class GradesController extends AppController{
 	*/
 	public function admin_edit($id){
 		if(!empty($this->data)){
+			$this->request->data = array('Grade' => $this->request->data);
 			$this->Grade->id = $id;
 			if($this->Grade->save($this->data)){
 				$this->Session->setFlash('Classe modifiée avec succès', 'message', array('type' => 'success'));
