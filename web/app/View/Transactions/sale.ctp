@@ -71,10 +71,20 @@
                     </thead>
                     <tbody>
                       <tr ng-repeat="achat in achats">
-                        <td><a class="btn btn-danger animate-leave" ng-click="removeAchat($index)" title="Supprimer cet achat" href="#">Supprimer</a></td>
+                        <td>
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                              Options <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                              <li><a class="animate-leave" ng-click="removeAchat($index)" title="Supprimer cet achat" href="#">Supprimer</a></li>
+                              <li><a class="animate-leave" ng-click="duplicateAchat($index)" title="Supprimer cet achat" href="#">Dupliquer</a></li>
+                            </ul>
+                          </div>
+                        </td>
                         <td>{{achat.Subject.name}}: {{achat.book.name}}</td>
                         <td><select ng-model="achat.book.etat" ng-options="value.conditions.name for value in etats track by value.conditions.id"></select></td>
-                        <td><input type="number" min="0" ng-model="achat.book.qte" style="width:50px; height:25px;"></td>
+                        <td><input type="number" ng-init="achat.book.qte=0" min="0" ng-model="achat.book.qte" style="width:50px; height:25px;"></td>
                       </tr>
                     </tbody>
                 </table>

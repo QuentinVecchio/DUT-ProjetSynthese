@@ -86,6 +86,17 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 
 	}
 
+	$scope.duplicateAchat = function(index){
+		var original = $scope.achats[index];
+		var tmp = {
+				date : '',
+				start_time: original.start_time,
+				end_time: original.end_time,
+				remark: original.remark
+
+			};
+		$scope.achats.splice(index+1, 0, tmp);
+	}
 
 	/*$scope.addLivre = function(newbook){
 		$scope.livres.push({
