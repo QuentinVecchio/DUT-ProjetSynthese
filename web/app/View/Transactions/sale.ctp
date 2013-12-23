@@ -1,6 +1,7 @@
-<h1>Vente</h1>
+<h1>Espace vente</h1>
 <div ng-app="todo" ng-controller="CtrlLivres">
-<section id="" ng-show="clicked" ng-init="clicked=false" class="container" style="clear:both;">
+<section id="" ng-show="clicked" ng-init="clicked=false" class="container animated fadeIn" style="clear:both;">
+
         <header id="header" ng-init="etats=<?php echo htmlentities(json_encode($test)); ?>">
 
           <div ng-init="filieres=<?php echo htmlentities(json_encode($listFiliere)) ?>"></div>
@@ -47,7 +48,7 @@
 <!--=======================================================================================================================================================-->
 <!--============================================================== Section des achats =====================================================================-->
 <!--=======================================================================================================================================================-->
-      <section id="achats" class="container" ng-show="!clicked" ng-hide="clicked">
+      <section id="achats" class="container animated fadeIn" ng-show="!clicked" ng-hide="clicked">
         <header id="header">
           <h1>Les achats</h1>
         </header>
@@ -70,10 +71,10 @@
                     </thead>
                     <tbody>
                       <tr ng-repeat="achat in achats">
-                        <td><a class="btn btn-danger" ng-click="removeAchat($index)" title="Supprimer cet achat" href="#">Supprimer</a></td>
+                        <td><a class="btn btn-danger animate-leave" ng-click="removeAchat($index)" title="Supprimer cet achat" href="#">Supprimer</a></td>
                         <td>{{achat.Subject.name}}: {{achat.book.name}}</td>
                         <td><select ng-model="achat.book.etat" ng-options="value.conditions.name for value in etats track by value.conditions.id"></select></td>
-                        <td><input type="number" ng-model="achat.book.qte" style="width:50px; height:25px;"></td>
+                        <td><input type="number" min="0" ng-model="achat.book.qte" style="width:50px; height:25px;"></td>
                       </tr>
                     </tbody>
                 </table>
@@ -102,7 +103,7 @@
 <!--============================================================== Section de la facture ==================================================================-->
 <!--=======================================================================================================================================================-->
 
-      <section id="facture" class="container" ng-show="!clicked" ng-hide="clicked">
+      <section id="facture" class="container animated fadeIn" ng-show="!clicked" ng-hide="clicked">
         <header id="header">
           <h1>Aperçu facture</h1>
         </header>
@@ -145,12 +146,14 @@
     </section>
 
 </div>
+<link rel="stylesheet" href="https://daneden.me/animate/animate.css">
+<script type="text/javascript" source="http://code.angularjs.org/1.2.0/angular-animate.min.js"></script>
  <?php 
-$this->start('script');
-	echo $this->Html->script('ventes');
+$this->start('script'); // indique quel fichier js on utilise
+  echo $this->Html->script('ventes');
 $this->end();
 
-$this->start('css');
+$this->start('css'); // indique quel fichier css on utilise
   echo $this->Html->css('vente_depot');
 $this->end();
 

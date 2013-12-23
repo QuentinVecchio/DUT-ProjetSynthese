@@ -101,7 +101,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 
 	$scope.checkAllTodo = function(allchecked){
 		$scope.livres.forEach(function(livre){
-			livre.completed = allchecked;
+			livre.completed = !allchecked;
 		})
 	}
 	
