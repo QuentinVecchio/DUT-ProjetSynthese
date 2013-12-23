@@ -1,6 +1,6 @@
 <table class="table table-bordered">
 	<caption>
-			<h4>Liste des Parents</h4>br
+			<h4>Liste des Parents</h4>
 		</caption>
 		<thead>
   		<tr>
