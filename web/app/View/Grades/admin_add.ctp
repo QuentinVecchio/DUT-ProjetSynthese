@@ -8,7 +8,7 @@
 			<div class="form-group">
 				<?php echo $this->Form->input('name', array('placeholder' => 'Nom','input' => array('class' => 'form-control'),
 																		'name' => 'name',
-																		'ng-model' => 'Grade.name',
+																		'ng-model' => 'Grade.Grade.name',
 																		'ng-pattern' =>'/^[a-zA-Zéèêàâùûç]{1,}$/',
 																		'label' => array('text' => 'Nom de la classe', 'class' => 'col-sm-4 control-label'),
 																		'div' => array('class' => 'col-sm-10'))); ?>

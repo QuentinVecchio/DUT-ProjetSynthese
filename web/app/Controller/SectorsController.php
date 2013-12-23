@@ -13,9 +13,9 @@ class SectorsController extends AppController{
 	*/
 	public function admin_add(){
 		if(!empty($this->data)){
-
+			$this->request->data = array('Sector' => $this->request->data);	
 			if($this->Sector->save($this->data)){
-				$this->Session->setFlash('<strong>Félicitation:</strong>Vous venez d\'ajouter une filière','message', array('type' => 'success'));
+				$this->Session->setFlash('<strong>Félicitation: </strong>Vous venez d\'ajouter une filière','message', array('type' => 'success'));
 				$this->redirect(array('action' => 'index'));
 			}
 		}
@@ -29,7 +29,7 @@ class SectorsController extends AppController{
 			$this->Sector->id = $id;
 			$this->request->data = array('Sector' => $this->request->data);	
 			if($this->Sector->save($this->data)){
-				$this->Session->setFlash('<strong>Félicitation:</strong>Vous venez de mettre à jour une filière','message', array('type' => 'success'));
+				$this->Session->setFlash('<strong>Félicitation: </strong>Vous venez de mettre à jour une filière','message', array('type' => 'success'));
 				$this->redirect(array('action' => 'index'));
 			}
 		}else{
