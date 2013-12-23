@@ -8,12 +8,13 @@
     <ul class="nav navbar-nav">
 		<li><?php echo $this->Html->Link('Opérateurs', array('controller' => 'users', 'action' => 'index', 'admin' => true)); ?></li>
 		<li><?php echo $this->Html->Link('Filières', array('controller' => 'sectors', 'action' => 'index', 'admin' => true)); ?></li>
-		<li><?php echo $this->Html->Link('Livres', array('controller' => 'books', 'action' => 'index')); ?></li>
+    <li><?php echo $this->Html->Link('Livres', array('controller' => 'books', 'action' => 'index')); ?></li>
+		<li><?php echo $this->Html->Link('Etats', array('controller' => 'conditions', 'action' => 'index','admin' => true)); ?></li>
 		<li><?php echo $this->Html->Link('Parents', array('controller' => 'clients', 'action' => 'index', 'admin' => true)); ?></li>
 		<li><?php echo $this->Html->Link('Associations', array('controller' => 'associations', 'action' => 'index', 'admin' => true)); ?></li>
 		<li><?php echo $this->Html->Link('Factures', array('controller' => 'associations', 'action' => 'index', 'admin' => true)); ?></li>
 		<li><?php echo $this->Html->Link('Stock', array('controller' => 'associations', 'action' => 'index', 'admin' => true)); ?></li>
-    <li> <?php echo $this->Html->Link('', array('controller' => 'users', 'action' => 'choice', 'admin' => true),
+    <li><?php echo $this->Html->Link('', array('controller' => 'users', 'action' => 'choice', 'admin' => true),
                                           array('class' => 'glyphicon glyphicon-user')) ?></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
