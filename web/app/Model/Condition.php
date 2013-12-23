@@ -9,7 +9,7 @@ class Condition extends AppModel{
 						'message' => 'Le nom de l\état doit être unique'
 					),
 				'correct' => array(
-						'rule' => '/^[a-z]{3,}$/i',
+						'rule' => '/^[a-zA-Zéèêàâùûç]{3,}$/i',
 						'message' => 'Le nom du livre doit uniquement contenir des lettres'
 					)
 				),

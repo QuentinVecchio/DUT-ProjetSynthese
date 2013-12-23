@@ -10,7 +10,7 @@ class Grade extends AppModel{
 						'message' => 'Le nom de la classe doit être unique pour une filière donnée'
 					),
 				'correct' => array(
-						'rule' => '/^[a-z]{3,}$/i',
+						'rule' => '/^[a-zA-Zéèêàâùûç]{3,}$/i',
 						'message' => 'Le nom de la classe doit uniquement contenir des lettres'
 					)
 				)
