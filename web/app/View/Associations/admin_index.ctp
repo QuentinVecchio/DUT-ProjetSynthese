@@ -16,8 +16,8 @@
 
       	<tr>
         	<td><?php echo $v['Association']['name']; ?></td>
-        	<td><?php echo $v['Association']['address']; ?></td>
-        	<td><?php echo $v['Association']['mail']; ?></td>
+        	<td><?php echo $v['Association']['houseNumber'].' '.$v['Association']['street'].' '.$v['Town']['zip_code'].' '.$v['Town']['name']; ?></td>
+        	<td><?php echo $v['Association']['email']; ?></td>
         	<td><?php echo $v['Association']['phone']; ?></td>
         	<td>
         		<div class="btn-group">
