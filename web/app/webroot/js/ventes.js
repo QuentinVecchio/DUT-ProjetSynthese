@@ -88,12 +88,11 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 
 	$scope.duplicateAchat = function(index){
 		var original = $scope.achats[index];
+		//alert('Valeur originale = '+original.Subject.name+original.book.name+original.book.qte+original.book.prize);
 		var tmp = {
-				date : '',
-				start_time: original.start_time,
-				end_time: original.end_time,
-				remark: original.remark
-
+			book: { id: original.book.id+1, name: original.book.name, prize: original.book.prize, etat: { condition:{id:'', name: "", reducing:''}}, qte: original.book.qte},
+			Subject: {name: original.Subject.name},
+			completed : true
 			};
 		$scope.achats.splice(index+1, 0, tmp);
 	}

@@ -81,9 +81,9 @@
                               <li><a class="animate-leave" ng-click="duplicateAchat($index)" title="Supprimer cet achat" href="#">Dupliquer</a></li>
                             </ul>
                           </div>
-                        </td>
+                        </td><!--achat.etat = etats[0]-->
                         <td>{{achat.Subject.name}}: {{achat.book.name}}</td>
-                        <td><select ng-model="achat.book.etat" ng-options="value.conditions.name for value in etats track by value.conditions.id"></select></td>
+                        <td><select ng-model="achat.book.etat" ng-init="achat.book.etat = etats[0]" ng-options="value.conditions.name for value in etats track by value.conditions.id"></select></td>
                         <td><input type="number" ng-init="achat.book.qte=0" min="0" ng-model="achat.book.qte" style="width:50px; height:25px;"></td>
                       </tr>
                     </tbody>
@@ -158,6 +158,7 @@
 </div>
 <link rel="stylesheet" href="https://daneden.me/animate/animate.css">
 <script type="text/javascript" source="http://code.angularjs.org/1.2.0/angular-animate.min.js"></script>
+<script type="text/javascript" source="http://code.angularjs.org/1.2.5/MINERR_ASSET"></script>
  <?php 
 $this->start('script'); // indique quel fichier js on utilise
   echo $this->Html->script('ventes');
