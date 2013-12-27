@@ -1,4 +1,4 @@
-  <div class="formulaire row" style="width : 700px; margin:auto;" ng-app>
+  <div class="formulaire row" style="width : 700px; margin:auto;" ng-app="app">
 	<div class="span4 offset6" ng-controller="Controller">
 		<?php
 			echo $this->Form->create('User', array('class' => 'form-horizontal', 'role' => 'form','name' => 'form'));
@@ -30,15 +30,22 @@
 			<div class="form-group">
 				<?php echo $this->Form->input('password', array('input' => array('class' => 'form-control'),
 																	'name' => 'password',
+																	'ng-model' => 'password',
 																	'label' => array('text' => 'Nouveau mot de passe ', 'class' => 'col-sm-5 control-label'), 
 																	'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
 			<div class="form-group">
 				<?php echo $this->Form->input('password2', array('type' => 'password', 'input' => array('class' => 'form-control'),
 																'name' => 'password2',
+																'ng-model' => 'password2',
+																'match' => 'password',
 																'label' => array('text' => 'Confirmation ', 'class' => 'col-sm-5 control-label'), 
 																'div' => array('class' => 'col-sm-10'))); ?>
 			</div>						
+	      <div ng-show="form.password2.$error.mismatch" class="col-sm-10">
+	            <div>Les mots de passes ne correspondent pas !</div>
+          </div>
+
 			<div class="form-group">
 				<?php echo $this->Form->radio('status', array('operateur' => 'operateur', 'admin' => 'administrateur'),
 														 array('legend' => false, 'value' => $typeUtil, 'name' => 'status'));?>
@@ -49,7 +56,7 @@
 					}
 			 ?>
 
-			<?php echo $this->Form->button('Ajouter', array('class' => 'btn btn-large btn-block btn-success',
+			<?php echo $this->Form->button('Valider', array('class' => 'btn btn-large btn-block btn-success',
 															'style' => 'border-radius: 0px;','ng-disabled' => 'form.$invalid')); ?>
 		</fieldset>
 		<?php

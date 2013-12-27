@@ -1,4 +1,4 @@
-<div class="formulaire row" style="width : 700px; margin:auto;" ng-app>
+<div class="formulaire row" style="width : 700px; margin:auto;" ng-app="app">
 	<div class="span4 offset6" ng-controller="Controller">
 		<?php
 			echo $this->Form->create('Sector', array('class' => 'form-horizontal', 'role' => 'form', 'name' => 'form'));
