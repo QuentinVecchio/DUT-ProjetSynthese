@@ -9,6 +9,9 @@ class TransactionsController extends AppController {
 
 			$this->loadModel('conditions');
 			$this->set('test',$this->conditions->find('all'));
+			if(!empty($this->data)){
+				debug($this->data);
+			}
 	}
 
 	public function getLivre($filiere = null, $classe = null){
