@@ -17,7 +17,7 @@
 	        	<div ng-show="form.name.$error.required">Saisir un nom de filière</div>
 	        	<div ng-show="form.name.$error.pattern">Caractères incorrectes.</div>
 	        </div>					
-			<?php echo $this->Form->button('Ajouter', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;',
+			<?php echo $this->Form->button('Valider', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;',
 															'ng-disabled' => 'form.$invalid')); ?>
 		</fieldset>
 		<?php

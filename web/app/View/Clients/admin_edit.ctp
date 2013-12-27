@@ -29,7 +29,7 @@
 				<?php echo $this->Form->label('association_id', 'Association :', array('class' => 'col-sm-4 control-label', 'style' => 'margin-left : -35px;')); ?>
 				<?php echo $this->Form->select('association_id', $listAssoc, array('class' => 'form-control', 'style' => 'width : 200px; margin-left: 320px;')); ?>
 			</div>
-			<?php echo $this->Form->button('Ajouter', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;')); ?>
+			<?php echo $this->Form->button('Valider', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;')); ?>
 		</fieldset>
 		<?php
 			echo $this->Form->end();

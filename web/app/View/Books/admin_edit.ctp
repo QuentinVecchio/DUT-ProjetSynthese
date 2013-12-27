@@ -41,7 +41,7 @@
 																					'label' => array('text' => 'ISBN', 'class' => 'col-sm-4 control-label'), 
 																					'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
-			<?php echo $this->Form->button('Edition', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;',
+			<?php echo $this->Form->button('Valider', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;',
 																		'ng-disabled' => 'form.$invalid')); ?>
 		</fieldset>
 		<?php

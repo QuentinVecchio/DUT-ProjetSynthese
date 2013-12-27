@@ -87,7 +87,7 @@
 	        </div>
 
 
-			<?php echo $this->Form->button('Editer', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;','ng-disabled' => 'form.$invalid')); ?>
+			<?php echo $this->Form->button('Valider', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;','ng-disabled' => 'form.$invalid')); ?>
 		</fieldset>
 		<?php
 			echo $this->Form->end();
