@@ -27,12 +27,26 @@
 																	'input' => array('class' => 'form-control'),
 																	'label' => array('text' => 'Mot de passe ', 'class' => 'col-sm-4 control-label'), 
 																	'div' => array('class' => 'col-sm-10'))); ?>
-			<div ng-show="form.password.$dirty && form.password.$invalid" class="col-sm-10">
-		        <div ng-show="form.password.$error.required">Saisir un mot de passe.</div>
-		        <div ng-show="form.password.$error.minlength">Trop petit (5 caractères)</div>
-	        </div>
-
+				<div ng-show="form.password.$dirty && form.password.$invalid" class="col-sm-10">
+			        <div ng-show="form.password.$error.required">Saisir un mot de passe.</div>
+			        <div ng-show="form.password.$error.minlength">Trop petit (5 caractères)</div>
+		        </div>
 			</div>
+
+			<div class="form-group">
+				<?php echo $this->Form->input('password2', array('type' => 'password', 'input' => array('class' => 'form-control'),
+																'name' => 'password2',
+																'ng-model' => 'User.password2',
+																'placeholder' => 'Confirmation',
+																'match' => 'User.password',
+																'label' => array('text' => 'Confirmation ', 'class' => 'col-sm-4 control-label'), 
+																'div' => array('class' => 'col-sm-10'))); ?>
+			    <div ng-show="form.password2.$error.mismatch" class="col-sm-10">
+			        <div>Les mots de passes ne correspondent pas !</div>
+		        </div>
+			</div>						
+
+
 			<div class="form-group">
 				<?php echo $this->Form->radio('status', array('operateur' => 'operateur', 'admin' => 'administrateur'),
 														array('legend' => false, 'value' => 'operateur', 'name' => 'status'));?>

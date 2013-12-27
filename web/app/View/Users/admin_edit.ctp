@@ -24,6 +24,7 @@
 				<?php echo $this->Form->input('passwordOld', array('type' => 'password', 'input' => array('class' => 'form-control'),
 																	'name' => 'passwordOld',
 																	'ng-model' => 'passwordOld',
+																	'placeholder' => 'Ancien mot de passe',
 																	'label' => array('text' => 'Ancien mot de passe ', 'class' => 'col-sm-5 control-label'),
 																	'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
@@ -31,6 +32,7 @@
 				<?php echo $this->Form->input('password', array('input' => array('class' => 'form-control'),
 																	'name' => 'password',
 																	'ng-model' => 'password',
+																	'placeholder' => 'Nouveau mot de passe',
 																	'label' => array('text' => 'Nouveau mot de passe ', 'class' => 'col-sm-5 control-label'), 
 																	'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
@@ -38,6 +40,7 @@
 				<?php echo $this->Form->input('password2', array('type' => 'password', 'input' => array('class' => 'form-control'),
 																'name' => 'password2',
 																'ng-model' => 'password2',
+																'placeholder' => 'Confirmation',
 																'match' => 'password',
 																'label' => array('text' => 'Confirmation ', 'class' => 'col-sm-5 control-label'), 
 																'div' => array('class' => 'col-sm-10'))); ?>
