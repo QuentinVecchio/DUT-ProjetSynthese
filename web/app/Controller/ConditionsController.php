@@ -13,12 +13,15 @@ class ConditionsController extends AppController{
 	*/
 	public function admin_add(){
 		if(!empty($this->data)){
-
+			$this->request->data = array('Condition' =>$this->data);
 			if($this->Condition->save($this->data)){
 				$this->Session->setFlash('<strong>Félicitation:</strong>Vous venez d\'ajouter un état','message', array('type' => 'success'));
 				$this->redirect(array('action' => 'index'));
+			}else{
+				$this->request->data['Condition']['reducing'] = (int)$this->request->data['Condition']['reducing'];		
 			}
 		}
+
 	}
 
 	/**
@@ -26,6 +29,7 @@ class ConditionsController extends AppController{
 	*/
 	public function admin_edit($id){
 		if(!empty($this->data)){
+			$this->request->data = array('Condition' =>$this->data);			
 			$this->Condition->id = $id;
 			if($this->Condition->save($this->data)){
 				$this->Session->setFlash('<strong>Félicitation:</strong>Vous venez de mettre à jour un état','message', array('type' => 'success'));
@@ -34,6 +38,8 @@ class ConditionsController extends AppController{
 		}else{
 			$this->data = $this->Condition->findById($id);
 		}
+		
+		$this->request->data['Condition']['reducing'] = (int)$this->request->data['Condition']['reducing'];
 	}
 
 
