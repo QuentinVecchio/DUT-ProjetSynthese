@@ -5,7 +5,7 @@
 		?>
 		<fieldset ng-init="urlTown='<?php echo $this->Html->url(array('controller' => 'towns', 'action' => 'getTown')) ?>'">
 			<legend ng-init="Associations=<?php if(isset($this->data))echo htmlspecialchars(json_encode($this->data));?>">Ajout d'une association</legend>
-			<div class="form-group" >
+			<div class="form-group">
 				<?php echo $this->Form->input('name', array('placeholder' => 'Nom','input' => array('class' => 'form-control'),
 																'name' =>'name',
 																'ng-minLength' =>2, 'ng-maxLength' =>15,
@@ -14,11 +14,11 @@
 																'label' => array('text' => 'Nom', 'class' => 'col-sm-4 control-label'),
 																'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
-			<div ng-show="form.name.$dirty && form.name.$invalid" class="col-sm-10">
-	          <div ng-show="form.name.$error.required">Saisir votre nom.</div>
-	          <div ng-show="form.name.$error.minlength">Nom trop petit.</div>
-	          <div ng-show="form.name.$error.maxlength">Nom trop long.</div>
-	          <div ng-show="form.name.$error.pattern">Caractere incorrecte.</div>
+			<div ng-show="form.name.$dirty && form.name.$invalid" style="display: inline-block; vertical-align : top;">
+	          <div class="erreurForm" ng-show="form.name.$error.required">Saisir votre nom.</div>
+	          <div class="erreurForm" ng-show="form.name.$error.minlength">Nom trop petit.</div>
+	          <div class="erreurForm" ng-show="form.name.$error.maxlength">Nom trop long.</div>
+	          <div class="erreurForm" ng-show="form.name.$error.pattern">Caractere incorrecte.</div>
 	        </div>
 
 

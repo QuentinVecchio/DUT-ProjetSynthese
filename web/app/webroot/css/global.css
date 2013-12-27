@@ -51,6 +51,14 @@ th,td
 {
 	width: 200px;
 }
+.erreurForm
+{
+	color: rgba(216,0,0,0.75);
+	text-align: center;
+	width: 180px;
+	border-bottom: 1px solid #C0C0C0;
+	margin-bottom: 10px;
+}
 .labelForm
 {
 	color : red;

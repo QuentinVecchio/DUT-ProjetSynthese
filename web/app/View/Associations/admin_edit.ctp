@@ -1,3 +1,6 @@
+<script>
+	traitementCodePostal();
+</script>
 <div class="formulaire row" style="width : 700px; margin:auto;" ng-app="app">
 	<div class="span4 offset6" ng-controller="Controller">
 		<?php
@@ -14,7 +17,7 @@
 																'label' => array('text' => 'Nom', 'class' => 'col-sm-4 control-label'),
 																'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
-			<div ng-show="form.name.$dirty && form.name.$invalid" class="col-sm-10">
+			<div ng-show="form.name.$dirty && form.name.$invalid" class="col-sm-12">
 	          <div ng-show="form.name.$error.required">Saisir votre nom.</div>
 	          <div ng-show="form.name.$error.minlength">Nom trop petit.</div>
 	          <div ng-show="form.name.$error.maxlength">Nom trop long.</div>

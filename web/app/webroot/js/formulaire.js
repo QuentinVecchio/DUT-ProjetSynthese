@@ -34,6 +34,17 @@ app.controller('Controller', function($scope, filterFilter, $http, $location){
   {
     if($scope.Associations.Association.zip_code.length == 5)//Si c'est un code postal alors on fais de l'ajax
     {
+      traitementCodePostal();
+    }
+    else
+    {
+      $scope.existePas = true;
+      $scope.existe = false;
+    }
+  };
+
+  function traitementCodePostal()
+  {
       $http.get($scope.urlTown+'/' + $scope.Associations.Association.zip_code).success(function(data)
       {
         $scope.villes = data;
@@ -47,13 +58,7 @@ app.controller('Controller', function($scope, filterFilter, $http, $location){
           $scope.existe = true;
           $scope.existePas = false;
         }
-      });
-    }
-    else
-    {
-      $scope.existePas = true;
-      $scope.existe = false;
-    }
+      })
   }
 
 });
