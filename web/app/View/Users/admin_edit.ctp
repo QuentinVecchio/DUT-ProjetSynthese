@@ -25,6 +25,7 @@
 																	'name' => 'passwordOld',
 																	'ng-model' => 'passwordOld',
 																	'placeholder' => 'Ancien mot de passe',
+																	'required' => true,
 																	'label' => array('text' => 'Ancien mot de passe ', 'class' => 'col-sm-5 control-label'),
 																	'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
@@ -33,6 +34,7 @@
 																	'name' => 'password',
 																	'ng-model' => 'password',
 																	'placeholder' => 'Nouveau mot de passe',
+																	'required' => true,
 																	'label' => array('text' => 'Nouveau mot de passe ', 'class' => 'col-sm-5 control-label'), 
 																	'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
@@ -41,6 +43,7 @@
 																'name' => 'password2',
 																'ng-model' => 'password2',
 																'placeholder' => 'Confirmation',
+																'required' => true,
 																'match' => 'password',
 																'label' => array('text' => 'Confirmation ', 'class' => 'col-sm-5 control-label'), 
 																'div' => array('class' => 'col-sm-10'))); ?>
@@ -60,7 +63,8 @@
 			 ?>
 
 			<?php echo $this->Form->button('Valider', array('class' => 'btn btn-large btn-block btn-success',
-															'style' => 'border-radius: 0px;','ng-disabled' => 'form.$invalid')); ?>
+															'style' => 'border-radius: 0px;','ng-disabled' => '(password||passwordOld||password2)&&(form.$invalid)', 'onClick' =>'(passwordOld.required=false)||(password.required=false)||(password2.required=false)')); ?>
+
 		</fieldset>
 		<?php
 			echo $this->Form->end();
