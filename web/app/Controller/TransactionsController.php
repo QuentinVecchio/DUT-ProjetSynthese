@@ -35,7 +35,7 @@ class TransactionsController extends AppController {
 
 	public function init(){
 		$this->set('step_for_progress_bar', 1);
-		$this->set('pred_for_progress_bar', array('controller' => 'transactions', 'action' => 'init'));
+		$this->set('pred_for_progress_bar', '#');
 
 
 
@@ -61,7 +61,6 @@ class TransactionsController extends AppController {
 				}
 			}
 		}
-		//$this->Session->delete('Transaction');
 	}
 
 

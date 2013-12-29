@@ -48,7 +48,7 @@
 
 
 <?php 
-	echo $this->Html->Link('Ajouter', array('controller' => 'clients', 'action' => 'add'), array('class' => 'btn btn-primary'));
+	echo $this->Html->Link('Ajouter', array('controller' => 'clients', 'action' => 'add', 'admin' => false), array('class' => 'btn btn-primary'));
  ?>
 
 
