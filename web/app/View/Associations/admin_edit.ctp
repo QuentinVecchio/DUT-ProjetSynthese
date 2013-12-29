@@ -1,6 +1,3 @@
-<script>
-	traitementCodePostal();
-</script>
 <div class="formulaire row" style="width : 700px; margin:auto;" ng-app="app">
 	<div class="span4 offset6" ng-controller="Controller">
 		<?php
@@ -14,6 +11,7 @@
 																'ng-minLength' =>2, 'ng-maxLength' =>15,
 																'ng-pattern' =>' /^[a-zA-Z\. ]{1,}$/',
 																'ng-model' => 'Associations.Association.name',
+																'autocomplete' => 'off',
 																'label' => array('text' => 'Nom', 'class' => 'col-sm-4 control-label'),
 																'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
@@ -31,6 +29,7 @@
 																'name' =>'houseNumber',
 																'ng-model' => 'Associations.Association.houseNumber',
 																'ng-pattern' => '/^[0-9]{1,3}$|^[0-9]{1,3} bis|ter$/',
+																'autocomplete' => 'off',
 																'label' => array('text' => 'N° rue:', 'class' => 'col-sm-4 control-label'), 
 																'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
@@ -44,22 +43,23 @@
 				<?php echo $this->Form->input('street', array('placeholder' => 'Rue','input' => array('class' => 'form-control'),
 																'name' =>'street',
 																'ng-model' => 'Associations.Association.street',
+																'autocomplete' => 'off',
 																'label' => array('text' => 'Rue:', 'class' => 'col-sm-4 control-label'), 
 																'div' => array('class' => 'col-sm-10'))); ?>
 			</div>			
 			<div class="form-group">
-				<?php echo $this->Form->input('zip_code', array('ng-model' => 'Associations.Association.zip_code',
+				<?php echo $this->Form->input('zip_code', array('ng-model' => 'Associations.Town.zip_code',
 																'placeholder' => 'Code postal',
 																'name' => 'zip_code',
 																'ng-change' => 'traitement()',
+																'autocomplete' => 'off',
 																'label' => array('text' => 'Code postal:', 'class' => 'col-sm-4 control-label'), 
 																'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
-
 			<div class="form-group" ng-show="existe">
 				<div class="col-sm-10">
 					<label for="ville"  class="col-sm-4 control-label">Ville</label>
-					<select class="form-control" style="width:164px; margin-left:304px;" ng-model="Associations.Association.town_id" name="town_id" ng-options="value.Town.name for value in villes track by value.Town.id" required></select>
+					<select class="form-control" style="width:164px; margin-left:304px;" ng-model="Associations.Association.town_id" ng-init="initTown()" name="town_id" ng-options="value.Town.name for value in villes track by value.Town.id" ng-change="updateZipCode()" required></select>
 				</div>
 			</div>
 			<span class="col-sm-10" ng-show="existePas">Aucune ville trouvée</span>
@@ -68,6 +68,7 @@
 				<?php echo $this->Form->input('phone', array('placeholder' => 'Téléphone','input' => array('class' => 'form-control'),
 																'name' => 'phone',
 																'ng-model' => 'Associations.Association.phone',
+																'autocomplete' => 'off',
 																'ng-pattern' => '/^0[1-9][0-9]{8}$|^[+]33[1-9][0-9]{8}$|^[+]352[0-9]{6,}$|^00352[0-9]{6,}$/',
 																'label' => array('text' => 'Numéro de Téléphone', 'class' => 'col-sm-4 control-label'), 
 																'div' => array('class' => 'col-sm-10'))); ?>
@@ -80,7 +81,8 @@
 			<div class="form-group">
 				<?php echo $this->Form->input('email', array('placeholder' => 'Adresse mail','input' => array('class' => 'form-control'),
 																'name' => 'email',
-																'ng-model' => 'Associations.Association.email',					
+																'ng-model' => 'Associations.Association.email',	
+																'autocomplete' => 'off',				
 																'label' => array('text' => 'Adresse Mail', 'class' => 'col-sm-4 control-label'), 
 																'div' => array('class' => 'col-sm-10'))); ?>
 			</div>

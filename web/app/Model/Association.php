@@ -24,7 +24,7 @@ class Association extends AppModel{
 				'required' => true,
 				'message' => 'Veuillez renseigner une adresse mail!'),	
 			'phone' => array(
-				'rule' => 'mail',
+				'rule' => '/^0[1-9][0-9]{8}$|^[+]33[1-9][0-9]{8}$|^[+]352[0-9]{6,}$|^00352[0-9]{6,}$/',
 				'required' => true,
 				'message' => 'Veuillez renseigner un numéro de téléphone!'),	
 		);

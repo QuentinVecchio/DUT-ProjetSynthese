@@ -14,6 +14,7 @@ app.directive('match', function($parse) {
 });
 
 app.controller('Controller', function($scope, filterFilter, $http, $location){
+
   $scope.master = {};
  
   $scope.update = function(user) {
@@ -32,9 +33,10 @@ app.controller('Controller', function($scope, filterFilter, $http, $location){
  // $scope.villes = [];
   $scope.traitement = function()
   {
-    if($scope.Associations.Association.zip_code.length == 5)//Si c'est un code postal alors on fais de l'ajax
+    if($scope.Associations.Town.zip_code.length <= 5 &&
+        $scope.Associations.Town.zip_code.length > 2)//Si c'est un code postal alors on fais de l'ajax
     {
-      traitementCodePostal();
+      $scope.traitementCodePostal();
     }
     else
     {
@@ -43,11 +45,12 @@ app.controller('Controller', function($scope, filterFilter, $http, $location){
     }
   };
 
-  function traitementCodePostal()
+  $scope.traitementCodePostal = function()
   {
-      $http.get($scope.urlTown+'/' + $scope.Associations.Association.zip_code).success(function(data)
+      $http.get($scope.urlTown+'/' + $scope.Associations.Town.zip_code).success(function(data)
       {
         $scope.villes = data;
+
         if($scope.villes.length == 0)
         {
           $scope.existePas = true;
@@ -59,7 +62,19 @@ app.controller('Controller', function($scope, filterFilter, $http, $location){
           $scope.existePas = false;
         }
       })
+  };
+
+  $scope.initTown = function(){
+    $scope.Associations.Association.town_id = {Town: $scope.Associations.Town};
   }
+
+  $scope.updateZipCode = function(){
+    $scope.Associations.Town.zip_code = $scope.Associations.Association.town_id.Town.zip_code;
+  }
+
+angular.element(document).ready(function () {
+   $scope.traitement();
+});
 
 });
 
