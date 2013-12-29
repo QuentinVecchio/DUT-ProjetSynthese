@@ -6,7 +6,7 @@
   		<tr>
         	<th class="thNom">Nom</th>
        	 	<th class="thAdresse">Adresse</th>
-       	 	<th class="thMail">Adresse mail</th>
+       	 	<th class="thMail">Email</th>
        	 	<th class="thTelephone">Téléphone</th>
        	 	<th class="thAssoc">Association</th>
        	 	<th style="width : 115px">Réglages</th>
@@ -16,9 +16,10 @@
 <?php 
 	foreach ($listParent as $k =>$v): ?>
 	          	<tr>
-	            	<td><?php echo $v['Client']['name']; ?></td>
-	            	<td><?php echo $v['Client']['address']; ?></td>
-	            	<td><?php echo $v['Client']['mail']; ?></td>
+	            	<td><?php echo $v['Client']['name'].' '.$v['Client']['lastname']; ?></td>
+	            	<td><?php echo $v['Client']['houseNumber'].' '.$v['Client']['street']; 
+	            			  echo (isset($v['Town']) && !empty($v['Town']))?' '.$v['Town']['name'].' '.$v['Town']['zip_code']:''; ?></td>
+	            	<td><?php echo $v['Client']['email']; ?></td>
 	            	<td><?php echo $v['Client']['phone']; ?></td>
 	            	<td><?php echo $v['Association']['name']; ?></td>
 	            	<td>
