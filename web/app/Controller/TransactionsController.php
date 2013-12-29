@@ -50,7 +50,7 @@ class TransactionsController extends AppController {
 		$this->set('pred_for_progress_bar', array('controller' => 'transactions', 'action' => 'init'));		
 		$this->set('suiv_for_progress_bar', '#');		
 		
-		if(!$this->Session->check('Transaction')){
+		if(!$this->Session->check('Transaction.Client')){
 			$this->redirect(array('controller' => 'transactions', 'action' => 'init'));
 		}
 
