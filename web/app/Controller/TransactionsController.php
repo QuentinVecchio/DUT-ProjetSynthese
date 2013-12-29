@@ -36,6 +36,7 @@ class TransactionsController extends AppController {
 	public function init(){
 		$this->set('step_for_progress_bar', 1);
 		$this->set('pred_for_progress_bar', '#');
+		$this->set('suiv_for_progress_bar', array('controller' => 'transactions', 'action' => 'depot'));
 
 
 
@@ -44,15 +45,16 @@ class TransactionsController extends AppController {
 		}
 	}
 
-	public function depot($clientID){
+	public function depot($clientID = null){
 		$this->set('step_for_progress_bar', 2);
 		$this->set('pred_for_progress_bar', array('controller' => 'transactions', 'action' => 'init'));		
+		$this->set('suiv_for_progress_bar', '#');		
 		
 		if(!$this->Session->check('Transaction')){
 			$this->redirect(array('controller' => 'transactions', 'action' => 'init'));
 		}
 
-		if(is_numeric($clientID)){
+		if(isset($clientID) && is_numeric($clientID)){
 			if(!$this->Session->check('Transaction.Client')){
 				$client = current(current($this->Transaction->Client->find('all', array('conditions' => array('id' => $clientID)
 																		,'recursive' => -1))));
