@@ -40,5 +40,23 @@ class TransactionsController extends AppController {
 		}
 	}
 
+	public function depot($clientID){
+		$this->set('step_for_progress_bar', 2);
+		if(!$this->Session->check('Transaction')){
+			$this->redirect(array('controller' => 'transactions', 'action' => 'init'));
+		}
+
+		if(is_numeric($clientID)){
+			if(!$this->Session->check('Transaction.Client')){
+				$client = current(current($this->Transaction->Client->find('all', array('conditions' => array('id' => $clientID)
+																		,'recursive' => -1))));
+				if($client){
+					$this->Session->write('Transaction.Client', $client);
+				}
+			}
+		}
+		//$this->Session->delete('Transaction');
+	}
+
 }
 ?>
