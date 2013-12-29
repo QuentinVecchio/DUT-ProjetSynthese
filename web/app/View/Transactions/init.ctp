@@ -7,11 +7,14 @@
 	<div ng-init="urlSearch='<?php echo $this->Html->Url(array('controller' => 'clients', 'action' => 'getClient')); ?>';
 				  urlStep2='<?php echo $this->Html->Url(array('controller' => 'transactions', 'action' => 'depot')) ?>'">
 		<label for="searchParent">Rechercher le parent:</label>
-		<input type="text" name="search" ng-model="search" ng-change="refresh()">
+		<input type="text" name="searchParent" id="searchParent" ng-model="search" ng-change="refresh()">
 	</div>
+		<div><?php echo $this->Html->Link('Créer le parent', array('controller' => 'clients', 'action' => 'add'),
+															 array('class' => 'btn btn-primary')) ?>
+		</div>
 	<table ng-show="match" class="table table-bordered">
 		<caption>
-				<h4>Résultat de la recherche:</h4><br>
+				<h5>Résultat de la recherche:</h5><br>
 		</caption>
 		<thead>
   		<tr>
@@ -29,7 +32,7 @@
 	        </tr>
 	    </tbody>
 	</table>
-	<div ng-show="!match"><p>Parent non trouvé</p></div>
+	<div ng-show="!match && search.length >1"><p>Parent non trouvé</p></div>
 </section>
  <?php 
 $this->start('script');
