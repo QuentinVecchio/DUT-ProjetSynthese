@@ -1,4 +1,7 @@
 <?php $this->extend('corps_transaction') ?>
+
+<?php if(!$this->Session->check('Transaction.Client')): ?>
+
 <section ng-app="app" ng-controller="Controller">
 	<h1>Choix du parent:</h1>
 	<div ng-init="urlSearch='<?php echo $this->Html->Url(array('controller' => 'clients', 'action' => 'getClient')); ?>';
@@ -34,3 +37,9 @@ $this->start('script');
 $this->end();
 
  ?>
+
+ <?php else: ?>
+	<h1>Le parent est déjà séléctionné</h1>
+	<h2>Le parent: <?php echo $this->Session->read('Transaction.Client.name').' '.$this->Session->read('Transaction.Client.lastname'); ?></h2>
+	<?php echo $this->Html->link('Désélectionner ?', array('controller' => 'transactions', 'action' => 'refresh'), array('confirm' => 'Etes-vous sûr?', 'class' => 'btn btn-danger')) ?>
+ <?php endif; ?>

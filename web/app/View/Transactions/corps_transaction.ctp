@@ -19,7 +19,7 @@
 			</li>
 		</ul>
 		<div id="btnGroup">
-			<a id="btnPred" class="btn btn-primary " href="#"><span class="glyphicon glyphicon-chevron-left"></span> Pred</a>
+			<a id="btnPred" class="btn btn-primary " href="<?php echo $this->Html->url($pred_for_progress_bar); ?>"><span class="glyphicon glyphicon-chevron-left"></span> Pred</a>
 			<a id="btnSuiv" class="btn btn-primary" href="#">Suiv <span class="glyphicon glyphicon-chevron-right"></a>
 		</div>
 	</div>

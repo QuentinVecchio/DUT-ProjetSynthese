@@ -35,6 +35,10 @@ class TransactionsController extends AppController {
 
 	public function init(){
 		$this->set('step_for_progress_bar', 1);
+		$this->set('pred_for_progress_bar', array('controller' => 'transactions', 'action' => 'init'));
+
+
+
 		if(!$this->Session->check('Transaction.date')){
 			$this->Session->write('Transaction.date', time());
 		}
@@ -42,6 +46,8 @@ class TransactionsController extends AppController {
 
 	public function depot($clientID){
 		$this->set('step_for_progress_bar', 2);
+		$this->set('pred_for_progress_bar', array('controller' => 'transactions', 'action' => 'init'));		
+		
 		if(!$this->Session->check('Transaction')){
 			$this->redirect(array('controller' => 'transactions', 'action' => 'init'));
 		}
@@ -56,6 +62,12 @@ class TransactionsController extends AppController {
 			}
 		}
 		//$this->Session->delete('Transaction');
+	}
+
+
+	public function refresh(){
+		$this->Session->delete('Transaction');
+		$this->redirect(array('controller' => 'transactions', 'action' => 'init'));
 	}
 
 }
