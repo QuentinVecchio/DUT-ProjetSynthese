@@ -20,6 +20,10 @@ class AssociationsController extends AppController{
 				$this->Session->setFlash('<strong>Félicitation:</strong> Vous venez d\'ajouter une association !','message', array('type' => 'success'));
 				$this->redirect(array('action' => 'index'));
 			}
+			if(isset($this->data['Association']['town_id'])){
+				$this->request->data['Town'] = current($this->Association->Town->findById($this->data['Association']['town_id']));
+			}
+
 		}
 	}
 

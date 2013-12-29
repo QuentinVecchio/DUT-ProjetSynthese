@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Mar 24 Décembre 2013 à 17:30
+-- Généré le: Dim 29 Décembre 2013 à 13:07
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.4.16
 
@@ -38,16 +38,15 @@ CREATE TABLE IF NOT EXISTS `associations` (
   `email` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `town_id` (`town_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Contenu de la table `associations`
 --
 
 INSERT INTO `associations` (`id`, `name`, `houseNumber`, `street`, `town_id`, `phone`, `email`) VALUES
-(1, 'P.E.E.P', '', '89/91 Boulevard Berthier 75017 Paris', 1, '0606060606', 'peep@peep.fr'),
-(2, 'F.C.P.E', '', '108-110 avenue Ledru-Rollin 75544 Paris cedex 11', 1, '01.43.57.16.16', 'fcpe@fcpe.fr'),
-(4, 'test', '16', 'rue des vergers', 22176, '0303', 'matthieu.clin@wanadoo.fr');
+(1, 'P.E.E.P', '89', 'Boulevard Berthier', 22136, '0606060606', 'peep@peep.fr'),
+(2, 'F.C.P.E', '108', 'avenue Ledru-Rollin', 22016, '0143571616', 'fcpe@fcpe.fr');
 
 -- --------------------------------------------------------
 
@@ -90,23 +89,25 @@ INSERT INTO `books` (`id`, `name`, `prize`, `ISBN`, `subject_id`) VALUES
 CREATE TABLE IF NOT EXISTS `clients` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `mail` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
+  `houseNumber` varchar(10) NOT NULL,
+  `street` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
+  `town_id` int(11) DEFAULT NULL,
   `association_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `association_id` (`association_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+  KEY `association_id` (`association_id`),
+  KEY `town_id` (`town_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Contenu de la table `clients`
 --
 
-INSERT INTO `clients` (`id`, `name`, `address`, `mail`, `phone`, `association_id`) VALUES
-(1, 'clin', 'cahahah', 'kljsljkl', 'jljkljlk', 2),
-(2, 'vecchio', 'cahahah', 'kljsljkl', 'jljkljlk', 1),
-(6, 't', 't', 't', 't', NULL),
-(7, 'a', 'a', 'a', 'a', NULL);
+INSERT INTO `clients` (`id`, `name`, `lastname`, `houseNumber`, `street`, `email`, `phone`, `town_id`, `association_id`) VALUES
+(8, 'Matthieu', 'Clin', '16', 'rue des vergers', 'matthieu.clin@wanadoo.fr', '0303030303', 22176, 1),
+(9, 'Quentin', 'Vecchio', '13', 'rue de l''Ã©cole', 'quentin.vecchio@gmail.com', '0303030303', 21925, 2);
 
 -- --------------------------------------------------------
 
@@ -119,16 +120,18 @@ CREATE TABLE IF NOT EXISTS `conditions` (
   `name` varchar(255) NOT NULL,
   `reducing` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Contenu de la table `conditions`
 --
 
 INSERT INTO `conditions` (`id`, `name`, `reducing`) VALUES
-(1, 'Bon', 15),
+(1, 'Bon', 21),
 (2, 'Moyen', 30),
-(3, 'Mediocre', 45);
+(3, 'Mediocre', 45),
+(4, 'test', 50),
+(5, 'rre', 2);
 
 -- --------------------------------------------------------
 
@@ -192,9 +195,13 @@ CREATE TABLE IF NOT EXISTS `records` (
 CREATE TABLE IF NOT EXISTS `rows` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `condition_id` int(11) NOT NULL,
+  `book_id` int(11) NOT NULL,
+  `transaction_id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `condition_id` (`condition_id`)
+  KEY `condition_id` (`condition_id`),
+  KEY `book_id` (`book_id`),
+  KEY `transaction_id` (`transaction_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -36898,7 +36905,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Contenu de la table `users`
@@ -36909,7 +36916,8 @@ INSERT INTO `users` (`id`, `username`, `password`, `status`) VALUES
 (2, 'test', 'c33238eb253815832987922eafddd535aed8dd8f', 'operateur'),
 (4, 'moi', 'be726632b300e27fb208743d1a81198ecf218f2d', 'operateur'),
 (15, 'coucou', '1f6af4c3844c196c11fbae3bc00829e0af8780ad', 'operateur'),
-(16, 'operateur', '9f3a070b1c3be5d726026c278211372c0424fbe6', 'operateur');
+(16, 'operateur', '9f3a070b1c3be5d726026c278211372c0424fbe6', 'operateur'),
+(19, 'matthieuM', '2195e1719910ab88f2ca44af6e3489a974fdcb9e', 'operateur');
 
 --
 -- Contraintes pour les tables exportées
@@ -36931,7 +36939,8 @@ ALTER TABLE `books`
 -- Contraintes pour la table `clients`
 --
 ALTER TABLE `clients`
-  ADD CONSTRAINT `clients_ibfk_1` FOREIGN KEY (`association_id`) REFERENCES `associations` (`id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `clients_ibfk_1` FOREIGN KEY (`association_id`) REFERENCES `associations` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `clients_ibfk_2` FOREIGN KEY (`town_id`) REFERENCES `towns` (`id`) ON DELETE SET NULL;
 
 --
 -- Contraintes pour la table `grades`
@@ -36951,7 +36960,9 @@ ALTER TABLE `records`
 -- Contraintes pour la table `rows`
 --
 ALTER TABLE `rows`
-  ADD CONSTRAINT `rows_ibfk_1` FOREIGN KEY (`condition_id`) REFERENCES `conditions` (`id`);
+  ADD CONSTRAINT `rows_ibfk_1` FOREIGN KEY (`condition_id`) REFERENCES `conditions` (`id`),
+  ADD CONSTRAINT `rows_ibfk_2` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`),
+  ADD CONSTRAINT `rows_ibfk_3` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`);
 
 --
 -- Contraintes pour la table `subjects`

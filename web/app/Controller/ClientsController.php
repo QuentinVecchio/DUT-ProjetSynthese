@@ -14,11 +14,14 @@ class ClientsController extends AppController{
 	*/
 	public function admin_add(){
 		if(!empty($this->data)){
-			debug($this->data);
-			/*if($this->Client->save($this->data)){
+			$this->request->data = array('Client' =>$this->data);			
+			if($this->Client->save($this->data)){
 				$this->Session->setFlash('<strong>Félicitation:</strong>Vous venez d\'ajouter un parent','message', array('type' => 'success'));
 				$this->redirect(array('action' => 'index'));
-			}*/
+			}
+			if(isset($this->data['Client']['town_id'])){
+				$this->request->data['Town'] = current($this->Client->Town->findById($this->data['Client']['town_id']));
+			}			
 		}
 
 		$listAssoc = $this->Client->Association->find('list');
