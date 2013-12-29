@@ -33,5 +33,12 @@ class TransactionsController extends AppController {
 		$this->autoRender = false;
 	}
 
+	public function init(){
+		$this->set('step_for_progress_bar', 1);
+		if(!$this->Session->check('Transaction.date')){
+			$this->Session->write('Transaction.date', time());
+		}
+	}
+
 }
 ?>

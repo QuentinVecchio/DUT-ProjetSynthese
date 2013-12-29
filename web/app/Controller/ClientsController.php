@@ -56,5 +56,12 @@ class ClientsController extends AppController{
 				$this->redirect(array('action' => 'index'));			
 		}
 	}
+
+	public function getClient($name){
+		$this->autoRender = false;
+		echo json_encode($this->Client->find('all', array('conditions' => array('OR' => array('Client.name LIKE' => $name.'%',
+																							   'Client.lastname LIKE' => $name.'%')
+																				))));
+	}
 }
  ?>
