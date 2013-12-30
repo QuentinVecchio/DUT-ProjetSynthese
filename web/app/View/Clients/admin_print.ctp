@@ -42,7 +42,10 @@
 							$corps .= 
 			      			'<tr>
 			        			<td>' . $v['Client']['name'].' '.$v['Client']['lastname'] . '</td>
-			        			<td>' . $v['Client']['houseNumber'].' '.$v['Client']['street'] . (isset($v['Town']) && !empty($v['Town']))?' '.$v['Town']['name'].' '.$v['Town']['zip_code']:'' .'</td>
+			        			<td>' . $v['Client']['houseNumber'].' '.$v['Client']['street'];
+
+ 								$corps.= (isset($v['Town']) && !empty($v['Town']))?' '.$v['Town']['name'].' '.$v['Town']['zip_code']:'';
+ 								$corps .='</td>
 			        			<td>' .  $v['Client']['email'] . '</td>
 			        			<td>' .  $v['Client']['phone'] . '</td>
 			        			<td>' . $v['Association']['name'] . '</td>
