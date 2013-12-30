@@ -68,5 +68,16 @@ class ClientsController extends AppController{
 																							   'Client.lastname LIKE' => $name.'%')
 																				))));
 	}
+
+	/**
+	*	Impression de la liste des parents
+	*/
+	public function admin_print() 
+    { 
+		$listParent = $this->Client->find('all');
+		$this->set('listParent', $listParent); 
+        $this->layout = 'pdf'; //this will use the pdf.ctp layout 
+        $this->render();    
+    }
 }
  ?>
