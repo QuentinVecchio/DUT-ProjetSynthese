@@ -93,5 +93,15 @@ class UsersController extends AppController {
 		$this->Auth->logout();
 		$this->redirect(array('controller' => 'users', 'action' => 'login'));
 	}
+
+	/**
+	*	Impression de la liste des utilisateurs
+	*/
+	public function admin_print() {
+		$listUser = $this->User->find('all');
+		$this->set('listUser', $listUser);
+        $this->layout = 'pdf'; //this will use the pdf.ctp layout 
+        $this->render(); 
+	}
 }
 ?>

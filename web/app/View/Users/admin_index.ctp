@@ -41,4 +41,8 @@
 
 <?php 
 	echo $this->Html->Link('Ajouter', array('controller' => 'users', 'action' => 'add'), array('class' => 'btn btn-primary'));
- ?>
+?>
+
+<?php 
+	echo $this->Html->Link('Imprimer', array('controller' => 'users', 'action' => 'print'), array('class' => 'btn btn-primary', 'style' => 'margin-left : 20px;'));
+?>

@@ -55,6 +55,9 @@ class AssociationsController extends AppController{
 		}
 	}
 
+	/**
+	*	Permet l'impression de toutes les associations
+	*/
 	public function admin_print() 
     { 
 		$listAssoc = $this->Association->find('all');
