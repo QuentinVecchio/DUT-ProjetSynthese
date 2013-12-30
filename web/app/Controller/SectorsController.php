@@ -47,5 +47,15 @@ class SectorsController extends AppController{
 				$this->redirect(array('action' => 'index'));			
 		}
 	}
+
+	/**
+	*	Impression de la liste des filière
+	*/
+	public function admin_print() {
+		$listFiliere = $this->Sector->find('all');
+		$this->set('listFiliere', $listFiliere);
+        $this->layout = 'pdf'; //this will use the pdf.ctp layout 
+        $this->render(); 
+	}
 }
  ?>
