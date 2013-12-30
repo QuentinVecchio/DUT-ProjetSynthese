@@ -55,5 +55,13 @@ class AssociationsController extends AppController{
 		}
 	}
 
+	public function admin_print() 
+    { 
+		$listAssoc = $this->Association->find('all');
+		$this->set('listAssoc', $listAssoc); 
+        $this->layout = 'pdf'; //this will use the pdf.ctp layout 
+        $this->render();    
+    }
+
 }
  ?>
