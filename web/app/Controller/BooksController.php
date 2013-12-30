@@ -69,6 +69,16 @@ class BooksController extends AppController{
 		}
 	}
 
-
+	/**
+	*	Permet l'impression de toutes les livres
+	*/
+	public function admin_print($id = null)
+	{
+		$listLivre = $this->Book->findAllBySubjectId($id);
+		$this->set('listLivre', $listLivre);
+		$this->set('idSubject', $id);		
+        $this->layout = 'pdf'; //this will use the pdf.ctp layout 
+        $this->render();    
+    }
 
 } ?>

@@ -49,5 +49,7 @@
 </table>
 <?php 
   echo $this->Html->Link('Ajouter', array('controller' => 'books', 'action' => 'add', $idSubject), array('class' => 'btn btn-primary'));
- ?>
-
+?>
+<?php 
+  echo $this->Html->Link('Imprimer', array('controller' => 'books', 'action' => 'print'), array('class' => 'btn btn-primary', 'style' => 'margin-left : 20px;'));
+?>
