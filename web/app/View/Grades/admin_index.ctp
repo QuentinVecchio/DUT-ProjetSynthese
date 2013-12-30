@@ -54,3 +54,6 @@
 	echo $this->Html->Link('Ajouter', array('controller' => 'grades', 'action' => 'add', $idGrade), array('class' => 'btn btn-primary'));
  ?>
 
+<?php 
+	echo $this->Html->Link('Imprimer', array('controller' => 'grades', 'action' => 'print', $idGrade), array('class' => 'btn btn-primary', 'style' => 'margin-left : 20px;'));
+?>

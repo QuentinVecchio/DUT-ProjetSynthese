@@ -53,5 +53,16 @@ class GradesController extends AppController{
 				$this->redirect(array('controller' =>'grades', 'action' => 'index', $idSector));			
 		}
 	}
+
+	/**
+	*	Impression de la liste des classes
+	*/
+	public function admin_print($id) {
+		$listGrade = $this->Grade->findAllBySectorId($id);
+		$this->set('listGrade', $listGrade);
+		$this->set('idGrade', $id);
+        $this->layout = 'pdf'; //this will use the pdf.ctp layout 
+        $this->render(); 
+	}
 }
  ?>
