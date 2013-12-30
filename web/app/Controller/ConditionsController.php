@@ -52,4 +52,15 @@ class ConditionsController extends AppController{
 				$this->redirect(array('action' => 'index'));			
 		}
 	}
+
+	/**
+	*	Permet l'impression de tous les états
+	*/
+	public function admin_print() 
+    { 
+		$listEtat = $this->Condition->find('all');
+		$this->set('listEtat', $listEtat);
+        $this->layout = 'pdf'; //this will use the pdf.ctp layout 
+        $this->render();    
+    }
 } ?>

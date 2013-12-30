@@ -4,7 +4,7 @@
 		</caption>
 		<thead>
   		<tr>
-          <th class="thNom">Nom</th>
+          	<th class="thNom">Nom</th>
         	<th class="thNom">Réduction</th>
        	 	<th style="width : 115px">Réglages</th>
   		</tr>
@@ -37,6 +37,8 @@
 </table>
 <?php 
   echo $this->Html->Link('Ajouter', array('controller' => 'conditions', 'action' => 'add'), array('class' => 'btn btn-primary'));
- ?>
-
+?>
+<?php 
+  echo $this->Html->Link('Imprimer', array('controller' => 'conditions', 'action' => 'print'), array('class' => 'btn btn-primary', 'style' => 'margin-left : 20px;'));
+?>
 
