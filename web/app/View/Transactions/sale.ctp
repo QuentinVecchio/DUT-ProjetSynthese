@@ -99,7 +99,7 @@
         <footer id="footer">
           <div class="panel-footer" id="footer_boutons">
               <input type="submit" value="Valider" class="btn btn-primary">
-              <a class="btn btn-primary" ng-click="clicked=true" href="#">Nouveau</a>
+              <a class="btn btn-primary" ng-click="saveAchats()" href="#">Nouveau</a>
           </div>
         </footer>
 
