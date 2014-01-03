@@ -44,5 +44,5 @@ $this->end();
  <?php else: ?>
 	<h1>Le parent est déjà séléctionné</h1>
 	<h2>Le parent: <?php echo $this->Session->read('Transaction.Client.name').' '.$this->Session->read('Transaction.Client.lastname'); ?></h2>
-	<?php echo $this->Html->link('Désélectionner ?', array('controller' => 'transactions', 'action' => 'refresh'), array('confirm' => 'Etes-vous sûr?', 'class' => 'btn btn-danger')) ?>
+	<?php echo $this->Html->link('Désélectionner ?', array('controller' => 'transactions', 'action' => 'refresh','depot'), array('confirm' => 'Etes-vous sûr?', 'class' => 'btn btn-danger')) ?>
  <?php endif; ?>

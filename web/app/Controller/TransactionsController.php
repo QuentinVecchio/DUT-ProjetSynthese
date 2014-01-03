@@ -24,9 +24,11 @@ class TransactionsController extends AppController {
 	*	Etape de vente des livres
 	*/
 	public function sale($clientID = null){
+		$step_pred = array('controller' => 'transactions', 'action' => 'initSale');
+		$step_succ = array('controller' => 'transactions', 'action' => 'recapSale');
 		$this->set('step_for_progress_bar', 2);
-		$this->set('pred_for_progress_bar', array('controller' => 'transactions', 'action' => 'initSale'));		
-		$this->set('suiv_for_progress_bar', array('controller' => 'transactions', 'action' => 'recapSale'));		
+		$this->set('pred_for_progress_bar', $step_pred);		
+		$this->set('suiv_for_progress_bar', $step_succ);		
 		
 
 		if(isset($clientID) && is_numeric($clientID)){
@@ -40,7 +42,7 @@ class TransactionsController extends AppController {
 		}
 
 		if(!$this->Session->check('Transaction.Client')){
-			$this->redirect(array('controller' => 'transactions', 'action' => 'initSale'));
+			$this->redirect($step_pred);
 		}
 
 
@@ -54,7 +56,7 @@ class TransactionsController extends AppController {
 		$this->set('test',$this->conditions->find('all'));
 		if(!empty($this->data)){
 			$this->Session->write('Transaction.Row', $this->data['Row']);
-			$this->redirect(array('controller' => 'transactions', 'action' => 'recapSale'));
+			$this->redirect($step_succ);
 		}
 	}
 
@@ -65,14 +67,22 @@ class TransactionsController extends AppController {
 	*	Récapitulation des achats du parent
 	*/
 	public function recapSale(){
+		$step_pred =  array('controller' => 'transactions', 'action' => 'sale');
 		$this->set('step_for_progress_bar', 3);
-		$this->set('pred_for_progress_bar', array('controller' => 'transactions', 'action' => 'sale'));
+		$this->set('pred_for_progress_bar', $step_pred);
 		$this->set('suiv_for_progress_bar', '#');
 
 		if(!$this->Session->check('Transaction.Row')){
-			$this->redirect(array('controller' => 'transactions', 'action' => 'sale'));
+			$this->redirect($step_pred);
 		}
 	}
+
+
+
+
+
+
+
 
 
 
@@ -95,12 +105,13 @@ class TransactionsController extends AppController {
 
 	/**
 	*	Procéssus Dépot
-	*	Etape: 1		
+	*	Etape: 2		
 	*	Etape du dépôt des livres
 	*/
 	public function depot($clientID = null){
+		$step_pred = array('controller' => 'transactions', 'action' => 'init');
 		$this->set('step_for_progress_bar', 2);
-		$this->set('pred_for_progress_bar', array('controller' => 'transactions', 'action' => 'init'));		
+		$this->set('pred_for_progress_bar', $step_pred);		
 		$this->set('suiv_for_progress_bar', '#');		
 		
 
@@ -115,16 +126,42 @@ class TransactionsController extends AppController {
 		}
 
 		if(!$this->Session->check('Transaction.Client')){
-			$this->redirect(array('controller' => 'transactions', 'action' => 'init'));
+			$this->redirect($step_pred);
 		}
 	}
 
 	/**
-	*	Reinitialise le panier
+	*	Processus Dépôt
+	*	Etape: 3
+	*	Etape de la récapitulation
 	*/
-	public function refresh(){
+	public function recapDepot(){
+		$step_pred = array('controller' => 'transactions', 'action' => 'depot');
+		$this->set('step_for_progress_bar', 3);
+		$this->set('pred_for_progress_bar', $step_pred);
+		$this->set('suiv_for_progress_bar', '#');
+
+		if(!$this->Session->check('Transaction.Row')){
+			$this->redirect($step_pred);
+		}
+	}
+
+
+
+
+	/**
+	*	Reinitialise le panier
+	*	@params $type, le type de panier (sale ou depot)
+	*/
+	public function refresh($type){
 		$this->Session->delete('Transaction');
-		$this->redirect(array('controller' => 'transactions', 'action' => 'init'));
+
+		if($type == 'sale'){
+			$this->redirect(array('controller' => 'transactions', 'action' => 'initSale'));	
+		}else{
+			$this->redirect(array('controller' => 'transactions', 'action' => 'init'));	
+		}
+
 	}
 
 
