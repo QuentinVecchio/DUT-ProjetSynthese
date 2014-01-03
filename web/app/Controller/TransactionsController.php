@@ -34,10 +34,11 @@ class TransactionsController extends AppController {
 
 		if(isset($clientID) && is_numeric($clientID)){
 			if(!$this->Session->check('Transaction.achat.Client')){
-				$client = current(current($this->Transaction->Client->find('all', array('conditions' => array('id' => $clientID)
-																		,'recursive' => -1))));
+				$client = current($this->Transaction->Client->find('all', array('conditions' => array('Client.id' => $clientID))));
 				if($client){
-					$this->Session->write('Transaction.achat.Client', $client);
+
+					$this->Session->write('Transaction.achat.Client', $client['Client']);
+					$this->Session->write('Transaction.achat.Town', $client['Town']);
 				}
 			}
 		}

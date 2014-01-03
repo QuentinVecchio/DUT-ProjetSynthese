@@ -16,7 +16,7 @@
     <td><?php echo $this->Session->read('Transaction.achat.Client.lastname') ?></td>
     <td><?php echo $this->Session->read('Transaction.achat.Client.name') ?></td>
     <td><?php echo $this->Session->read('Transaction.achat.Client.houseNumber').' '.
-    			$this->Session->read('Transaction.achat.Client.street'); ?></td>
+    			$this->Session->read('Transaction.achat.Client.street').' '.$this->Session->read('Transaction.achat.Town.name').' '.$this->Session->read('Transaction.achat.Town.zip_code'); ?></td>
     <td><?php echo $this->Session->read('Transaction.achat.Client.email'); ?></td>
     <td><?php echo $this->Session->read('Transaction.achat.Client.phone'); ?></td>
   </tbody>
@@ -46,7 +46,7 @@
  		$total = 0;
  		foreach ($listLivre as $key => $value): 
 
- 		$current_prize = (intval($value['Book']['prize'])-intval($value['Book']['prize'])*intval($value['Condition']['reducing'])/100);
+ 		$current_prize = (intval($value['Transaction']['amount'])* (intval($value['Book']['prize'])-intval($value['Book']['prize'])*intval($value['Condition']['reducing'])/100));
  		$total += $current_prize;
  	?>
  		<tr>
