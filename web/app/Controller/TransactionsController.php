@@ -13,8 +13,9 @@ class TransactionsController extends AppController {
 
 
 
-		if(!$this->Session->check('Transaction.date')){
-			$this->Session->write('Transaction.date', time());
+		if(!$this->Session->check('Transaction.achat.date')){
+			$this->Session->write('Transaction.achat.date', time());
+			$this->Session->write('Transaction.achat.type', 'achat');
 		}
 	}
 
@@ -32,16 +33,16 @@ class TransactionsController extends AppController {
 		
 
 		if(isset($clientID) && is_numeric($clientID)){
-			if(!$this->Session->check('Transaction.Client')){
+			if(!$this->Session->check('Transaction.achat.Client')){
 				$client = current(current($this->Transaction->Client->find('all', array('conditions' => array('id' => $clientID)
 																		,'recursive' => -1))));
 				if($client){
-					$this->Session->write('Transaction.Client', $client);
+					$this->Session->write('Transaction.achat.Client', $client);
 				}
 			}
 		}
 
-		if(!$this->Session->check('Transaction.Client')){
+		if(!$this->Session->check('Transaction.achat.Client')){
 			$this->redirect($step_pred);
 		}
 
@@ -55,7 +56,7 @@ class TransactionsController extends AppController {
 		$this->loadModel('conditions');
 		$this->set('test',$this->conditions->find('all'));
 		if(!empty($this->data)){
-			$this->Session->write('Transaction.Row', $this->data['Row']);
+			$this->Session->write('Transaction.achat.Row', $this->data['Row']);
 			$this->redirect($step_succ);
 		}
 	}
@@ -72,7 +73,7 @@ class TransactionsController extends AppController {
 		$this->set('pred_for_progress_bar', $step_pred);
 		$this->set('suiv_for_progress_bar', '#');
 
-		if(!$this->Session->check('Transaction.Row')){
+		if(!$this->Session->check('Transaction.achat.Row')){
 			$this->redirect($step_pred);
 		}
 	}
@@ -98,8 +99,9 @@ class TransactionsController extends AppController {
 
 
 
-		if(!$this->Session->check('Transaction.date')){
-			$this->Session->write('Transaction.date', time());
+		if(!$this->Session->check('Transaction.depot.date')){
+			$this->Session->write('Transaction.depot.date', time());
+			$this->Session->write('Transaction.depot.type', 'depot');			
 		}
 	}
 
@@ -109,6 +111,11 @@ class TransactionsController extends AppController {
 	*	Etape du dépôt des livres
 	*/
 	public function depot($clientID = null){
+		
+		if(!$this->Session->check('Transaction.depot.Client')){
+			$this->redirect($step_pred);
+		}
+
 		$step_pred = array('controller' => 'transactions', 'action' => 'init');
 		$this->set('step_for_progress_bar', 2);
 		$this->set('pred_for_progress_bar', $step_pred);		
@@ -116,18 +123,15 @@ class TransactionsController extends AppController {
 		
 
 		if(isset($clientID) && is_numeric($clientID)){
-			if(!$this->Session->check('Transaction.Client')){
+			if(!$this->Session->check('Transaction.depot.Client')){
 				$client = current(current($this->Transaction->Client->find('all', array('conditions' => array('id' => $clientID)
 																		,'recursive' => -1))));
 				if($client){
-					$this->Session->write('Transaction.Client', $client);
+					$this->Session->write('Transaction.depot.Client', $client);
 				}
 			}
 		}
 
-		if(!$this->Session->check('Transaction.Client')){
-			$this->redirect($step_pred);
-		}
 	}
 
 	/**
@@ -141,7 +145,7 @@ class TransactionsController extends AppController {
 		$this->set('pred_for_progress_bar', $step_pred);
 		$this->set('suiv_for_progress_bar', '#');
 
-		if(!$this->Session->check('Transaction.Row')){
+		if(!$this->Session->check('Transaction.depot.Row')){
 			$this->redirect($step_pred);
 		}
 	}
