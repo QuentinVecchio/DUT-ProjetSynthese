@@ -1,3 +1,4 @@
+<?php $this->extend('corps_transaction_sale') ?>
 <h1>Espace vente</h1>
 <div ng-app="todo" ng-controller="CtrlLivres">
 <section id="book_choice" ng-show="clicked" ng-init="clicked=false" class="container animated fadeIn" style="clear:both;">

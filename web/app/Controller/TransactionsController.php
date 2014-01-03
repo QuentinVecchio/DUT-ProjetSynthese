@@ -1,22 +1,39 @@
 <?php
 class TransactionsController extends AppController {
 
-	public function sale(){
-			$this->loadModel('row');
-			$this->loadModel('sector');
+	public function sale($clientID = null){
+		$this->set('step_for_progress_bar', 2);
+		$this->set('pred_for_progress_bar', array('controller' => 'transactions', 'action' => 'initSale'));		
+		$this->set('suiv_for_progress_bar', array('controller' => 'transactions', 'action' => 'recapSale'));		
+		
 
-			$this->set('listFiliere',$this->sector->find('all'));
-
-			$this->loadModel('conditions');
-			$this->set('test',$this->conditions->find('all'));
-			if(!empty($this->data)){
-				/*if($this->Transaction->Row->saveMany($this->data['Row'])){
-					echo 'oui';
-				}else{
-					echo 'non';
-				}*/
-				debug($this->data);
+		if(isset($clientID) && is_numeric($clientID)){
+			if(!$this->Session->check('Transaction.Client')){
+				$client = current(current($this->Transaction->Client->find('all', array('conditions' => array('id' => $clientID)
+																		,'recursive' => -1))));
+				if($client){
+					$this->Session->write('Transaction.Client', $client);
+				}
 			}
+		}
+
+		if(!$this->Session->check('Transaction.Client')){
+			$this->redirect(array('controller' => 'transactions', 'action' => 'initSale'));
+		}
+
+
+
+		$this->loadModel('row');
+		$this->loadModel('sector');
+
+		$this->set('listFiliere',$this->sector->find('all'));
+
+		$this->loadModel('conditions');
+		$this->set('test',$this->conditions->find('all'));
+		if(!empty($this->data)){
+			$this->Session->write('Transaction.Row', $this->data['Row']);
+			$this->redirect(array('controller' => 'transactions', 'action' => 'recapSale'));
+		}
 	}
 
 	public function getLivre($filiere = null, $classe = null){
@@ -49,6 +66,31 @@ class TransactionsController extends AppController {
 			$this->Session->write('Transaction.date', time());
 		}
 	}
+
+	public function initSale(){
+		$this->set('step_for_progress_bar', 1);
+		$this->set('pred_for_progress_bar', '#');
+		$this->set('suiv_for_progress_bar', array('controller' => 'transactions', 'action' => 'sale'));
+
+
+
+		if(!$this->Session->check('Transaction.date')){
+			$this->Session->write('Transaction.date', time());
+		}
+	}
+
+	public function recapSale(){
+		$this->set('step_for_progress_bar', 3);
+		$this->set('pred_for_progress_bar', array('controller' => 'transactions', 'action' => 'sale'));
+		$this->set('suiv_for_progress_bar', '#');
+
+		if(!$this->Session->check('Transaction.Row')){
+			$this->redirect(array('controller' => 'transactions', 'action' => 'sale'));
+		}
+	}
+
+
+
 
 	public function depot($clientID = null){
 		$this->set('step_for_progress_bar', 2);
