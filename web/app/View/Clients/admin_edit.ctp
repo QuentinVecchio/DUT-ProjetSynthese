@@ -3,7 +3,7 @@
 		<?php
 			echo $this->Form->create('Client', array('class' => 'form-horizontal', 'role' => 'form', 'name' => 'form'));
 		?>
-		<fieldset ng-init="urlTown='<?php echo $this->Html->url(array('controller' => 'towns', 'action' => 'getTown')) ?>'">
+		<fieldset ng-init="urlTown='<?php echo $this->Html->url(array('controller' => 'towns', 'action' => 'getTown', 'admin' => false)) ?>'">
 			<legend ng-init="Clients=<?php if(isset($this->data))echo htmlspecialchars(json_encode($this->data));?>">Edition d'un parent</legend>	
 		
 			<div class="form-group" >

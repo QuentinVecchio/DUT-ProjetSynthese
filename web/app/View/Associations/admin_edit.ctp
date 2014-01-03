@@ -3,7 +3,7 @@
 		<?php
 			echo $this->Form->create('Association', array('class' => 'form-horizontal', 'role' => 'form', 'name' => 'form'));
 		?>
-		<fieldset ng-init="urlTown='<?php echo $this->Html->url(array('controller' => 'towns', 'action' => 'getTown')) ?>'">
+		<fieldset ng-init="urlTown='<?php echo $this->Html->url(array('controller' => 'towns', 'action' => 'getTown', 'admin' => false)) ?>'">
 			<legend ng-init="Associations=<?php if(isset($this->data))echo htmlspecialchars(json_encode($this->data));?>">Edition d'une association</legend>
 			<div class="form-group" >
 				<?php echo $this->Form->input('name', array('placeholder' => 'Nom','input' => array('class' => 'form-control'),
