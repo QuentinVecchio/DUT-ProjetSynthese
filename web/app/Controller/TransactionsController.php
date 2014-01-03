@@ -90,7 +90,7 @@ class TransactionsController extends AppController {
 	/**
 	*	Procéssus Dépot
 	*	Etape: 1	
-	*	Récapitulation des achats du parent
+	*	Initialisation du dépôt
 	*/
 	public function init(){
 		$this->set('step_for_progress_bar', 1);
@@ -111,11 +111,6 @@ class TransactionsController extends AppController {
 	*	Etape du dépôt des livres
 	*/
 	public function depot($clientID = null){
-		
-		if(!$this->Session->check('Transaction.depot.Client')){
-			$this->redirect($step_pred);
-		}
-
 		$step_pred = array('controller' => 'transactions', 'action' => 'init');
 		$this->set('step_for_progress_bar', 2);
 		$this->set('pred_for_progress_bar', $step_pred);		
@@ -132,6 +127,9 @@ class TransactionsController extends AppController {
 			}
 		}
 
+		if(!$this->Session->check('Transaction.depot.Client')){
+			$this->redirect($step_pred);
+		}
 	}
 
 	/**
