@@ -93,6 +93,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 
 	$scope.saveAchats = function(){
 		$scope.clicked = true;
+		console.log($scope.achats);
 		if($scope.variable == null)
 			$scope.variable = 0;
 		//$scope.anciens = $scope.achats;
@@ -123,6 +124,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 
 	$scope.duplicateAchat = function(index){
 		var original = $scope.achats[index];
+		console.log($scope.achats);
 		//alert('Valeur originale = '+original.Subject.name+original.book.name+original.book.qte+original.book.prize);
 		var tmp = {
 			book: { id: original.book.id+1, name: original.book.name, prize: original.book.prize, etat: { condition:{id:'', name: "", reducing:''}}, qte: original.book.qte},

@@ -47,7 +47,19 @@ class TransactionsController extends AppController {
 			$this->redirect($step_pred);
 		}
 
+		if($this->Session->check('Transaction.achat.Row')){
+			$listAchat = array();
+			foreach ($this->Session->read('Transaction.achat.Row') as $key => $value) {
 
+				$listAchat[$key]['book'] = current($this->Transaction->Row->Book->findById($value['book_id']));
+				$listAchat[$key]['Subject'] = current($this->Transaction->Row->Book->Subject->findById($listAchat[$key]['book']['subject_id']));
+				$listAchat[$key]['book']['qte'] = $value['amount'];
+				$listAchat[$key]['book']['etat']['conditions'] = current($this->Transaction->Row->Condition->findById($value['condition_id']));
+
+				$listAchat[$key]['completed'] = true;
+			}
+			$this->set('listAchat', $listAchat);
+		}
 
 		$this->loadModel('row');
 		$this->loadModel('sector');

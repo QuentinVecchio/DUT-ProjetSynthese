@@ -5,7 +5,7 @@
 
         <header id="header" ng-init="etats=<?php echo htmlentities(json_encode($test)); ?>">
 
-          <div ng-init="filieres=<?php echo htmlentities(json_encode($listFiliere)) ?>"></div>
+          <div ng-init="filieres=<?php echo htmlentities(json_encode($listFiliere)) ?>;<?php if(isset($listAchat)) echo 'achats='.htmlentities(json_encode($listAchat)); ?>"></div>
           <div ng-init="urlGetGrades='<?php echo $this->Html->url(array('controller' =>'transactions', 'action' => 'getGrades', 'full_base' => true)) ?>'"></div>
           <div ng-init="urlGetBooks='<?php echo $this->Html->url(array('controller' =>'transactions', 'action' => 'getBooks', 'full_base' => true)) ?>'"></div>
 
@@ -85,8 +85,8 @@
                         </td><!--achat.etat = etats[0]-->
                         <td><input type="text" style="display:none" name="Row[{{$index}}][transaction_id]" ng-value="1">
                             <input type="text" style="display:none" name="Row[{{$index}}][book_id]" ng-model="achat.book.id">{{achat.Subject.name}}: {{achat.book.name}}</td>
-                        <td><select name="Row[{{$index}}][condition_id]" ng-model="achat.book.etat" ng-init="achat.book.etat = etats[0]" ng-options="value.conditions.name for value in etats track by value.conditions.id"></select></td>
-                        <td><input name="Row[{{$index}}][amount]" type="number" ng-init="achat.book.qte=0" min="0" ng-model="achat.book.qte" style="width:50px; height:25px;"></td>
+                        <td><select name="Row[{{$index}}][condition_id]" ng-model="achat.book.etat" Ang-init="achat.book.etat = etats[0]" ng-options="value.conditions.name for value in etats track by value.conditions.id"></select></td>
+                        <td><input name="Row[{{$index}}][amount]" Atype="number" type="text" Ang-init="achat.book.qte=0" min="0" ng-model="achat.book.qte" style="width:50px; height:25px;"></td>
                       </tr>
                     </tbody>
                 </table>
