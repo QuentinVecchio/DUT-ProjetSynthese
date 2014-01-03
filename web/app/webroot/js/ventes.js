@@ -69,14 +69,26 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	var anciens;
 
 	$scope.TransfertLivre = function(){
-		$scope.achats = filterFilter($scope.livres, {"completed":true}); 
+
+		$tmp = angular.copy(filterFilter($scope.livres, {"completed":true}));
+		for(i in $tmp){
+			$scope.achats.push($tmp[i]);			
+		}
+		
+		$scope.clicked = false;
+
+		/*$tmp = angular.copy(filterFilter($scope.livres, {"completed":true})); 
+		$scope.achats.push($tmp);
+		$scope.clicked = false;
+*/
+		/*$scope.achats = filterFilter($scope.livres, {"completed":true}); 
 		if(anciens != ""){ // si il existe d'anciens livres d'autres classes ou filières
 			//$scope.achats.push($scope.anciens);
 			$scope.achats.splice(10, 0, anciens); // on met le ou les anciens au début de la liste (index 0)
 			$scope.clicked = false;
 		}
 		else if(anciens == "")
-			$scope.clicked = false;
+			$scope.clicked = false;*/
 	}
 
 	$scope.saveAchats = function(){
