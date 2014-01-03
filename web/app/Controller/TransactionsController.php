@@ -155,14 +155,14 @@ class TransactionsController extends AppController {
 
 	/**
 	*	Reinitialise le panier
-	*	@params $type, le type de panier (sale ou depot)
 	*/
-	public function refresh($type){
-		$this->Session->delete('Transaction');
+	public function refresh(){
 
-		if($type == 'sale'){
+		if($this->Session->check('Transaction.achat')){
+			$this->Session->delete('Transaction');
 			$this->redirect(array('controller' => 'transactions', 'action' => 'initSale'));	
 		}else{
+			$this->Session->delete('Transaction');
 			$this->redirect(array('controller' => 'transactions', 'action' => 'init'));	
 		}
 
