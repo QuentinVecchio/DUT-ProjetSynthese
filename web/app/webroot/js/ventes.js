@@ -46,7 +46,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	}, true)
 
 	$scope.$watch('livres', function(){
-		$scope.variable = filterFilter($scope.livres, {completed:true}).length; // calcul du montant total TTC, pour le moment nombre d'achats 
+		$scope.variable = filterFilter($scope.livres, {completed:true}).length; 
 	}, true)
 
 	if($location.path() == '')
@@ -61,9 +61,31 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 			(path == '/done') ? {completed : true} : null;
 	});
 
+
+	/**
+	Le problème étant qu'il copie bien le livres mais qu'en fait il rajoute une profondeur de tableau du 
+	coup l'affichge plante, je conseille d'utiliser le pulgin AngularJS Batarang sous Chrome.
+	Enjoy **/
+	var anciens;
+
 	$scope.TransfertLivre = function(){
-		$scope.achats = filterFilter($scope.livres, {"completed":true});
-		$scope.clicked = false;
+		$scope.achats = filterFilter($scope.livres, {"completed":true}); 
+		if(anciens != ""){ // si il existe d'anciens livres d'autres classes ou filières
+			//$scope.achats.push($scope.anciens);
+			$scope.achats.splice(10, 0, anciens); // on met le ou les anciens au début de la liste (index 0)
+			$scope.clicked = false;
+		}
+		else if(anciens == "")
+			$scope.clicked = false;
+	}
+
+	$scope.saveAchats = function(){
+		$scope.clicked = true;
+		if($scope.variable == null)
+			$scope.variable = 0;
+		//$scope.anciens = $scope.achats;
+		//$scope.anciens = angular.copy($scope.achats);
+		 anciens = $scope.achats;
 	}
 
 	$scope.removeAchat = function(index){
@@ -72,6 +94,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	}
 
 	$scope.updateGrades = function(){
+		$scope.livres=[];
 		$http.get($scope.urlGetGrades+'/'+$scope.choixFiliere.sector.id).success(function(response) {
 				      	$scope.classes = response;
 				      	console.log($scope.classes);
