@@ -1,6 +1,28 @@
 <?php
 class TransactionsController extends AppController {
 
+	/**
+	*	Procéssus Vente
+	*	Etape: 1
+	*	Initialisation de la vente
+	*/
+	public function initSale(){
+		$this->set('step_for_progress_bar', 1);
+		$this->set('pred_for_progress_bar', '#');
+		$this->set('suiv_for_progress_bar', array('controller' => 'transactions', 'action' => 'sale'));
+
+
+
+		if(!$this->Session->check('Transaction.date')){
+			$this->Session->write('Transaction.date', time());
+		}
+	}
+
+	/**
+	*	Procéssus Vente
+	*	Etape: 2	
+	*	Etape de vente des livres
+	*/
 	public function sale($clientID = null){
 		$this->set('step_for_progress_bar', 2);
 		$this->set('pred_for_progress_bar', array('controller' => 'transactions', 'action' => 'initSale'));		
@@ -36,49 +58,12 @@ class TransactionsController extends AppController {
 		}
 	}
 
-	public function getLivre($filiere = null, $classe = null){
-			$this->loadModel('book');
-			debug($this->book->find('all'));
-	}
 
-	public function getGrades($id){
-		$this->loadModel('grade');
-		echo json_encode($this->grade->find('all', array('conditions' => array('sector_id' => $id), 'recursive' => -1)));
-		$this->layout = null;
-		$this->autoRender = false;
-	}
-
-	public function getBooks($id){
-		$this->loadModel('book');
-		echo json_encode($this->book->find('all', array('fields' => array('Book.id, Book.name, Book.prize, Subject.name'), 'conditions' => array('grade_id' => $id))));
-		$this->layout = null;
-		$this->autoRender = false;
-	}
-
-	public function init(){
-		$this->set('step_for_progress_bar', 1);
-		$this->set('pred_for_progress_bar', '#');
-		$this->set('suiv_for_progress_bar', array('controller' => 'transactions', 'action' => 'depot'));
-
-
-
-		if(!$this->Session->check('Transaction.date')){
-			$this->Session->write('Transaction.date', time());
-		}
-	}
-
-	public function initSale(){
-		$this->set('step_for_progress_bar', 1);
-		$this->set('pred_for_progress_bar', '#');
-		$this->set('suiv_for_progress_bar', array('controller' => 'transactions', 'action' => 'sale'));
-
-
-
-		if(!$this->Session->check('Transaction.date')){
-			$this->Session->write('Transaction.date', time());
-		}
-	}
-
+	/**
+	*	Procéssus Vente
+	*	Etape: 3	
+	*	Récapitulation des achats du parent
+	*/
 	public function recapSale(){
 		$this->set('step_for_progress_bar', 3);
 		$this->set('pred_for_progress_bar', array('controller' => 'transactions', 'action' => 'sale'));
@@ -91,7 +76,28 @@ class TransactionsController extends AppController {
 
 
 
+	/**
+	*	Procéssus Dépot
+	*	Etape: 1	
+	*	Récapitulation des achats du parent
+	*/
+	public function init(){
+		$this->set('step_for_progress_bar', 1);
+		$this->set('pred_for_progress_bar', '#');
+		$this->set('suiv_for_progress_bar', array('controller' => 'transactions', 'action' => 'depot'));
 
+
+
+		if(!$this->Session->check('Transaction.date')){
+			$this->Session->write('Transaction.date', time());
+		}
+	}
+
+	/**
+	*	Procéssus Dépot
+	*	Etape: 1		
+	*	Etape du dépôt des livres
+	*/
 	public function depot($clientID = null){
 		$this->set('step_for_progress_bar', 2);
 		$this->set('pred_for_progress_bar', array('controller' => 'transactions', 'action' => 'init'));		
@@ -113,11 +119,37 @@ class TransactionsController extends AppController {
 		}
 	}
 
-
+	/**
+	*	Reinitialise le panier
+	*/
 	public function refresh(){
 		$this->Session->delete('Transaction');
 		$this->redirect(array('controller' => 'transactions', 'action' => 'init'));
 	}
 
+
+
+	/**
+	*	Quelques appels ajax pour les différentes étapes
+	*/
+
+	public function getLivre($filiere = null, $classe = null){
+			$this->loadModel('book');
+			debug($this->book->find('all'));
+	}
+
+	public function getGrades($id){
+		$this->loadModel('grade');
+		echo json_encode($this->grade->find('all', array('conditions' => array('sector_id' => $id), 'recursive' => -1)));
+		$this->layout = null;
+		$this->autoRender = false;
+	}
+
+	public function getBooks($id){
+		$this->loadModel('book');
+		echo json_encode($this->book->find('all', array('fields' => array('Book.id, Book.name, Book.prize, Subject.name'), 'conditions' => array('grade_id' => $id))));
+		$this->layout = null;
+		$this->autoRender = false;
+	}
 }
 ?>
