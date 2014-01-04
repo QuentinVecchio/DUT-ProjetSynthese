@@ -1,6 +1,15 @@
 <?php
 class TransactionsController extends AppController {
 
+
+	public function admin_index(){
+		$this->set('list', $this->Transaction->find('all'));
+	}
+
+
+
+
+
 	/**
 	*	Procéssus Vente
 	*	Etape: 1
