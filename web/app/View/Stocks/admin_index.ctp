@@ -1,0 +1,1 @@
+<h1>Visualisation des stocks</h1>

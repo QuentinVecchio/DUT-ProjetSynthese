@@ -1,5 +1,5 @@
 <div id="contenant">
-	<div id="choixAdm" class="choixStat"><a href="<?php echo $this->Html->url(array('controller' => 'users', 'action' => 'index', 'admin' => true)) ?>">
+	<div id="choixAdm" class="choixStat"><a href="<?php echo $this->Html->url(array('controller' => 'stocks', 'action' => 'index', 'admin' => true)) ?>">
 		<div  class="glyphicon glyphicon-user" style="font-size : 5em; margin-top: 170px;"></div>
 		<br>Administrateur</a>
 	</div>
