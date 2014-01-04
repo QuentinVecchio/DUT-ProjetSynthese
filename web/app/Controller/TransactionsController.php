@@ -53,7 +53,7 @@ class TransactionsController extends AppController {
 
 				$listAchat[$key]['book'] = current($this->Transaction->Row->Book->findById($value['book_id']));
 				$listAchat[$key]['Subject'] = current($this->Transaction->Row->Book->Subject->findById($listAchat[$key]['book']['subject_id']));
-				$listAchat[$key]['book']['qte'] = $value['amount'];
+				$listAchat[$key]['book']['qte'] = intval($value['amount']);
 				$listAchat[$key]['book']['etat']['conditions'] = current($this->Transaction->Row->Condition->findById($value['condition_id']));
 
 				$listAchat[$key]['completed'] = true;

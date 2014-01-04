@@ -86,7 +86,7 @@
                         <td><input type="text" style="display:none" name="Row[{{$index}}][transaction_id]" ng-value="1">
                             <input type="text" style="display:none" name="Row[{{$index}}][book_id]" ng-model="achat.book.id">{{achat.Subject.name}}: {{achat.book.name}}</td>
                         <td><select name="Row[{{$index}}][condition_id]" ng-model="achat.book.etat" Ang-init="achat.book.etat = etats[0]" ng-options="value.conditions.name for value in etats track by value.conditions.id"></select></td>
-                        <td><input name="Row[{{$index}}][amount]" Atype="number" type="text" Ang-init="achat.book.qte=0" min="0" ng-model="achat.book.qte" style="width:50px; height:25px;"></td>
+                        <td><input name="Row[{{$index}}][amount]" type="number" Ang-init="achat.book.qte=0" min="0" ng-model="achat.book.qte" style="width:50px; height:25px;"></td>
                       </tr>
                     </tbody>
                 </table>
