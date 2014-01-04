@@ -4,7 +4,7 @@ class Transaction extends AppModel{
 
 	public $hasMany = array('Row');
 
-	public $hasAndBelongsToMany =array('Typereglement');
+	public $hasAndBelongsToMany =array('Typereglement' => array('unique' => true));
 }
 
  ?>
