@@ -25,6 +25,8 @@ class TransactionsController extends AppController {
 		if(!$this->Session->check('Transaction.achat.date')){
 			$this->Session->write('Transaction.achat.date', time());
 			$this->Session->write('Transaction.achat.type', 'achat');
+			$this->Session->write('Transaction.achat.completed', 0);
+			$this->Session->write('Transaction.achat.close', 0);
 		}
 	}
 
@@ -48,6 +50,17 @@ class TransactionsController extends AppController {
 
 					$this->Session->write('Transaction.achat.Client', $client['Client']);
 					$this->Session->write('Transaction.achat.Town', $client['Town']);
+
+					$tmp = array('client_id' => $client['Client']['id'],
+								 'user_id' => $this->Auth->user('id'),
+								 'date' => date('Y-m-d',time(null)),
+								 'type' => $this->Session->read('Transaction.achat.type'),
+								 'close' => $this->Session->read('Transaction.achat.close'),
+								 'completed' => $this->Session->read('Transaction.achat.completed'),
+								 );
+					$this->Transaction->save($tmp);
+					$this->Session->write('Transaction.achat.transaction_id', $this->Transaction->id);
+
 				}
 			}
 		}
@@ -224,6 +237,14 @@ class TransactionsController extends AppController {
 	public function refresh(){
 
 		if($this->Session->check('Transaction.achat')){
+			if($this->Session->check('Transaction.achat.transaction_id')){
+				$tmp = $this->Transaction->findById($this->Session->read('Transaction.achat.transaction_id'));
+				if($tmp){
+					if($tmp['Transaction']['completed'] == 0){
+						$this->Transaction->delete($tmp['Transaction']['id']);
+					}
+				}
+			}
 			$this->Session->delete('Transaction');
 			$this->redirect(array('controller' => 'transactions', 'action' => 'initSale'));	
 		}else{
