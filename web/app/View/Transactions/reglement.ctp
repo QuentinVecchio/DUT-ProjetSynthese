@@ -1,6 +1,6 @@
 <?php $this->extend('corps_transaction_sale') ?>
 <section ng-app="gestionReglement" ng-Controller="ctrl" ng-init="list=<?php echo htmlentities(json_encode($listTypeReglement))?>;
-																transactionId=1">
+																transactionId=<?php echo $this->Session->read('Transaction.achat.transaction_id') ?>">
 		<?php
 		
 		/**

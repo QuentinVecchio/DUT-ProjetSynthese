@@ -114,17 +114,19 @@ class TransactionsController extends AppController {
 
 
 		$this->loadModel('Typereglement');
-		$this->Typereglement->bindModel(array('hasMany' => array('TransactionsTypereglement')));
 		$this->loadModel('TransactionsTypereglement');
-		$this->set('listTypeReglement', $this->Typereglement->find('all'));
+		$listTypeReglement = $this->Typereglement->find('all', array('contain' => array('TransactionsTypereglement' => array(
+																							'conditions' => array('transaction_id'=> $this->Session->read('Transaction.achat.transaction_id'))))));		
+		$this->set('listTypeReglement', $listTypeReglement);
 
 		if(!empty($this->data)){
-			/*if($this->TransactionsTypereglement->saveMany($this->data)){
+			$this->TransactionsTypereglement->deleteAll(array('transaction_id' => $this->Session->read('Transaction.achat.transaction_id')));
+			if($this->TransactionsTypereglement->saveMany($this->data)){
 				$this->Session->setFlash('<strong>Félicitation: </strong>Vous venez d\'enregistrer','message', array('type' => 'success'));
 				$this->redirect($step_succ);
 			}else{
 				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
-			}*/
+			}
 			debug($this->data);
 		}
 	}
@@ -241,14 +243,14 @@ class TransactionsController extends AppController {
 	public function refresh(){
 
 		if($this->Session->check('Transaction.achat')){
-			if($this->Session->check('Transaction.achat.transaction_id')){
+			/*if($this->Session->check('Transaction.achat.transaction_id')){
 				$tmp = $this->Transaction->findById($this->Session->read('Transaction.achat.transaction_id'));
 				if($tmp){
 					if($tmp['Transaction']['completed'] == 0){
 						$this->Transaction->delete($tmp['Transaction']['id']);
 					}
 				}
-			}
+			}*/
 			$this->Session->delete('Transaction');
 			$this->redirect(array('controller' => 'transactions', 'action' => 'initSale'));	
 		}else{
