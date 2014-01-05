@@ -2,7 +2,7 @@
 <h1>Espace vente</h1>
 <div ng-app="GBL" ng-controller="CtrlLivres">
 <section id="book_choice" ng-show="clicked" ng-init="clicked=false" class="container animated fadeIn" style="clear:both;">
-        <header id="header" ng-init="etats=<?php echo htmlentities(json_encode($test)); ?>">
+        <header id="header" ng-init="etats=<?php echo htmlentities(json_encode($test)); ?>;transaction_id=<?php echo $this->Session->read('Transaction.achat.transaction_id') ?>">
           <div ng-init="filieres=<?php echo htmlentities(json_encode($listFiliere)) ?>;<?php if(isset($listAchat)) echo 'achats='.htmlentities(json_encode($listAchat)); ?>"></div>
           <div ng-init="urlGetGrades='<?php echo $this->Html->url(array('controller' =>'transactions', 'action' => 'getGrades', 'full_base' => true)) ?>'"></div>
           <div ng-init="urlGetBooks='<?php echo $this->Html->url(array('controller' =>'transactions', 'action' => 'getBooks', 'full_base' => true)) ?>'"></div>
@@ -66,7 +66,7 @@
                             </ul>
                           </div>
                         </td>
-                        <td><input type="text" style="display:none" name="Row[{{$index}}][transaction_id]" ng-value="1">
+                        <td><input type="text" style="display:none" name="Row[{{$index}}][transaction_id]" ng-value="transaction_id">
                             <input type="text" style="display:none" name="Row[{{$index}}][book_id]" ng-model="achat.book.id">{{achat.Subject.name}}: {{achat.book.name}}</td>
                         <td><select name="Row[{{$index}}][condition_id]" ng-model="achat.book.etat" Ang-init="achat.book.etat = etats[0]" ng-options="value.conditions.name for value in etats track by value.conditions.id"></select></td>
                         <td><input name="Row[{{$index}}][amount]" type="number" ng-init="achat.book.qte = Row[{{$index}}][amount]" min="0" ng-model="achat.book.qte" style="width:50px; height:25px;"></td>

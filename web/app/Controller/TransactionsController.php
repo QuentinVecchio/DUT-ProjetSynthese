@@ -91,8 +91,12 @@ class TransactionsController extends AppController {
 		$this->loadModel('conditions');
 		$this->set('test',$this->conditions->find('all'));
 		if(!empty($this->data)){
-			$this->Session->write('Transaction.achat.Row', $this->data['Row']);
-			$this->redirect($step_succ);
+			if($this->Transaction->Row->saveMany($this->data['Row'])){
+				$this->Session->write('Transaction.achat.Row', $this->data['Row']);
+				$this->redirect($step_succ);
+			}else{
+				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
+			}
 		}
 	}
 
