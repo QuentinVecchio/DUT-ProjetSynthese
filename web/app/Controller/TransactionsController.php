@@ -102,12 +102,12 @@ class TransactionsController extends AppController {
 		$this->set('listTypeReglement', $this->Typereglement->find('all'));
 
 		if(!empty($this->data)){
-			if($this->TransactionsTypereglement->saveMany($this->data)){
+			/*if($this->TransactionsTypereglement->saveMany($this->data)){
 				$this->Session->setFlash('<strong>Félicitation: </strong>Vous venez d\'enregistrer','message', array('type' => 'success'));
 				$this->redirect($step_succ);
 			}else{
 				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
-			}
+			}*/
 			debug($this->data);
 		}
 	}
