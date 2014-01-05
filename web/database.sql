@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Sam 04 Janvier 2014 à 11:29
+-- Généré le: Dim 05 Janvier 2014 à 09:33
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.4.16
 
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
   PRIMARY KEY (`id`),
   KEY `association_id` (`association_id`),
   KEY `town_id` (`town_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Contenu de la table `clients`
@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `grades` (
   `sector_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `sector_id` (`sector_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 --
 -- Contenu de la table `grades`
@@ -214,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `sectors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Contenu de la table `sectors`
@@ -230,6 +230,23 @@ INSERT INTO `sectors` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `stocks`
+--
+
+CREATE TABLE IF NOT EXISTS `stocks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `book_id` int(11) NOT NULL,
+  `condition_id` int(11) NOT NULL,
+  `depot` int(11) NOT NULL,
+  `vente` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `book_id` (`book_id`,`condition_id`),
+  KEY `etat_id` (`condition_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `subjects`
 --
 
@@ -239,7 +256,7 @@ CREATE TABLE IF NOT EXISTS `subjects` (
   `grade_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `grade_id` (`grade_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Contenu de la table `subjects`
@@ -36877,6 +36894,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `date` date NOT NULL,
   `type` varchar(255) NOT NULL,
   `close` int(11) NOT NULL,
+  `completed` int(11) NOT NULL,
   `client_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
@@ -36887,8 +36905,8 @@ CREATE TABLE IF NOT EXISTS `transactions` (
 -- Contenu de la table `transactions`
 --
 
-INSERT INTO `transactions` (`id`, `user_id`, `date`, `type`, `close`, `client_id`) VALUES
-(1, 1, '2014-01-02', 'depot', 0, 8);
+INSERT INTO `transactions` (`id`, `user_id`, `date`, `type`, `close`, `completed`, `client_id`) VALUES
+(1, 1, '2014-01-02', 'depot', 0, 0, 8);
 
 -- --------------------------------------------------------
 
@@ -36911,8 +36929,7 @@ CREATE TABLE IF NOT EXISTS `transactions_typereglements` (
 --
 
 INSERT INTO `transactions_typereglements` (`id`, `transaction_id`, `typereglement_id`, `amount`) VALUES
-(1, 1, 2, '10.00'),
-(2, 1, 1, '10.00');
+(1, 1, 2, '50.00');
 
 -- --------------------------------------------------------
 
@@ -36946,7 +36963,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 --
 -- Contenu de la table `users`
@@ -37002,6 +37019,13 @@ ALTER TABLE `rows`
   ADD CONSTRAINT `rows_ibfk_3` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`);
 
 --
+-- Contraintes pour la table `stocks`
+--
+ALTER TABLE `stocks`
+  ADD CONSTRAINT `stocks_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `stocks_ibfk_2` FOREIGN KEY (`condition_id`) REFERENCES `conditions` (`id`) ON DELETE CASCADE;
+
+--
 -- Contraintes pour la table `subjects`
 --
 ALTER TABLE `subjects`
@@ -37018,8 +37042,8 @@ ALTER TABLE `transactions`
 -- Contraintes pour la table `transactions_typereglements`
 --
 ALTER TABLE `transactions_typereglements`
-  ADD CONSTRAINT `transactions_typereglements_ibfk_2` FOREIGN KEY (`typereglement_id`) REFERENCES `typereglements` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `transactions_typereglements_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `transactions_typereglements_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `transactions_typereglements_ibfk_2` FOREIGN KEY (`typereglement_id`) REFERENCES `typereglements` (`id`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

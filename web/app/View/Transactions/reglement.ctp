@@ -13,10 +13,7 @@
 		 *	Les contraintes sont donc:
 		 *				- La somme des paiements doit faire le total
 		 *				- Il faut qu'on trouve un moyen d'écarter les champs non remplit
-		 *				- J'ai préférer tout afficher, parce que faire des menus déroulants et ajout suppression serait plus chaud (mais tu peux essayer)
-		 *
-		 *	Il y a un bug sur ng-model="i.TransactionsTypereglement[0].amount", il essaye de prendre une valeur de quelque chose qui n'existe pas
-		 *		Je ne vois pas comment faire pour le moment, c'est la ligne est nécessaire pour récupérer les valeurs lors d'un retour en arrière
+		 *				- J'ai préféré tout afficher, parce que faire des menus déroulants et ajout suppression serait plus chaud (mais tu peux essayer)
 		 *
 		 *	GOOD LUCK
 		 *
