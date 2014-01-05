@@ -70,7 +70,7 @@
                           </div>
 
                             <input type="text" style="display:none" name="{{$index}}[Row][transaction_id]" ng-value="transaction_id">
-                            <input type="text" style="display:none" name="{{$index}}[Row][book_id]" ng-model="achat.Row.id">
+                            <input type="text" style="display:none" name="{{$index}}[Row][book_id]" ng-model="achat.Row.book_id">
                             <input type="text" style="display:none" name="{{$index}}[Row][name_book]" ng-model="achat.Row.name_book">
                             <input type="text" style="display:none" name="{{$index}}[Row][name_subject]" ng-model="achat.Row.name_subject">
                             <input type="text" style="display:none" name="{{$index}}[Row][prize_unit]" ng-model="achat.Row.prize_unit">

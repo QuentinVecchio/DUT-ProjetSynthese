@@ -69,53 +69,44 @@ class TransactionsController extends AppController {
 			$this->redirect($step_pred);
 		}
 
-		/*if($this->Session->check('Transaction.achat.Row')){
-			$listAchat = array();
-			foreach ($this->Session->read('Transaction.achat.Row') as $key => $value) {
-
-				$listAchat[$key]['book'] = current($this->Transaction->Row->Book->findById($value['book_id']));
-				$listAchat[$key]['Subject'] = current($this->Transaction->Row->Book->Subject->findById($listAchat[$key]['book']['subject_id']));
-				$listAchat[$key]['book']['qte'] = intval($value['amount']);
-				$listAchat[$key]['book']['etat']['conditions'] = current($this->Transaction->Row->Condition->findById($value['condition_id']));
-
-				$listAchat[$key]['completed'] = true;
-
-			}
-			debug($listAchat);
-		}*/
 
 		if(empty($this->data)){
 
 			$listAchat = $this->Transaction->Row->find('all', array('conditions' => array('transaction_id' => $this->Session->read('Transaction.achat.transaction_id')),
 																	'recursive' => -1));
 
-			echo 'chargement';
 		}else{
-			echo 'keep';
 			$listAchat = $this->data;
 		}
 
+		//Transaction pour angularjs
 		foreach ($listAchat as $key => $value) {
 			$listAchat[$key]['Row']['amount'] = intval($listAchat[$key]['Row']['amount']);
 			$listAchat[$key]['Row']['Condition']['conditions'] = current($this->Transaction->Row->Condition->findById($listAchat[$key]['Row']['condition_id']));
 		}
-		debug($listAchat);
+
+
 		$this->set('listAchat', $listAchat);
 
-		$this->loadModel('sector');
 
+
+		$this->loadModel('sector');
 		$this->set('listFiliere',$this->sector->find('all'));
+
 
 		$this->loadModel('conditions');
 		$this->set('test',$this->conditions->find('all'));
-		/*if(!empty($this->data)){
-			if($this->Transaction->Row->saveMany($this->data['Row'])){
-				$this->Session->write('Transaction.achat.Row', $this->data['Row']);
+
+
+		if(!empty($this->data)){
+			$this->Transaction->Row->deleteAll(array('transaction_id' => $this->Session->read('Transaction.achat.transaction_id')));
+			if($this->Transaction->Row->saveMany($this->data)){
+				$this->Session->write('Transaction.achat.Row', $this->data);
 				$this->redirect($step_succ);
 			}else{
 				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
 			}
-		}*/
+		}
 	}
 
 	/**
