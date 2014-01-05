@@ -75,6 +75,7 @@
                             <input type="text" style="display:none" name="{{$index}}[Row][name_subject]" ng-model="achat.Row.name_subject">
                             <input type="text" style="display:none" name="{{$index}}[Row][prize_unit]" ng-model="achat.Row.prize_unit">
                             <input type="text" style="display:none" name="{{$index}}[Row][prize_total]"  ng-model="achat.Row.prize_total">
+                            <input type="text" style="display:none" name="{{$index}}[Row][name_condition]"  ng-model="achat.Row.name_condition">
 
                         </td>
 

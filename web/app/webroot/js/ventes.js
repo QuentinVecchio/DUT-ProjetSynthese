@@ -134,6 +134,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	*/
 	$scope.updateCondition = function(index){
 		$scope.achats[index].Row.reducing = $scope.achats[index].Row.Condition.conditions.reducing;
+		$scope.achats[index].Row.name_condition = $scope.achats[index].Row.Condition.conditions.name;
 	}
 
 
