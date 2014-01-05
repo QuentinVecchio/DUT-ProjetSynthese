@@ -13,7 +13,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	$scope.mt =0;
 	$scope.achats = [];
 		
-	$scope.$watch('achats', function(){
+	/*$scope.$watch('achats', function(){
 		console.log('oui');
 		$scope.mt = 0;
 		$scope.achats.forEach(function(achat){
@@ -38,19 +38,32 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 		$scope.statusFilter =
 			(path == '/active') ? {completed : false} : null;
 			(path == '/done') ? {completed : true} : null;
-	});
+	});*/
 
 	var anciens;
 
 	$scope.TransfertLivre = function(){
 		$tmp = angular.copy(filterFilter($scope.livres, {"completed":true}));
+		console.log('affichage');
 		for(i in $tmp){
-			$scope.achats.push($tmp[i]);			
+			console.log($tmp[i]);
+
+			$t = {Row: {
+					transaction_id : $scope.transaction_id,
+					book_id: $tmp[i].book.id,
+					name_book: $tmp[i].book.name,
+					name_subject: $tmp[i].Subject.name,
+					Condition: $scope.etats[0],
+					amount: 0,
+					prize_unit : $tmp[i].book.prize
+					}}
+
+			$scope.achats.push($t);			
 		}
-		$scope.achats.forEach(function(achat){
+		/*$scope.achats.forEach(function(achat){
 			if(achat.book.qte == null)
 				achat.book.qte = 0;
-		})
+		})*/
 		$scope.clicked = false;
 	}
 
@@ -84,14 +97,16 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	}
 
 	$scope.duplicateAchat = function(index){
-		var original = $scope.achats[index];
+
+		$scope.achats.splice(index+1, 0, angular.copy($scope.achats[index]));
+
+		/*var original = $scope.achats[index];
 		console.log($scope.achats);
 		var tmp = {
 			book: { id: original.book.id+1, name: original.book.name, prize: original.book.prize, etat: { condition:{id:'', name: "", reducing:''}}, qte: original.book.qte},
 			Subject: {name: original.Subject.name},
 			completed : true
-			};
-		$scope.achats.splice(index+1, 0, tmp);
+			};*/
 	}
 
 	$scope.editTodo = function(todo){
@@ -104,4 +119,21 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 		})
 	}
 	
+	/**
+	*	Recalcul du total si modification de la quantité ou de la réduction
+	*/
+	$scope.changeRow = function(index){
+		$scope.achats[index].Row.prize_total = ($scope.achats[index].Row.prize_unit- $scope.achats[index].Row.prize_unit*  $scope.achats[index].Row.reducing / 100)*$scope.achats[index].Row.amount;
+
+	}
+
+	/**
+	*	Appelé au changement de condition dans le menu déroulan
+	*	Permet de mettre à jour le champs de réduction
+	*/
+	$scope.updateCondition = function(index){
+		$scope.achats[index].Row.reducing = $scope.achats[index].Row.Condition.conditions.reducing;
+	}
+
+
 });

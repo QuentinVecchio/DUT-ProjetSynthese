@@ -1,6 +1,6 @@
 <?php $this->extend('corps_transaction_sale') ?>
 <h1>Espace vente</h1>
-<div ng-app="GBL" ng-controller="CtrlLivres">
+<div ng-app="GBL" ng-controller="CtrlLivres" class="clearFix">
 <section id="book_choice" ng-show="clicked" ng-init="clicked=false" class="container animated fadeIn" style="clear:both;">
         <header id="header" ng-init="etats=<?php echo htmlentities(json_encode($test)); ?>;transaction_id=<?php echo $this->Session->read('Transaction.achat.transaction_id') ?>">
           <div ng-init="filieres=<?php echo htmlentities(json_encode($listFiliere)) ?>;<?php if(isset($listAchat)) echo 'achats='.htmlentities(json_encode($listAchat)); ?>"></div>
@@ -49,8 +49,11 @@
                       <tr>
                         <td><strong>Options</strong></td>
                         <td><strong>Libellé</strong></td>
+                        <td><strong>Prix Unit</strong></td>
                         <td><strong>Etat</strong></td>
+                        <td><strong>%</strong></td>
                         <td><strong>Quantité</strong></td>
+                        <td><strong>Total</strong></td>
                       </tr>
                     </thead>
                     <tbody>
@@ -65,11 +68,30 @@
                               <li><a class="animate-leave" ng-click="duplicateAchat($index)" title="Supprimer cet achat" href="#">Dupliquer</a></li>
                             </ul>
                           </div>
+
+                            <input type="text" style="display:none" name="{{$index}}[Row][transaction_id]" ng-value="transaction_id">
+                            <input type="text" style="display:none" name="{{$index}}[Row][book_id]" ng-model="achat.Row.id">
+                            <input type="text" style="display:none" name="{{$index}}[Row][name_book]" ng-model="achat.Row.name_book">
+                            <input type="text" style="display:none" name="{{$index}}[Row][name_subject]" ng-model="achat.Row.name_subject">
+                            <input type="text" style="display:none" name="{{$index}}[Row][prize_unit]" ng-model="achat.Row.prize_unit">
+                            <input type="text" style="display:none" name="{{$index}}[Row][prize_total]"  ng-model="achat.Row.prize_total">
+
                         </td>
-                        <td><input type="text" style="display:none" name="Row[{{$index}}][transaction_id]" ng-value="transaction_id">
-                            <input type="text" style="display:none" name="Row[{{$index}}][book_id]" ng-model="achat.book.id">{{achat.Subject.name}}: {{achat.book.name}}</td>
-                        <td><select name="Row[{{$index}}][condition_id]" ng-model="achat.book.etat" Ang-init="achat.book.etat = etats[0]" ng-options="value.conditions.name for value in etats track by value.conditions.id"></select></td>
-                        <td><input name="Row[{{$index}}][amount]" type="number" ng-init="achat.book.qte = Row[{{$index}}][amount]" min="0" ng-model="achat.book.qte" style="width:50px; height:25px;"></td>
+
+                        <td>{{achat.Row.name_subject}}: {{achat.Row.name_book}}</td>
+
+                        <td>{{achat.Row.prize_unit}}</td>
+
+
+                        <td><select name="{{$index}}[Row][condition_id]" ng-model="achat.Row.Condition"  ng-options="value.conditions.name for value in etats track by value.conditions.id" ng-change="updateCondition($index)"></select></td>
+
+                        <td><input type="text" name="{{$index}}[Row][reducing]" ng-model="achat.Row.reducing"  ng-change="changeRow($index)" style="width:50px; height:25px;"></td>
+
+
+                        <td><input name="{{$index}}[Row][amount]" type="number" Ang-init="achat.book.qte = Row[{{$index}}][amount]" min="0" ng-model="achat.Row.amount" style="width:50px; height:25px;" ng-change="changeRow($index)"></td>
+
+                        <td>{{achat.Row.prize_total}}€</td>
+
                       </tr>
                     </tbody>
                 </table>
@@ -86,6 +108,7 @@
         </footer>
         <?php echo $this->Form->end(); ?>
     </section>
+        <!--
       <section id="facture" class="container animated fadeIn" ng-show="!clicked" ng-hide="clicked">
         <header id="header">
           <h3>Aperçu facture</h3>
@@ -122,6 +145,8 @@
           </ul>
         </section>
     </section>
+  -->
+
 </div>
 <link rel="stylesheet" href="https://daneden.me/animate/animate.css">
 <script type="text/javascript" source="http://code.angularjs.org/1.2.0/angular-animate.min.js"></script>
