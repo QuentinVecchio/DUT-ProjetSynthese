@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Dim 05 Janvier 2014 à 09:33
+-- Généré le: Dim 05 Janvier 2014 à 14:26
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.4.16
 
@@ -189,20 +189,18 @@ CREATE TABLE IF NOT EXISTS `rows` (
   `condition_id` int(11) NOT NULL,
   `book_id` int(11) NOT NULL,
   `transaction_id` int(11) NOT NULL,
+  `name_book` varchar(255) NOT NULL,
+  `name_subject` varchar(255) NOT NULL,
+  `name_condition` varchar(255) NOT NULL,
+  `reducing` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
+  `prize_unit` decimal(5,2) NOT NULL,
+  `prize_total` decimal(5,2) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `condition_id` (`condition_id`),
   KEY `book_id` (`book_id`),
   KEY `transaction_id` (`transaction_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Contenu de la table `rows`
---
-
-INSERT INTO `rows` (`id`, `condition_id`, `book_id`, `transaction_id`, `amount`) VALUES
-(1, 1, 1, 1, 2),
-(2, 2, 4, 1, 2);
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
 
 -- --------------------------------------------------------
 
@@ -36899,14 +36897,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `client_id` (`client_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Contenu de la table `transactions`
---
-
-INSERT INTO `transactions` (`id`, `user_id`, `date`, `type`, `close`, `completed`, `client_id`) VALUES
-(1, 1, '2014-01-02', 'depot', 0, 0, 8);
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 -- --------------------------------------------------------
 
@@ -36922,14 +36913,7 @@ CREATE TABLE IF NOT EXISTS `transactions_typereglements` (
   PRIMARY KEY (`id`),
   KEY `transaction_id` (`transaction_id`,`typereglement_id`),
   KEY `typereglement_id` (`typereglement_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Contenu de la table `transactions_typereglements`
---
-
-INSERT INTO `transactions_typereglements` (`id`, `transaction_id`, `typereglement_id`, `amount`) VALUES
-(1, 1, 2, '50.00');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 -- --------------------------------------------------------
 
