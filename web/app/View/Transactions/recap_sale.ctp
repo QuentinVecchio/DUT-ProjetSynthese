@@ -2,7 +2,7 @@
  <h2>Facture de <?php echo $this->Session->read('Transaction.achat.Client.lastname').' '.$this->Session->read('Transaction.achat.Client.name') ?>	</h2>
 
 <h4>Récapitulatif informations Parent</h4>
-<table>
+<!--<table>
   <thead>
     <tr>
       <th>Nom</th>
@@ -99,7 +99,12 @@
       </tr>
     </table>
   </div>
+-->
   <?php 
+
+  debug($listLivre);
+
+
 $this->start('css'); // indique quel fichier css on utilise
   echo $this->Html->css('facture');
 $this->end();  

@@ -158,14 +158,8 @@ class TransactionsController extends AppController {
 			$this->redirect($step_pred);
 		}
 
-		$listAchat = array();
-		foreach ($this->Session->read('Transaction.achat.Row') as $key => $value) {
-
-			$listAchat[$key] = $this->Transaction->Row->Book->findById($value['book_id']);
-			$listAchat[$key]['Condition'] = current($this->Transaction->Row->Condition->findById($value['condition_id']));
-
-			$listAchat[$key]['Transaction'] = $value;
-		}
+		$this->Transaction->Row->recursive =  -1;
+		$listAchat = $this->Transaction->Row->findAllByTransactionId($this->Session->read('Transaction.achat.transaction_id'));
 		$this->set('listLivre', $listAchat);
 
 		$this->set('listCondition', $this->Transaction->Row->Condition->find('all'));
