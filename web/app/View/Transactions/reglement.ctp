@@ -1,8 +1,9 @@
 <?php $this->extend('corps_transaction_sale') ?>
 <section ng-app="gestionReglement" ng-Controller="ctrl" ng-init="list=<?php echo htmlentities(json_encode($listTypeReglement))?>;
-																transactionId=<?php echo $this->Session->read('Transaction.achat.transaction_id') ?>">
-		<?php
-		
+																transactionId=<?php echo $this->Session->read('Transaction.achat.transaction_id') ?>;
+																total=100;
+																initialisation();">
+		<?php		
 		/**
 		*	La valeur total de l'achat que je ne peux pas te fournir pour le moment
 		*	La somme des choix de paiement avec la quantité doit être égale a ce montant, sinon on ne peut pas valider (logique);
@@ -18,23 +19,22 @@
 		 *	GOOD LUCK
 		 *
 		 */
-
 		 ?>
 
 		<?php debug($listTypeReglement); ?>
 
 
-		<h1>Affichage avec Angularjs</h1>
+		<h1>Règlement</h1>
 
 		<?php echo $this->Form->create(); ?>
 			<div ng-repeat="i in list">
-				<input type="text" ng-model="i.Typereglement.id" name="data[{{$index}}][typereglement_id]">
-				<input type="text" ng-model="i.Typereglement.transaction_id" ng-init="i.Typereglement.transaction_id = transactionId" name="data[{{$index}}][transaction_id]">
-				<input type="text" name="data[{{$index}}][amount]"  ng-init="i.Typereglement.amount = i.TransactionsTypereglement[0].amount || 0"  ng-model="i.Typereglement.amount">
+				<label name="data[{{$index}}][typereglement_id]">{{i.Typereglement.name}}</label>
+				<input style="visibility : hidden;" type="text" ng-model="i.Typereglement.transaction_id" ng-init="i.Typereglement.transaction_id = transactionId" name="data[{{$index}}][transaction_id]">
+				<input type="number" min="0" step="0.01" name="data[{{$index}}][amount]"  ng-init="i.Typereglement.amount = i.TransactionsTypereglement[0].amount || 0"  ng-model="i.Typereglement.amount" ng-change="traitement($index)">
 			</div>
-			<input type="submit" value="Envoyer">
+			<p>Il reste {{reste}} € à payer.</p>
+			<input ng-disabled="reglement != 100"type="submit" value="Envoyer" class="btn btn-primary">
 		<?php echo $this->Form->end(); ?>
-
 </section>
 <?php 
 $this->start('script');
