@@ -33,7 +33,7 @@
 				<input type="number" min="0" step="0.01" name="data[{{$index}}][amount]"  ng-init="i.Typereglement.amount = i.TransactionsTypereglement[0].amount || 0"  ng-model="i.Typereglement.amount" ng-change="traitement($index)">
 			</div>
 			<p>Il reste {{reste}} € à payer.</p>
-			<input ng-disabled="reglement != 100"type="submit" value="Envoyer" class="btn btn-primary">
+			<input ng-disabled="reglement != total"type="submit" value="Envoyer" class="btn btn-primary">
 		<?php echo $this->Form->end(); ?>
 </section>
 <?php 
