@@ -70,6 +70,13 @@ class TransactionsController extends AppController {
 		if(!empty($this->data)){
 			$this->Transaction->Row->deleteAll(array('transaction_id' => $this->Session->read('Transaction.achat.transaction_id')));
 			if($this->Transaction->Row->saveMany($this->data)){
+
+				$total = 0;
+				foreach ($this->data as $key => $value) {
+					$total += $value['Row']['prize_total'];
+				}
+				$this->Session->write('Transaction.achat.total', $total);
+
 				$this->Session->write('Transaction.achat.step', 3);
 				$this->redirect($step_succ);
 			}else{
