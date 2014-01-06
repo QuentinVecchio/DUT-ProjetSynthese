@@ -6,10 +6,6 @@ class TransactionsController extends AppController {
 		$this->set('list', $this->Transaction->find('all'));
 	}
 
-
-
-
-
 	/**
 	*	Procéssus Vente
 	*	Etape: 1
@@ -36,17 +32,6 @@ class TransactionsController extends AppController {
 
 		$step_pred = array('controller' => 'transactions', 'action' => 'initSale');
 
-		if(!$this->Session->check('Transaction.achat') || $this->Session->read('Transaction.achat.step') < 2){
-			$this->redirect($step_pred);
-		}
-
-		$step_succ = array('controller' => 'transactions', 'action' => 'reglement');
-		$this->set('step_for_progress_bar', 2);
-		$this->set('pred_for_progress_bar', $step_pred);		
-		$this->set('suiv_for_progress_bar', $step_succ);		
-
-		
-
 		if(isset($clientID) && is_numeric($clientID)){
 			if(!$this->Session->check('Transaction.achat.Client')){
 				$client = current($this->Transaction->Client->find('all', array('conditions' => array('Client.id' => $clientID))));
@@ -64,22 +49,35 @@ class TransactionsController extends AppController {
 					$this->Session->write('Transaction.achat.transaction_id', $this->Transaction->id);
 					$this->Session->write('Transaction.achat.step', 2);
 
+				}else{
+					$this->redirect($step_pred);
 				}
 			}
 		}
 
-		if(!$this->Session->check('Transaction.achat.Client')){
+		if(!$this->Session->check('Transaction.achat') || $this->Session->read('Transaction.achat.step') < 2){
 			$this->redirect($step_pred);
 		}
 
+		$step_succ = array('controller' => 'transactions', 'action' => 'reglement');
+		$this->set('step_for_progress_bar', 2);
+		$this->set('pred_for_progress_bar', $step_pred);		
+		$this->set('suiv_for_progress_bar', $step_succ);		
 
-		if(empty($this->data)){
 
+		if(!empty($this->data)){
+			$this->Transaction->Row->deleteAll(array('transaction_id' => $this->Session->read('Transaction.achat.transaction_id')));
+			if($this->Transaction->Row->saveMany($this->data)){
+				$this->Session->write('Transaction.achat.step', 3);
+				$this->redirect($step_succ);
+			}else{
+				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
+			}
+			$listAchat = $this->data;
+		}else{
 			$listAchat = $this->Transaction->Row->find('all', array('conditions' => array('transaction_id' => $this->Session->read('Transaction.achat.transaction_id')),
 																	'recursive' => -1));
-
-		}else{
-			$listAchat = $this->data;
+			
 		}
 
 		//Transaction pour angularjs
@@ -90,23 +88,9 @@ class TransactionsController extends AppController {
 
 
 		$this->set('listAchat', $listAchat);
-
-
 		$this->set('listFiliere', $this->Transaction->Row->Book->Subject->Grade->Sector->find('all'));
-
 		$this->set('listCondition', $this->Transaction->Row->Condition->find('all'));
 
-
-
-
-		if(!empty($this->data)){
-			$this->Transaction->Row->deleteAll(array('transaction_id' => $this->Session->read('Transaction.achat.transaction_id')));
-			if($this->Transaction->Row->saveMany($this->data)){
-				$this->redirect($step_succ);
-			}else{
-				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
-			}
-		}
 	}
 
 	/**
@@ -116,34 +100,32 @@ class TransactionsController extends AppController {
 	*/
 	public function reglement(){
 		$step_pred = array('controller' => 'transactions', 'action' => 'sale');
+		$step_succ = array('controller' => 'transactions', 'action' => 'recapSale');
 
-		if(!$this->Session->check('Transaction.achat') || $this->Session->read('Transaction.achat.step') < 2){
+		if(!empty($this->data)){
+			$this->Transaction->TransactionsTypereglement->deleteAll(array('transaction_id' => $this->Session->read('Transaction.achat.transaction_id')));
+			if($this->Transaction->TransactionsTypereglement->saveMany($this->data)){
+				$this->Session->write('Transaction.achat.step', 4);
+				$this->redirect($step_succ);
+			}else{
+				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
+			}
+		}
+
+		if(!$this->Session->check('Transaction.achat') || $this->Session->read('Transaction.achat.step') < 3){
 			$this->redirect($step_pred);
 		}
 		
-		$step_succ = array('controller' => 'transactions', 'action' => 'recapSale');
 		$this->set('step_for_progress_bar', 3);
 		$this->set('pred_for_progress_bar', $step_pred);
 		$this->set('suiv_for_progress_bar', $step_succ);
 
 
 		$this->loadModel('Typereglement');
-		$this->loadModel('TransactionsTypereglement');
 		$listTypeReglement = $this->Typereglement->find('all', array('contain' => array('TransactionsTypereglement' => array(
 																							'conditions' => array('transaction_id'=> $this->Session->read('Transaction.achat.transaction_id'))))));		
 		$this->set('listTypeReglement', $listTypeReglement);
 
-		if(!empty($this->data)){
-			$this->TransactionsTypereglement->deleteAll(array('transaction_id' => $this->Session->read('Transaction.achat.transaction_id')));
-			if($this->TransactionsTypereglement->saveMany($this->data)){
-				$this->Session->setFlash('<strong>Félicitation: </strong>Vous venez d\'enregistrer','message', array('type' => 'success'));
-				$this->Session->write('Transaction.achat.step', 3);
-				$this->redirect($step_succ);
-			}else{
-				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
-			}
-			debug($this->data);
-		}
 	}
 
 
