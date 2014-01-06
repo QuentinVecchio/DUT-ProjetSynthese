@@ -41,6 +41,11 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	});*/
 
 	$scope.VerifBook = function(){
+
+		/**
+		*	Matthieu:
+		*		- Pourquoi ne pas utiliser un filterFilter avec comme paramètre book_id : xxx ?
+		*/
 		var tmp = $scope.achats;
 		var tmp2 = $scope.achats;
 		var nbook ;
@@ -66,6 +71,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	$scope.TransfertLivre = function(){
 		$tmp = angular.copy(filterFilter($scope.livres, {"completed":true}));
 		console.log('affichage');
+		console.log($scope.etats);
 		for(i in $tmp){
 			console.log($tmp[i]);
 
