@@ -47,19 +47,19 @@ class TransactionsController extends AppController {
 			if(!$this->Session->check('Transaction.achat.Client')){
 				$client = current($this->Transaction->Client->find('all', array('conditions' => array('Client.id' => $clientID))));
 				if($client){
-
+					debug($client);
 					$this->Session->write('Transaction.achat.Client', $client['Client']);
-					$this->Session->write('Transaction.achat.Town', $client['Town']);
 
 					$tmp = array('client_id' => $client['Client']['id'],
 								 'user_id' => $this->Auth->user('id'),
 								 'date' => date('Y-m-d',time(null)),
-								 'type' => $this->Session->read('Transaction.achat.type'),
-								 'close' => $this->Session->read('Transaction.achat.close'),
-								 'completed' => $this->Session->read('Transaction.achat.completed'),
+								 'type' => 'achat',
+								 'close' => 0,
+								 'completed' => 0,
 								 );
 					$this->Transaction->save($tmp);
 					$this->Session->write('Transaction.achat.transaction_id', $this->Transaction->id);
+					$this->Session->write('Transaction.achat.step', 2);
 
 				}
 			}
@@ -90,12 +90,22 @@ class TransactionsController extends AppController {
 
 
 
+
+		
+		/* les deux suivantes */
 		$this->loadModel('sector');
+		debug($this->sector->find('all'));
 		$this->set('listFiliere',$this->sector->find('all'));
+		//$this->set('listFiliere', $this->Transaction->Row->Book->Subject->Grade->Sector->find('all');
 
 
+
+		/* Les deux suivantes */
 		$this->loadModel('conditions');
 		$this->set('test',$this->conditions->find('all'));
+		//$this->set('listCondition', $this->Transaction->Row->Condition->find('all');
+
+
 
 
 		if(!empty($this->data)){
