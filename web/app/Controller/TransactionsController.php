@@ -82,7 +82,7 @@ class TransactionsController extends AppController {
 		//Transaction pour angularjs
 		foreach ($listAchat as $key => $value) {
 			$listAchat[$key]['Row']['amount'] = intval($listAchat[$key]['Row']['amount']);
-			$listAchat[$key]['Row']['Condition']['conditions'] = current($this->Transaction->Row->Condition->findById($listAchat[$key]['Row']['condition_id']));
+			$listAchat[$key]['Row']['Condition']['Condition'] = current($this->Transaction->Row->Condition->findById($listAchat[$key]['Row']['condition_id']));
 		}
 
 
@@ -93,17 +93,17 @@ class TransactionsController extends AppController {
 
 		
 		/* les deux suivantes */
-		$this->loadModel('sector');
+		/*$this->loadModel('sector');
 		debug($this->sector->find('all'));
-		$this->set('listFiliere',$this->sector->find('all'));
-		//$this->set('listFiliere', $this->Transaction->Row->Book->Subject->Grade->Sector->find('all');
+		$this->set('listFiliere',$this->sector->find('all'));*/
+		$this->set('listFiliere', $this->Transaction->Row->Book->Subject->Grade->Sector->find('all'));
 
 
 
 		/* Les deux suivantes */
-		$this->loadModel('conditions');
-		$this->set('test',$this->conditions->find('all'));
-		//$this->set('listCondition', $this->Transaction->Row->Condition->find('all');
+		/*$this->loadModel('conditions');
+		$this->set('test',$this->conditions->find('all'));*/
+		$this->set('listCondition', $this->Transaction->Row->Condition->find('all'));
 
 
 

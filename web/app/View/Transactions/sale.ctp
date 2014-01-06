@@ -2,14 +2,14 @@
 <h1>Espace vente</h1>
 <div ng-app="GBL" ng-controller="CtrlLivres" class="clearFix">
 <section id="book_choice" ng-show="clicked" ng-init="clicked=false" class="container animated fadeIn" style="clear:both;">
-        <header id="header" ng-init="etats=<?php echo htmlentities(json_encode($test)); ?>;transaction_id=<?php echo $this->Session->read('Transaction.achat.transaction_id') ?>">
+        <header id="header" ng-init="etats=<?php echo htmlentities(json_encode($listCondition)); ?>;transaction_id=<?php echo $this->Session->read('Transaction.achat.transaction_id') ?>">
           <div ng-init="filieres=<?php echo htmlentities(json_encode($listFiliere)) ?>;<?php if(isset($listAchat)) echo 'achats='.htmlentities(json_encode($listAchat)); ?>"></div>
           <div ng-init="urlGetGrades='<?php echo $this->Html->url(array('controller' =>'transactions', 'action' => 'getGrades', 'full_base' => true)) ?>'"></div>
           <div ng-init="urlGetBooks='<?php echo $this->Html->url(array('controller' =>'transactions', 'action' => 'getBooks', 'full_base' => true)) ?>'"></div>
           <h3>Choix des livres</h3>
             <form action="#" id="filieres-form" ng-submit="">
                 <span id="filieres-list">
-                  <strong>Filière</strong> : <select  ng-model="choixFiliere" ng-options="value.sector.name for value in filieres track by value.sector.id" ng-change="updateGrades()" required></select>
+                  <strong>Filière</strong> : <select  ng-model="choixFiliere" ng-options="value.Sector.name for value in filieres track by value.Sector.id" ng-change="updateGrades()" required></select>
                 </span>
 
                 <span id="classes-list">
@@ -48,7 +48,8 @@
                     <thead>
                       <tr>
                         <td><strong>Options</strong></td>
-                        <td><strong>Libellé</strong></td>
+                        <td><strong>Matière</strong></td>
+                        <td><strong>Livre</strong></td>
                         <td><strong>Prix Unit</strong></td>
                         <td><strong>Etat</strong></td>
                         <td><strong>%</strong></td>
@@ -74,24 +75,25 @@
                             <input type="text" style="display:none" name="{{$index}}[Row][name_book]" ng-model="achat.Row.name_book">
                             <input type="text" style="display:none" name="{{$index}}[Row][name_subject]" ng-model="achat.Row.name_subject">
                             <input type="text" style="display:none" name="{{$index}}[Row][prize_unit]" ng-model="achat.Row.prize_unit">
-                            <input type="text" style="display:none" name="{{$index}}[Row][prize_total]"  ng-model="achat.Row.prize_total">
+                            <input type="text" style="display:none" name="{{$index}}[Row][prize_total]" ng-model="achat.Row.prize_total">
                             <input type="text" style="display:none" name="{{$index}}[Row][name_condition]"  ng-model="achat.Row.name_condition">
 
                         </td>
 
-                        <td>{{achat.Row.name_subject}}: {{achat.Row.name_book}}</td>
+                        <td>{{achat.Row.name_subject}}</td>
+                        <td>{{achat.Row.name_book}}</td>
 
-                        <td>{{achat.Row.prize_unit}}</td>
+                        <td class="prix">{{achat.Row.prize_unit | number:2}}&nbsp€</td>
 
 
-                        <td><select name="{{$index}}[Row][condition_id]" ng-model="achat.Row.Condition"  ng-options="value.conditions.name for value in etats track by value.conditions.id" ng-change="updateCondition($index)"></select></td>
+                        <td><select name="{{$index}}[Row][condition_id]" ng-model="achat.Row.Condition"  ng-options="value.Condition.name for value in etats track by value.Condition.id" ng-change="updateCondition($index)"></select></td>
 
                         <td><input type="text" name="{{$index}}[Row][reducing]" ng-model="achat.Row.reducing"  ng-change="changeRow($index)" style="width:50px; height:25px;"></td>
 
 
-                        <td><input name="{{$index}}[Row][amount]" type="number" Ang-init="achat.book.qte = Row[{{$index}}][amount]" min="0" ng-model="achat.Row.amount" style="width:50px; height:25px;" ng-change="changeRow($index)"></td>
+                        <td><input name="{{$index}}[Row][amount]" type="number" ng-init="achat.Row.amount" min="1" ng-model="achat.Row.amount" style="width:50px; height:25px;" ng-change="changeRow($index)"></td>
 
-                        <td>{{achat.Row.prize_total}}€</td>
+                        <td class="prix">{{achat.Row.prize_total | number:2}}&nbsp€</td>
 
                       </tr>
                     </tbody>
@@ -103,8 +105,9 @@
         </section>
         <footer id="footer">
           <div class="panel-footer" id="footer_boutons">
-              <input type="submit" value="Valider" class="btn btn-primary">
+              <input type="submit" ng-click="VerifBook()" value="Valider" class="btn btn-primary">
               <a class="btn btn-primary" ng-click="saveAchats()" href="#">Nouveau</a>
+                    Montant total TTC : <strong>{{mt | number:2}}</strong> €
           </div>
         </footer>
         <?php echo $this->Form->end(); ?>
@@ -133,12 +136,12 @@
                         <td>{{achat.Subject.name}}: {{achat.book.name}}</td>
                         <td>{{achat.book.etat.conditions.name}}</td>
                         <td>{{achat.book.qte}}</td>
-                        <td>{{((achat.book.prize- achat.book.prize*achat.book.etat.conditions.reducing / 100)*achat.book.qte) || 0}} €</td>
+                        <td class="prix">{{((achat.book.prize- achat.book.prize*achat.book.etat.conditions.reducing / 100)*achat.book.qte) | number:2 || 0}} €</td>
                       </tr>
                     </tbody>
                 </table>
                   <div class="panel-footer">
-                    Montant total TTC : <strong>{{mt}}</strong> €
+                    Montant total TTC : <strong>{{mt | number:2}}</strong> €
                   </div>
               </label>
             </div>

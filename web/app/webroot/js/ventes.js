@@ -22,13 +22,13 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 				$scope.mt += tmp;
 			}
 		})
-	}, true)
+	}, true)*/
 
 	$scope.$watch('livres', function(){
 		$scope.variable = filterFilter($scope.livres, {completed:true}).length; 
 	}, true)
 
-	if($location.path() == '')
+	/*if($location.path() == '')
 		{
 		 $location.path('/')
 		}
@@ -40,8 +40,29 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 			(path == '/done') ? {completed : true} : null;
 	});*/
 
-	var anciens;
+	$scope.VerifBook = function(){
+		var tmp = $scope.achats;
+		var tmp2 = $scope.achats;
+		var nbook ;
+			for(i in tmp){
+				nbook = 0;
+				//alert($tmp[i].book.etat.conditions.name);
+				for(j in tmp2){
+					if(tmp[i].book.name == tmp2[j].book.name && i != j){
+						//alert(tmp[i].book.name + i +' = ' + tmp2[j].book.name + j );
+						if(nbook == 1){
+							alert('Vous avez deux fois le livre' + tmp[i].book.name);
+							break;
+						}
+						nbook ++;
+						//break;
+					}
+				}
+					alert(nbook);
+			}
+		}
 
+	var anciens;
 	$scope.TransfertLivre = function(){
 		$tmp = angular.copy(filterFilter($scope.livres, {"completed":true}));
 		console.log('affichage');
@@ -54,17 +75,16 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 					name_book: $tmp[i].book.name,
 					name_subject: $tmp[i].Subject.name,
 					Condition: $scope.etats[0],
-					reducing: $scope.etats[0].conditions.reducing,
-					amount: 0,
+					reducing: $scope.etats[0].Condition.reducing,
+					amount: 1,
 					prize_unit : $tmp[i].book.prize
+					//prize_total: ($tmp[i].book.prize - $tmp[i].book.prize*$tmp[i].book.reducing/100)*amount;
 					}}
 
-			$scope.achats.push($t);			
+			$scope.achats.push($t);		
 		}
-		/*$scope.achats.forEach(function(achat){
-			if(achat.book.qte == null)
-				achat.book.qte = 0;
-		})*/
+			//$scope.achat.Row.prize_total = ($scope.achat.Row.prize_unit- $scope.achat.Row.prize_unit*  $scope.achat.Row.reducing / 100)*$scope.achat.Row.amount;
+
 		$scope.clicked = false;
 	}
 
@@ -83,7 +103,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 
 	$scope.updateGrades = function(){
 		$scope.livres=[];
-		$http.get($scope.urlGetGrades+'/'+$scope.choixFiliere.sector.id).success(function(response) {
+		$http.get($scope.urlGetGrades+'/'+$scope.choixFiliere.Sector.id).success(function(response) {
 				      	$scope.classes = response;
 				      	console.log($scope.classes);
 				    });			
@@ -133,8 +153,8 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	*	Permet de mettre à jour le champs de réduction
 	*/
 	$scope.updateCondition = function(index){
-		$scope.achats[index].Row.reducing = $scope.achats[index].Row.Condition.conditions.reducing;
-		$scope.achats[index].Row.name_condition = $scope.achats[index].Row.Condition.conditions.name;
+		$scope.achats[index].Row.reducing = $scope.achats[index].Row.Condition.Condition.reducing;
+		$scope.achats[index].Row.name_condition = $scope.achats[index].Row.Condition.Condition.name;
 	}
 
 
