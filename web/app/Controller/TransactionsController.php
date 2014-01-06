@@ -11,26 +11,18 @@ class TransactionsController extends AppController {
 	*	Etape: 1
 	*	Initialisation de la vente
 	*/
-	public function initSale(){
+	public function initSale($clientID = null){
+
+		$step_succ =  array('controller' => 'transactions', 'action' => 'sale');
+
 		$this->set('step_for_progress_bar', 1);
 		$this->set('pred_for_progress_bar', '#');
-		$this->set('suiv_for_progress_bar', array('controller' => 'transactions', 'action' => 'sale'));
-
+		$this->set('suiv_for_progress_bar', $step_succ);
 
 
 		if(!$this->Session->check('Transaction.achat')){
 			$this->Session->write('Transaction.achat.step', 1);
 		}
-	}
-
-	/**
-	*	Procéssus Vente
-	*	Etape: 2	
-	*	Etape de vente des livres
-	*/
-	public function sale($clientID = null){
-
-		$step_pred = array('controller' => 'transactions', 'action' => 'initSale');
 
 		if(isset($clientID) && is_numeric($clientID)){
 			if(!$this->Session->check('Transaction.achat.Client')){
@@ -48,12 +40,22 @@ class TransactionsController extends AppController {
 					$this->Transaction->save($tmp);
 					$this->Session->write('Transaction.achat.transaction_id', $this->Transaction->id);
 					$this->Session->write('Transaction.achat.step', 2);
+					$this->redirect($step_succ);
 
-				}else{
-					$this->redirect($step_pred);
 				}
 			}
 		}
+	}
+
+	/**
+	*	Procéssus Vente
+	*	Etape: 2	
+	*	Etape de vente des livres
+	*/
+	public function sale($clientID = null){
+
+		$step_pred = array('controller' => 'transactions', 'action' => 'initSale');
+
 
 		if(!$this->Session->check('Transaction.achat') || $this->Session->read('Transaction.achat.step') < 2){
 			$this->redirect($step_pred);
