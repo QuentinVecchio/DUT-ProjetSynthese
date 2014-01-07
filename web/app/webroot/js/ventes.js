@@ -13,16 +13,17 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	$scope.mt =0;
 	$scope.achats = [];
 		
-	/*$scope.$watch('achats', function(){
+	$scope.$watch('achats', function(){
 		console.log('oui');
 		$scope.mt = 0;
 		$scope.achats.forEach(function(achat){
-			var tmp = (achat.book.prize- achat.book.prize*achat.book.etat.conditions.reducing / 100)*achat.book.qte;
+			//alert(achat.Row.prize_unit);
+			var tmp = (achat.Row.prize_unit- achat.Rox.prize_unit*achat.Row.reducing / 100)*achat.Row.amount;
 			if(tmp != null){
 				$scope.mt += tmp;
 			}
 		})
-	}, true)*/
+	}, true)
 
 	$scope.$watch('livres', function(){
 		$scope.variable = filterFilter($scope.livres, {completed:true}).length; 
@@ -80,17 +81,14 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 					book_id: $tmp[i].book.id,
 					name_book: $tmp[i].book.name,
 					name_subject: $tmp[i].Subject.name,
-					Condition: $scope.etats[0],
+					Condition: $scope.etats[0].Condition.name,
 					reducing: $scope.etats[0].Condition.reducing,
 					amount: 1,
 					prize_unit : $tmp[i].book.prize
-					//prize_total: ($tmp[i].book.prize - $tmp[i].book.prize*$tmp[i].book.reducing/100)*amount;
 					}}
 
 			$scope.achats.push($t);		
 		}
-			//$scope.achat.Row.prize_total = ($scope.achat.Row.prize_unit- $scope.achat.Row.prize_unit*  $scope.achat.Row.reducing / 100)*$scope.achat.Row.amount;
-
 		$scope.clicked = false;
 	}
 
@@ -124,16 +122,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	}
 
 	$scope.duplicateAchat = function(index){
-
 		$scope.achats.splice(index+1, 0, angular.copy($scope.achats[index]));
-
-		/*var original = $scope.achats[index];
-		console.log($scope.achats);
-		var tmp = {
-			book: { id: original.book.id+1, name: original.book.name, prize: original.book.prize, etat: { condition:{id:'', name: "", reducing:''}}, qte: original.book.qte},
-			Subject: {name: original.Subject.name},
-			completed : true
-			};*/
 	}
 
 	$scope.editTodo = function(todo){
@@ -151,7 +140,6 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	*/
 	$scope.changeRow = function(index){
 		$scope.achats[index].Row.prize_total = ($scope.achats[index].Row.prize_unit- $scope.achats[index].Row.prize_unit*  $scope.achats[index].Row.reducing / 100)*$scope.achats[index].Row.amount;
-
 	}
 
 	/**

@@ -50,7 +50,7 @@
                         <td><strong>Options</strong></td>
                         <td><strong>Matière</strong></td>
                         <td><strong>Livre</strong></td>
-                        <td><strong>Prix Unit</strong></td>
+                        <td><strong>Prix / U</strong></td>
                         <td><strong>Etat</strong></td>
                         <td><strong>%</strong></td>
                         <td><strong>Quantité</strong></td>
@@ -61,12 +61,11 @@
                       <tr ng-repeat="achat in achats">
                         <td>
                           <div class="btn-group">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                              Options <span class="caret"></span>
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Options&nbsp<span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                              <li><a class="animate-leave" ng-click="removeAchat($index)" title="Supprimer cet achat" href="#">Supprimer</a></li>
-                              <li><a class="animate-leave" ng-click="duplicateAchat($index)" title="Supprimer cet achat" href="#">Dupliquer</a></li>
+                              <li><a class="glyphicon glyphicon-remove" ng-click="removeAchat($index)" href="#">&nbspSupprimer</a></li>
+                              <li><a class="glyphicon glyphicon-plus" ng-click="duplicateAchat($index)" href="#">&nbspDupliquer</a></li>
                             </ul>
                           </div>
 
@@ -98,18 +97,18 @@
                       </tr>
                     </tbody>
                 </table>
+                <span class="TotalTTC">Montant total TTC : <strong>{{mt | number:2}}</strong> €</span>
               </label>
             </div>
           </li>
           </ul>
         </section>
-        <footer id="footer">
-          <div class="panel-footer" id="footer_boutons">
-              <input type="submit" ng-click="VerifBook()" value="Valider" class="btn btn-primary">
+        <!--<footer id="footer">
+          <div class="panel-footer" id="footer_boutons">-->
               <a class="btn btn-primary" ng-click="saveAchats()" href="#">Nouveau</a>
-                    Montant total TTC : <strong>{{mt | number:2}}</strong> €
-          </div>
-        </footer>
+        <!--  </div>
+        </footer>-->
+        <input id="BtnSubmit" type="submit" ng-click="VerifBook()" value="Valider" class="btn btn-success">
         <?php echo $this->Form->end(); ?>
     </section>
         <!--

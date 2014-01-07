@@ -1,6 +1,17 @@
+#BtnSubmit{
+  width: 200px;
+  display: block;
+  margin: auto;
+}
+
+.TotalTTC{
+  margin-left:747px;
+}
+
 .prix{
   text-align: right;
 }
+
 #footer_choice{
   width:50%;
 }
