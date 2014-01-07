@@ -10,7 +10,7 @@
 				<?php echo $this->Form->input('name', array('placeholder' => 'Prénom','input' => array('class' => 'form-control'),
 																'name' =>'name',
 																'ng-minLength' =>2, 'ng-maxLength' =>15,
-																'ng-pattern' =>'/^[a-zA-Zéèêàâùûç ]{3,}$/i',
+																'ng-pattern' =>'/^[a-zA-Zéèêàâùûç\- ]+$/i',
 																'ng-model' => 'Clients.Client.name',
 																'autocomplete' => 'off',
 																'label' => array('text' => 'Prénom:', 'class' => 'col-sm-4 control-label'),
@@ -27,7 +27,7 @@
 				<?php echo $this->Form->input('lastname', array('placeholder' => 'Nom','input' => array('class' => 'form-control'),
 																'name' =>'lastname',
 																'ng-minLength' =>2, 'ng-maxLength' =>15,
-																'ng-pattern' =>'/^[a-zA-Zéèêàâùûç ]{3,}$/i',
+																'ng-pattern' =>'/^[a-zA-Zéèêàâùûç ]+$/i',
 																'ng-model' => 'Clients.Client.lastname',
 																'autocomplete' => 'off',
 																'label' => array('text' => 'Nom:', 'class' => 'col-sm-4 control-label'),
@@ -60,10 +60,16 @@
 				<?php echo $this->Form->input('street', array('placeholder' => 'Rue','input' => array('class' => 'form-control'),
 																'name' =>'street',
 																'ng-model' => 'Clients.Client.street',
+																'ng-pattern' => '/^[a-zA-Z-\'éèêëïöôùçà ]+$/',
 																'autocomplete' => 'off',
 																'label' => array('text' => 'Rue:', 'class' => 'col-sm-4 control-label'), 
 																'div' => array('class' => 'col-sm-10'))); ?>
-			</div>			
+			</div>	
+			<div ng-show="form.street.$dirty && form.street.$invalid" class="col-sm-10">
+	          <div ng-show="form.street.$error.required">Saisir votre nom de rue.</div>
+	          <div ng-show="form.street.$error.pattern">Nom de rue incorrecte.</div>
+	        </div>
+		
 			<div class="form-group">
 				<?php echo $this->Form->input('zip_code', array('ng-model' => 'Clients.Town.zip_code',
 																'placeholder' => 'Code postal',

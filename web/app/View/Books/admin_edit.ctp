@@ -38,9 +38,14 @@
 				<?php echo $this->Form->input('ISBN', array('placeholder' => 'ISBN','input' => array('class' => 'form-control'),
 																					'name' => 'ISBN',
 																					'ng-model' => 'Book.Book.ISBN',
+																					'ng-pattern' =>'/^978[0-9]{10}$|^979[0-9]{10}$/',
 																					'label' => array('text' => 'ISBN', 'class' => 'col-sm-4 control-label'), 
 																					'div' => array('class' => 'col-sm-10'))); ?>
 			</div>
+			<div ng-show="form.ISBN.$dirty && form.ISBN.$invalid" class="col-sm-10">
+	        	<div ng-show="form.ISBN.$error.required">Saisir un ISBN</div>
+	        	<div ng-show="form.ISBN.$error.pattern">ISBN incorrecte</div>
+	        </div>	
 			<?php echo $this->Form->button('Valider', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;',
 																		'ng-disabled' => 'form.$invalid')); ?>
 		</fieldset>

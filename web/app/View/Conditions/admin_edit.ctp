@@ -9,13 +9,16 @@
 					<?php echo $this->Form->input('name', array('placeholder' => 'Nom','input' => array('class' => 'form-control'),
 																					'ng-model' => 'Condition.name',
 																					'name' => 'name',
-																					'ng-pattern' => '/^[a-zA-Zéèêàâùûç]{3,}$/i',
+																					'ng-pattern' => '/^[a-zA-Zéèêàâùûç]+$/i',
+																					'ng-minLength' =>2, 'ng-maxLength' =>15,
 																					'label' => array('text' => 'Nom', 'class' => 'col-sm-4 control-label'),
 																					'div' => array('class' => 'col-sm-10')));?>
 			       
 					<div ng-show="form.name.$dirty && form.name.$invalid" class="col-sm-10">
 			        	<div ng-show="form.name.$error.required">Saisir un nom de réduction</div>
 			        	<div ng-show="form.name.$error.pattern">Caractères incorrectes.</div>
+			        	<div ng-show="form.name.$error.minlength">Nom trop petit.</div>
+	          			<div ng-show="form.name.$error.maxlength">Nom trop long.</div>
 			        </div>
 				</div>
 				<div class="form-group">

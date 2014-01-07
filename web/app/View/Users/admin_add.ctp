@@ -9,7 +9,7 @@
 				<?php echo $this->Form->input('username', array('placeholder' => 'Identifiant',
 																	'name' => 'username',
 																	'ng-model'=>'User.username', 'ng-minlength'=>'2', 'ng-maxlength'=> '15',
-																	'ng-pattern'=>'/^[a-zA-Z ]{1,}$/',
+																	'ng-pattern'=>'/^[a-zA-Z0-9\-!?&_éèêëïöôùçà ]+$/',
 																	'input' => array('class' => 'form-control'),
 																	'label' => array('text' => 'Identifiant ', 'class' => 'col-sm-4 control-label'),
 																	'div' => array('class' => 'col-sm-10'))); ?>

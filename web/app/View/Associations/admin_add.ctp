@@ -9,7 +9,7 @@
 				<?php echo $this->Form->input('name', array('placeholder' => 'Nom','input' => array('class' => 'form-control'),
 																'name' =>'name',
 																'ng-minLength' =>2, 'ng-maxLength' =>15,
-																'ng-pattern' =>' /^[a-zA-Z\. ]{1,}$/',
+																'ng-pattern' =>' /^[a-zA-Z0-9-\'@/:,«»!?&.éèêëïöôùçà ]{1,}$/',
 																'ng-model' => 'Associations.Association.name',
 																'autocomplete' => 'off',
 																'label' => array('text' => 'Nom', 'class' => 'col-sm-4 control-label'),
@@ -43,10 +43,16 @@
 				<?php echo $this->Form->input('street', array('placeholder' => 'Rue','input' => array('class' => 'form-control'),
 																'name' =>'street',
 																'ng-model' => 'Associations.Association.street',
+																'ng-pattern' => '/^[a-zA-Z-\'éèêëïöôùçà ]{1,}$/',
 																'autocomplete' => 'off',
 																'label' => array('text' => 'Rue:', 'class' => 'col-sm-4 control-label'), 
 																'div' => array('class' => 'col-sm-10'))); ?>
-			</div>			
+			</div>
+			<div ng-show="form.street.$dirty && form.street.$invalid" class="col-sm-10">
+	          <div ng-show="form.street.$error.required">Saisir votre nom de rue.</div>
+	          <div ng-show="form.street.$error.pattern">Nom de rue incorrecte.</div>
+	        </div>
+			
 			<div class="form-group">
 				<?php echo $this->Form->input('zip_code', array('ng-model' => 'Associations.Town.zip_code',
 																'placeholder' => 'Code postal',
