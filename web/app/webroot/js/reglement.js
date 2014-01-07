@@ -18,7 +18,7 @@ gestionDemande.controller('ctrl', function FormCtrl($scope) {
 		$scope.reglement -= sauvegarde[valeur];
 		if(angular.isNumber($scope.list[valeur].Typereglement.amount) == false)
 		{
-			alert("Vous n'avez pas entré un nombre.");
+	
 			$scope.list[valeur].Typereglement.amount = 0;
 			sauvegarde[valeur] = parseFloat($scope.list[valeur].Typereglement.amount);
 		}

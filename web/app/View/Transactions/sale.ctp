@@ -1,5 +1,7 @@
 <?php $this->extend('corps_transaction_sale') ?>
-<h1>Espace vente</h1>
+<div style="text-align: center;">
+  <h1>Espace vente</h1>
+</div>
 <div ng-app="GBL" ng-controller="CtrlLivres" class="clearFix">
 <section id="book_choice" ng-show="clicked" ng-init="clicked=false" class="container animated fadeIn" style="clear:both;">
         <header id="header" ng-init="etats=<?php echo htmlentities(json_encode($listCondition)); ?>;transaction_id=<?php echo $this->Session->read('Transaction.achat.transaction_id') ?>">
@@ -100,7 +102,7 @@
         </section>
         <!--<footer id="footer">
           <div class="panel-footer" id="footer_boutons">-->
-              <a class="btn btn-primary" ng-click="saveAchats()" href="#">Nouveau</a>
+              <a class="btn btn-primary" ng-click="saveAchats()" href="#" style="margin-left: 700px;">Nouveau</a>
         <!--  </div>
         </footer>-->
     </section>
