@@ -83,6 +83,8 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 					name_subject: $tmp[i].Subject.name,
 					Condition: $scope.etats[0],
 					reducing: $scope.etats[0].Condition.reducing,
+					name_condition: $scope.etats[0].Condition.name,
+					prize_total: $tmp[i].book.prize,
 					amount: 1,
 					prize_unit : $tmp[i].book.prize
 					}}

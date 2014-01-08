@@ -105,8 +105,8 @@
               <a class="btn btn-primary" ng-click="saveAchats()" href="#" style="margin-left: 700px;">Nouveau</a>
         <!--  </div>
         </footer>-->
-    </section>
-        <input id="BtnSubmit" type="submit" ng-click="VerifBook()" value="Enregistrer" class="btn btn-success">
+        <input id="BtnSubmit" type="submit" ng-click="VerifBook()" value="Acheter" class="btn btn-success">
+        </section>
         <?php echo $this->Form->end(); ?>
         <!--
       <section id="facture" class="container animated fadeIn" ng-show="!clicked" ng-hide="clicked">

@@ -33,7 +33,7 @@ gestionDemande.controller('ctrl', function FormCtrl($scope) {
 	$scope.$watch('reglement',function(){
 		if($scope.reste < 0)
 		{
-			alert("Impossible, le paiement est plus élévé que le total");
+			$scope.donne = 0 - $scope.reste;
 		}
 	},true);
 

@@ -66,8 +66,6 @@ class TransactionsController extends AppController {
 		$this->set('pred_for_progress_bar', $step_pred);		
 		$this->set('suiv_for_progress_bar', $step_succ);		
 
-		debug($this->data);
-
 		if(!empty($this->data)){
 			$this->Transaction->Row->deleteAll(array('transaction_id' => $this->Session->read('Transaction.achat.transaction_id')));
 			if($this->Transaction->Row->saveMany($this->data)){
