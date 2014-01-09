@@ -111,6 +111,14 @@ class TransactionsController extends AppController {
 		$step_succ = array('controller' => 'transactions', 'action' => 'recapSale');
 
 		if(!empty($this->data)){
+
+			// On enlève les entrées avec un prix vide
+			foreach ($this->request->data as $key => $value) {
+				if(empty($value['amount'])){
+					unset($this->request->data[$key]);
+				}
+			}
+
 			$this->Transaction->TransactionsTypereglement->deleteAll(array('transaction_id' => $this->Session->read('Transaction.achat.transaction_id')));
 			if($this->Transaction->TransactionsTypereglement->saveMany($this->data)){
 				$this->Session->write('Transaction.achat.step', 4);
@@ -132,6 +140,9 @@ class TransactionsController extends AppController {
 		$this->loadModel('Typereglement');
 		$listTypeReglement = $this->Typereglement->find('all', array('contain' => array('TransactionsTypereglement' => array(
 																							'conditions' => array('transaction_id'=> $this->Session->read('Transaction.achat.transaction_id'))))));		
+		foreach ($listTypeReglement as $key => $value) {
+			$listTypeReglement[$key]['TransactionsTypereglement'][0]['amount'] = floatval($listTypeReglement[$key]['TransactionsTypereglement'][0]['amount']);
+		}
 		$this->set('listTypeReglement', $listTypeReglement);
 
 	}
