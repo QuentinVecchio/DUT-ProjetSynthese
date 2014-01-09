@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Dim 05 Janvier 2014 à 14:26
+-- Généré le: Jeu 09 Janvier 2014 à 09:55
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.4.16
 
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `books` (
   `subject_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `subjet_id` (`subject_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Contenu de la table `books`
@@ -71,14 +71,8 @@ CREATE TABLE IF NOT EXISTS `books` (
 INSERT INTO `books` (`id`, `name`, `prize`, `ISBN`, `subject_id`) VALUES
 (1, 'Mon premier livre', 20, '2567', 7),
 (4, 'Un premier livre', 45, 'coucou', 1),
-(5, 't', 15, 'r', NULL),
 (6, 'AnglaisFacile', 20, 'AA', 3),
-(7, 'Un second livres', 55, 'AAA', 1),
-(8, 'Maths', 10, '111-253', NULL),
-(9, 'Mathsa', 1, 'azza', NULL),
-(10, 'ezf', 5, 'azaz', NULL),
-(11, 'MathÃ©matiques', 10, 'eza', NULL),
-(12, 'ezfa', 5, 'hht', NULL);
+(7, 'Un second livres', 55, 'AAA', 1);
 
 -- --------------------------------------------------------
 
@@ -99,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
   PRIMARY KEY (`id`),
   KEY `association_id` (`association_id`),
   KEY `town_id` (`town_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Contenu de la table `clients`
@@ -108,7 +102,8 @@ CREATE TABLE IF NOT EXISTS `clients` (
 INSERT INTO `clients` (`id`, `name`, `lastname`, `houseNumber`, `street`, `email`, `phone`, `town_id`, `association_id`) VALUES
 (8, 'Matthieu', 'Clin', '16', 'rue des vergers', 'matthieu.clin@wanadoo.fr', '0303030303', 22176, 1),
 (9, 'Quentin', 'Vecchio', '13', 'rue de l''Ã©cole', 'quentin.vecchio@gmail.com', '0303030303', 21925, 2),
-(10, 'Mathilde', 'Dupont', '15', 'rue du gÃ©nÃ©ral Clin', 'mathilde.dupont@dupont.org', '0505050505', 21776, 2);
+(10, 'Mathilde', 'Dupont', '15', 'rue du gÃ©nÃ©ral Clin', 'mathilde.dupont@dupont.org', '0505050505', 21776, 2),
+(14, 'dza', 'zefze', '12', 'sgrs', 'fezfjzekl@zdjfklze.com', '0606060606', 4552, NULL);
 
 -- --------------------------------------------------------
 
@@ -186,8 +181,8 @@ CREATE TABLE IF NOT EXISTS `records` (
 
 CREATE TABLE IF NOT EXISTS `rows` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `condition_id` int(11) NOT NULL,
-  `book_id` int(11) NOT NULL,
+  `condition_id` int(11) DEFAULT NULL,
+  `book_id` int(11) DEFAULT NULL,
   `transaction_id` int(11) NOT NULL,
   `name_book` varchar(255) NOT NULL,
   `name_subject` varchar(255) NOT NULL,
@@ -200,7 +195,19 @@ CREATE TABLE IF NOT EXISTS `rows` (
   KEY `condition_id` (`condition_id`),
   KEY `book_id` (`book_id`),
   KEY `transaction_id` (`transaction_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=130 ;
+
+--
+-- Contenu de la table `rows`
+--
+
+INSERT INTO `rows` (`id`, `condition_id`, `book_id`, `transaction_id`, `name_book`, `name_subject`, `name_condition`, `reducing`, `amount`, `prize_unit`, `prize_total`) VALUES
+(124, 1, 4, 32, 'Un premier livre', 'MathÃ©matiques', 'Bon', 15, 1, '45.00', '38.25'),
+(125, 1, 7, 32, 'Un second livres', 'MathÃ©matiques', 'Bon', 15, 1, '55.00', '46.75'),
+(126, 1, 1, 32, 'Mon premier livre', 'FranÃ§ais', 'Bon', 15, 1, '20.00', '17.00'),
+(127, 1, 4, 33, 'Un premier livre', 'MathÃ©matiques', 'Bon', 15, 1, '45.00', '38.25'),
+(128, 1, 7, 33, 'Un second livres', 'MathÃ©matiques', 'Bon', 15, 1, '55.00', '46.75'),
+(129, 1, 1, 33, 'Mon premier livre', 'FranÃ§ais', 'Bon', 15, 1, '20.00', '17.00');
 
 -- --------------------------------------------------------
 
@@ -36897,7 +36904,15 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `client_id` (`client_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
+
+--
+-- Contenu de la table `transactions`
+--
+
+INSERT INTO `transactions` (`id`, `user_id`, `date`, `type`, `close`, `completed`, `client_id`) VALUES
+(32, 1, '2014-01-09', 'achat', 0, 1, 8),
+(33, 1, '2014-01-09', 'achat', 0, 1, 8);
 
 -- --------------------------------------------------------
 
@@ -36913,7 +36928,17 @@ CREATE TABLE IF NOT EXISTS `transactions_typereglements` (
   PRIMARY KEY (`id`),
   KEY `transaction_id` (`transaction_id`,`typereglement_id`),
   KEY `typereglement_id` (`typereglement_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
+
+--
+-- Contenu de la table `transactions_typereglements`
+--
+
+INSERT INTO `transactions_typereglements` (`id`, `transaction_id`, `typereglement_id`, `amount`) VALUES
+(36, 32, 1, '100.00'),
+(37, 32, 2, '2.00'),
+(38, 33, 1, '50.00'),
+(39, 33, 2, '52.00');
 
 -- --------------------------------------------------------
 
@@ -36971,7 +36996,7 @@ ALTER TABLE `associations`
 -- Contraintes pour la table `books`
 --
 ALTER TABLE `books`
-  ADD CONSTRAINT `books_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `books_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `clients`
@@ -36998,9 +37023,9 @@ ALTER TABLE `records`
 -- Contraintes pour la table `rows`
 --
 ALTER TABLE `rows`
-  ADD CONSTRAINT `rows_ibfk_1` FOREIGN KEY (`condition_id`) REFERENCES `conditions` (`id`),
-  ADD CONSTRAINT `rows_ibfk_2` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`),
-  ADD CONSTRAINT `rows_ibfk_3` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`);
+  ADD CONSTRAINT `rows_ibfk_3` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `rows_ibfk_1` FOREIGN KEY (`condition_id`) REFERENCES `conditions` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `rows_ibfk_2` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`) ON DELETE SET NULL;
 
 --
 -- Contraintes pour la table `stocks`
