@@ -1,7 +1,52 @@
 <?php $this->extend('corps_transaction_sale') ?>
 
 <?php if(!$this->Session->check('Transaction.achat.Client')): ?>
+  <?php if(!empty($listEnCours)): ?>
+<section>
+  <table class="table table-bordered">
+      <br>
+      <caption><h3>Vos sessions en cours</h3></caption>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Adresse</th>
+          <th>Date</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($listEnCours as $key => $value): ?>
+          <tr>
+            <td><?php echo $value['Client']['name'].' '.$value['Client']['lastname'] ?></td>
+            <td><?php echo $value['Client']['houseNumber'].' '.$value['Client']['street'] ?></td>
+            <td><?php echo $value['Transaction']['date'] ?></td>
+            <td>
+              <div class="btn-group">
+                <button type="button" class="btn btn-primary">Actions</button>
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>              
+                <ul class="dropdown-menu" role="menu">
+                  <li><?php echo $this->Html->Link(' Reprendre',
+                                    array('controller' => 'transactions', 'action' => 'resume', $value['Transaction']['id']),
+                                    array('class' => 'glyphicon glyphicon-pencil')); ?>
+                  </li>
+                  <li><?php echo $this->Html->Link(' Suppression',
+                              array('controller' => 'transactions', 'action' => 'deleteTransactionSale', $value['Transaction']['id']),
+                              array('confirm' => 'Etes-vous sûr de vouloir le supprimer ?',
+                                  'class' => 'glyphicon glyphicon-remove')); ?></li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        <?php endforeach; ?>
 
+      </tbody>
+  </table>
+  <?php endif; ?>
+
+</section>
 <section ng-app="app" ng-controller="Controller">
   <div class="formulaire" style="width: 400px;margin: auto;padding-bottom:10px;">
     <legend>Choix du parent :</legend>

@@ -45,6 +45,11 @@ class TransactionsController extends AppController {
 				}
 			}
 		}
+
+		$listEnCours = $this->Transaction->findAllByCompletedAndType(0, 'achat');
+		$this->set('listEnCours', $listEnCours);
+
+
 	}
 
 	/**
@@ -249,6 +254,29 @@ class TransactionsController extends AppController {
 	}
 
 
+	/**
+	*	Suppression d'une transaction
+	*/
+	public function deleteTransactionSale($id) {
+		if($this->Transaction->delete($id)){
+			$this->Session->setFlash('Vous venez de supprimer une vente','message', array('type' => 'warning'));
+		}else{
+			$this->Session->setFlash('Erreur lors de la suppression','message', array('type' => 'danger'));
+		}
+		$this->redirect(array('controller' => 'transactions', 'action' => 'initSale'));
+	}
+
+	/**
+	*	Reprise d'une transaction
+	*/
+	public function resume($id){
+		$tmp = $this->Transaction->findById($id);
+		$this->Session->write('Transaction.achat.Client', $tmp['Client']);
+		$this->Session->write('Transaction.achat.transaction_id', $id);
+		$this->Session->write('Transaction.achat.step', 2);
+		$this->redirect(array('controller'=> 'transactions', 'action' => 'sale'));
+		
+	}
 
 
 	/**
