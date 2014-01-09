@@ -18,7 +18,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 		$scope.mt = 0;
 		$scope.achats.forEach(function(achat){
 			//alert(achat.Row.prize_unit);
-			var tmp = (achat.Row.prize_unit- achat.Rox.prize_unit*achat.Row.reducing / 100)*achat.Row.amount;
+			var tmp = (achat.Row.prize_unit- achat.Row.prize_unit*achat.Row.reducing / 100)*achat.Row.amount;
 			if(tmp != null){
 				$scope.mt += tmp;
 			}
@@ -26,7 +26,9 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	}, true)
 
 	$scope.$watch('livres', function(){
-		$scope.variable = filterFilter($scope.livres, {completed:true}).length; 
+		if($scope.livres){
+			$scope.variable = filterFilter($scope.livres, {completed:true}).length; 
+		}
 	}, true)
 
 	/*if($location.path() == '')
@@ -47,7 +49,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 		*	Matthieu:
 		*		- Pourquoi ne pas utiliser un filterFilter avec comme paramètre book_id : xxx ?
 		*/
-		var tmp = $scope.achats;
+		/*var tmp = $scope.achats;
 		var tmp2 = $scope.achats;
 		var nbook ;
 			for(i in tmp){
@@ -65,7 +67,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 					}
 				}
 					alert(nbook);
-			}
+			}*/
 		}
 
 	var anciens;
@@ -84,7 +86,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 					Condition: $scope.etats[0],
 					reducing: $scope.etats[0].Condition.reducing,
 					name_condition: $scope.etats[0].Condition.name,
-					prize_total: $tmp[i].book.prize,
+					prize_total: $scope.calculTotal($tmp[i].book.prize, $scope.etats[0].Condition.reducing, 1),
 					amount: 1,
 					prize_unit : $tmp[i].book.prize
 					}}
@@ -137,11 +139,20 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 		})
 	}
 	
+
+	/**
+	*
+	*/
+	$scope.calculTotal = function(prize_unit, reducing, amount){
+
+		return (prize_unit- prize_unit*reducing/100)* amount;
+	}
+
 	/**
 	*	Recalcul du total si modification de la quantité ou de la réduction
 	*/
 	$scope.changeRow = function(index){
-		$scope.achats[index].Row.prize_total = ($scope.achats[index].Row.prize_unit- $scope.achats[index].Row.prize_unit*  $scope.achats[index].Row.reducing / 100)*$scope.achats[index].Row.amount;
+			$scope.achats[index].Row.prize_total = $scope.calculTotal($scope.achats[index].Row.prize_unit,$scope.achats[index].Row.reducing,$scope.achats[index].Row.amount);
 	}
 
 	/**
@@ -151,6 +162,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	$scope.updateCondition = function(index){
 		$scope.achats[index].Row.reducing = $scope.achats[index].Row.Condition.Condition.reducing;
 		$scope.achats[index].Row.name_condition = $scope.achats[index].Row.Condition.Condition.name;
+		$scope.changeRow(index);
 	}
 
 
