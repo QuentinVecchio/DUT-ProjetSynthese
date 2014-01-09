@@ -26,9 +26,13 @@ class TransactionsController extends AppController {
 
 		if(isset($clientID) && is_numeric($clientID)){
 			if(!$this->Session->check('Transaction.achat.Client')){
-				$client = current($this->Transaction->Client->find('all', array('conditions' => array('Client.id' => $clientID))));
+				$this->Transaction->recursive = 2;
+				$this->Transaction->unbindModel(array('hasMany' => array('Row'), 'hasAndBelongsToMany' => array('Typereglement')));
+
+				$client = $this->Transaction->Client->findById($clientID);
 				if($client){
 					$this->Session->write('Transaction.achat.Client', $client['Client']);
+					$this->Session->write('Transaction.achat.Town', $client['Town']);
 
 					$tmp = array('client_id' => $client['Client']['id'],
 								 'user_id' => $this->Auth->user('id'),
@@ -273,8 +277,11 @@ class TransactionsController extends AppController {
 	*	Reprise d'une transaction
 	*/
 	public function resume($id){
+		$this->Transaction->recursive = 2;
+		$this->Transaction->unbindModel(array('hasMany' => array('Row'), 'hasAndBelongsToMany' => array('Typereglement')));
 		$tmp = $this->Transaction->findById($id);
 		$this->Session->write('Transaction.achat.Client', $tmp['Client']);
+		$this->Session->write('Transaction.achat.Town', $tmp['Client']['Town']);
 		$this->Session->write('Transaction.achat.transaction_id', $id);
 		$this->Session->write('Transaction.achat.step', 2);
 		$this->redirect(array('controller'=> 'transactions', 'action' => 'sale'));
