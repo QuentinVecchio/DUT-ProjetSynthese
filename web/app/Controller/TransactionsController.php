@@ -166,15 +166,14 @@ class TransactionsController extends AppController {
 	*/
 	public function recapSale(){
 		$step_pred =  array('controller' => 'transactions', 'action' => 'reglement');
-
 		if(!$this->Session->check('Transaction.achat') || $this->Session->read('Transaction.achat.step') < 4){
 			$this->redirect($step_pred);
 		}
 		
-		$step_succ =  array('controller' => 'transactions', 'action' => 'reglement');
+		$step_succ =  array('controller' => 'transactions', 'action' => 'end');
 		$this->set('step_for_progress_bar', 4);
 		$this->set('pred_for_progress_bar', $step_pred);
-		$this->set('suiv_for_progress_bar',  '#');
+		$this->set('suiv_for_progress_bar',  $step_succ);
 
 		$this->Transaction->TransactionsTypereglement->bindModel(array('belongsTo' => array('Typereglement')));
 		$this->set('transactions',$this->Transaction->TransactionsTypereglement->findAllByTransactionId($this->Session->read('Transaction.achat.transaction_id')));
@@ -190,7 +189,28 @@ class TransactionsController extends AppController {
 	}
 
 
+	public function end(){
+		$step_pred =  array('controller' => 'transactions', 'action' => 'reglement');
 
+		if(!$this->Session->check('Transaction.achat') || $this->Session->read('Transaction.achat.step') < 4){
+			$this->redirect($step_pred);
+		}
+		
+		$this->set('step_for_progress_bar', 4);
+		$this->set('pred_for_progress_bar', $step_pred);
+		$this->set('suiv_for_progress_bar',  '#');
+
+		$this->Transaction->id = $this->Session->read('Transaction.achat.transaction_id');
+		if($this->Transaction->save(array('completed' => 1))){
+			$this->Session->setFlash('Vente terminée','message', array('type' => 'success'));
+		}else{
+			$this->Session->setFlash('Erreur','message', array('type' => 'warning'));
+		}
+		$this->Session->delete('Transaction.achat');
+
+
+
+	}
 
 
 
