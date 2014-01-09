@@ -20,9 +20,9 @@ class ClientsController extends AppController{
 				
 				if($this->Session->check('Transaction')){
 					if($this->Session->check('Transaction.depot')){
-						$this->redirect(array('controller' => 'transactions', 'action' => 'depot', 'admin' => false, $this->Client->id));
+						$this->redirect(array('controller' => 'transactions', 'action' => 'init', 'admin' => false, $this->Client->id));
 					}else{
-						$this->redirect(array('controller' => 'transactions', 'action' => 'sale', 'admin' => false, $this->Client->id));	
+						$this->redirect(array('controller' => 'transactions', 'action' => 'initSale', 'admin' => false, $this->Client->id));	
 					}
 				}else{
 					$this->redirect(array('action' => 'index', 'admin' => true));

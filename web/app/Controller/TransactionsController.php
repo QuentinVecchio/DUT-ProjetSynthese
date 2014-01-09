@@ -141,6 +141,7 @@ class TransactionsController extends AppController {
 		$listTypeReglement = $this->Typereglement->find('all', array('contain' => array('TransactionsTypereglement' => array(
 																							'conditions' => array('transaction_id'=> $this->Session->read('Transaction.achat.transaction_id'))))));		
 		foreach ($listTypeReglement as $key => $value) {
+			if(!empty($value['TransactionsTypereglement']))
 			$listTypeReglement[$key]['TransactionsTypereglement'][0]['amount'] = floatval($listTypeReglement[$key]['TransactionsTypereglement'][0]['amount']);
 		}
 		$this->set('listTypeReglement', $listTypeReglement);
@@ -201,6 +202,7 @@ class TransactionsController extends AppController {
 			$this->Session->write('Transaction.depot.date', time());
 			$this->Session->write('Transaction.depot.type', 'depot');			
 		}
+		$this->Session->delete('Transaction');
 	}
 
 	/**
@@ -255,17 +257,30 @@ class TransactionsController extends AppController {
 	public function refresh(){
 
 		if($this->Session->check('Transaction.achat')){
-			/*if($this->Session->check('Transaction.achat.transaction_id')){
+			if($this->Session->check('Transaction.achat.transaction_id')){
 				$tmp = $this->Transaction->findById($this->Session->read('Transaction.achat.transaction_id'));
 				if($tmp){
 					if($tmp['Transaction']['completed'] == 0){
-						$this->Transaction->delete($tmp['Transaction']['id']);
+						if($this->Transaction->delete($tmp['Transaction']['id'])){
+							$this->Session->setFlash('Vous venez d\'annuler une vente','message', array('type' => 'warning'));
+						}
 					}
 				}
-			}*/
+			}
 			$this->Session->delete('Transaction');
 			$this->redirect(array('controller' => 'transactions', 'action' => 'initSale'));	
-		}else{
+		}else if($this->Session->check('Transaction.depot')){
+			if($this->Session->check('Transaction.depot.transaction_id')){
+				$tmp = $this->Transaction->findById($this->Session->read('Transaction.depot.transaction_id'));
+				if($tmp){
+					if($tmp['Transaction']['completed'] == 0){
+						if($this->Transaction->delete($tmp['Transaction']['id'])){
+							$this->Session->setFlash('Vous venez d\'annuler un dépôt','message', array('type' => 'warning'));
+						}
+					}
+				}
+			}
+
 			$this->Session->delete('Transaction');
 			$this->redirect(array('controller' => 'transactions', 'action' => 'init'));	
 		}
