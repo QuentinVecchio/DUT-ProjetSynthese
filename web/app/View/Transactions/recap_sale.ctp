@@ -53,10 +53,12 @@
     </thead>
 
     <tbody>
-      <tr>
-        <td>test</td>
-        <td>0</td>
-      </tr>
+      <?php foreach ($transactions as $key => $value): ?>
+        <tr>
+          <td><?php echo $value['Typereglement']['name'] ?></td>
+          <td><?php echo $value['TransactionsTypereglement']['amount'] ?></td>
+        </tr>
+    <?php endforeach ?>
     </tbody>
   </table>
 </div>

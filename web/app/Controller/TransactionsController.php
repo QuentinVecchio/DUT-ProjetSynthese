@@ -172,6 +172,9 @@ class TransactionsController extends AppController {
 		$this->set('pred_for_progress_bar', $step_pred);
 		$this->set('suiv_for_progress_bar',  '#');
 
+		$this->Transaction->TransactionsTypereglement->bindModel(array('belongsTo' => array('Typereglement')));
+		$this->set('transactions',$this->Transaction->TransactionsTypereglement->findAllByTransactionId($this->Session->read('Transaction.achat.transaction_id')));
+
 
 		$this->Transaction->Row->recursive =  -1;
 		$listAchat = $this->Transaction->Row->findAllByTransactionId($this->Session->read('Transaction.achat.transaction_id'));
