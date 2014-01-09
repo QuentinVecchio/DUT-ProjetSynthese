@@ -1,4 +1,4 @@
-<?php if($this->Session->read('Auth.User.status') == 'admin' && $this->params['prefix'] == 'admin'): ?>
+<?php if($this->Session->read('Auth.User.status') == 'admin' && ($this->params['prefix'] == 'admin' || $this->params['controller'] == 'clients' && $this->params['action'] == 'add')): ?>
 
 <nav class="navbar navbar-inverse" role="navigation">
   <div class="navbar-header">
