@@ -22,12 +22,20 @@
 						<span class="sr-only">Toggle Dropdown</span>
 						</button>
 				  	<ul class="dropdown-menu" role="menu">
-		              <li>
-		              <?php 
-		                  echo $this->Html->Link(' Edition',array('controller' => 'conditions', 'action' => 'edit', $v['Condition']['id']),
-		                                  array('class' => 'glyphicon glyphicon-pencil'));
-		               ?>               
-		              </li>
+			            <li>
+			            <?php 
+			                echo $this->Html->Link(' Edition',array('controller' => 'conditions', 'action' => 'edit', $v['Condition']['id']),
+			                                array('class' => 'glyphicon glyphicon-pencil'));
+			            ?>               
+			            </li>
+				    	<li>
+							<?php 
+									echo $this->Html->Link(' Suppression',
+													 array('controller' => 'conditions', 'action' => 'delete', $v['Condition']['id']),
+													 array(	'confirm' => 'Etes-vous sûr de vouloir le supprimer ?',
+													 		'class' => 'glyphicon glyphicon-remove'));
+							 ?>				    		
+				    	</li>		              
 				  	</ul>
 				</div>
 			</td>

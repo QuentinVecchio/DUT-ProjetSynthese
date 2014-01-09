@@ -33,9 +33,9 @@
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
     <li class="divider-vertical"></li>
-    <li> <?php echo $this->Html->Link('Vente', array('controller' => 'transactions', 'action' =>'initSale', 'admin' => false)) ?></li>
-    <li class="divider-vertical"></li>
     <li> <?php echo $this->Html->Link('Dépôt', array('controller' => 'transactions', 'action' =>'init', 'admin' => false)) ?></li>
+    <li class="divider-vertical"></li>
+    <li> <?php echo $this->Html->Link('Vente', array('controller' => 'transactions', 'action' =>'initSale', 'admin' => false)) ?></li>
 	 	<li class="divider-vertical"></li>
 		<li> <a href="#">Parents</a> </li>
 		<li class="divider-vertical"></li>
