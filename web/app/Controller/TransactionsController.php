@@ -99,20 +99,20 @@ class TransactionsController extends AppController {
 		$this->set('suiv_for_progress_bar', $step_succ);		
 
 		if(!empty($this->data)){
-			$this->Transaction->Row->deleteAll(array('transaction_id' => $this->Session->read('Transaction.achat.transaction_id')));
+			/*$this->Transaction->Row->deleteAll(array('transaction_id' => $this->Session->read('Transaction.achat.transaction_id')));
 			if($this->Transaction->Row->saveMany($this->data)){
 
+
+			}else{
+				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
+			}*/
 				$total = 0;
 				foreach ($this->data as $key => $value) {
 					$total += $value['Row']['prize_total'];
 				}
 				$this->Session->write('Transaction.achat.total', $total);
-
 				$this->Session->write('Transaction.achat.step', 3);
-				$this->redirect($step_succ);
-			}else{
-				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
-			}
+			$this->redirect($step_succ);
 			$listAchat = $this->data;
 		}else{
 			$listAchat = $this->Transaction->Row->find('all', array('conditions' => array('transaction_id' => $this->Session->read('Transaction.achat.transaction_id')),
@@ -120,19 +120,34 @@ class TransactionsController extends AppController {
 			
 		}
 
-		//Transaction pour angularjs
 		$this->loadModel('Stock');
-		//$this->Stock->binMo
 		foreach ($listAchat as $key => $value) {
 			$listAchat[$key]['Row']['amount'] = intval($listAchat[$key]['Row']['amount']);
-			$listAchat[$key]['Row']['Condition']['Condition'] = current($this->Transaction->Row->Condition->findById($listAchat[$key]['Row']['condition_id']));
-			//$stock = $this->Stock->findAllByBookId($value['Row']['book_id']);
-			//debug($stock);
+			
+			$this->Stock->recursive = -1;
+			$stock = $this->Stock->findAllByBookId($value['Row']['book_id']);
 
-
+			$conditionList = array();
+			foreach ($stock as $k => $v) {
+				/* Calcul du max en fonction de si la ligne corresponds a une quantité déjà prise par le client*/
+				if($value['Row']['condition_id'] == $v['Stock']['condition_id']){
+					$max = $v['Stock']['depot']+$value['Row']['amount'] - $v['Stock']['vente'];
+					$tmp = $this->Transaction->Row->Condition->findById($v['Stock']['condition_id']);
+					$tmp['Condition']['max'] = $max;
+					$conditionList[] = $tmp;
+					$listAchat[$key]['Row']['Condition'] = $tmp;
+				}else{
+					$max = $v['Stock']['depot'] - $v['Stock']['vente'];
+					/* si il reste des livres*/
+					if($max > 0){
+							$tmp = $this->Transaction->Row->Condition->findById($v['Stock']['condition_id']);
+							$tmp['Condition']['max'] = $max;
+							$conditionList[] = $tmp;
+					}
+				}
+			}
+			$listAchat[$key]['Row']['ConditionList'] = $conditionList;
 		}
-
-
 		$this->set('listAchat', $listAchat);
 		$this->set('listFiliere', $this->Transaction->Row->Book->Subject->Grade->Sector->find('all'));
 
@@ -374,10 +389,60 @@ class TransactionsController extends AppController {
 	}
 
 
-
 	/**
 	*	Quelques appels ajax pour les différentes étapes
 	*/
+
+	/**
+	*	Ajoute une ligne
+	*/
+	public function addRow($book_id, $condition_id, $reducing, $amount,$prize_total){
+			$book = $this->Transaction->Row->Book->findById($book_id);
+			$condition = $this->Transaction->Row->Condition->findById($condition_id);
+			$row = array('book_id' => $book_id, 'condition_id' => $condition_id, 'transaction_id' => $this->Session->read('Transaction.achat.transaction_id'),
+						 'name_book' => $book['Book']['name'], 'name_subject' => $book['Subject']['name'], 'name_condition'=> $condition['Condition']['name'],
+						 'reducing' => $reducing, 'amount' => $amount, 'prize_unit' => $book['Book']['prize'], 'prize_total' => $prize_total);
+
+			if($this->Transaction->Row->save($row)){
+				echo $this->Transaction->Row->id;
+			}else{
+				echo 0;
+			}
+			$this->autoRender = false;
+	}
+
+	/**
+	*	Modifie une ligne
+	*/
+	public function updateRow($id, $condition_id, $reducing, $amount,$prize_total){
+		$this->autoRender = false;
+		$current = $this->Transaction->Row->findById($id);
+		$book = $this->Transaction->Row->Book->findById($current['Row']['book_id']);
+		$condition = $this->Transaction->Row->Condition->findById($condition_id);
+
+		$row = array('condition_id' => $condition_id, 'name_book' => $book['Book']['name'], 'name_subject' => $book['Subject']['name'],
+					 'name_condition'=> $condition['Condition']['name'], 'reducing' => $reducing, 
+					 'amount' => $amount, 'prize_unit' => $book['Book']['prize'], 'prize_total' => $prize_total);
+		$this->Transaction->Row->id = $id;
+		if($this->Transaction->Row->save($row)){
+			echo 1;
+		}else{
+			echo 0;
+		}
+	}
+
+	/**
+	*	Supprime une ligne
+	*/
+	public function deleteRow($id){
+		$this->autoRender = false;
+		if($this->Transaction->Row->delete($id)){
+			echo 1;
+		}else{
+			echo 0;
+		}
+	}
+
 
 	public function getGrades($id){
 		$this->autoRender = false;

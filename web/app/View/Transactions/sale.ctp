@@ -6,7 +6,10 @@
 <section id="book_choice" ng-show="clicked" ng-init="clicked=false" class="container animated fadeIn" style="clear:both;">
         <header id="header" ng-init="transaction_id=<?php echo $this->Session->read('Transaction.achat.transaction_id') ?>">
           <div ng-init="filieres=<?php echo htmlentities(json_encode($listFiliere)) ?>;<?php if(isset($listAchat)) echo 'achats='.htmlentities(json_encode($listAchat)); ?>"></div>
-          <div ng-init="urlGetGrades='<?php echo $this->Html->url(array('controller' =>'transactions', 'action' => 'getGrades', 'full_base' => true)) ?>'"></div>
+          <div ng-init="urlGetGrades='<?php echo $this->Html->url(array('controller' =>'transactions', 'action' => 'getGrades', 'full_base' => true)) ?>';urlAddRow='<?php echo $this->Html->url(array('controller' => 'transactions', 'action' => 'addRow', 'full_base' => true)) ?>';
+                urlDeleteRow='<?php echo $this->Html->url(array('controller' => 'transactions', 'action' => 'deleteRow', 'full_base' => true)) ?>';
+                urlUpdateRow='<?php echo $this->Html->url(array('controller' => 'transactions', 'action' => 'updateRow', 'full_base' => true)) ?>';
+                "></div>
           <div ng-init="urlGetBooks='<?php echo $this->Html->url(array('controller' =>'transactions', 'action' => 'getBooks', 'full_base' => true)) ?>'"></div>
           <h3>Choix des livres</h3>
             <form action="#" id="filieres-form" ng-submit="">

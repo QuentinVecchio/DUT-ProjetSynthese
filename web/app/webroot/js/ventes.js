@@ -75,8 +75,9 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 		$tmp = angular.copy(filterFilter($scope.livres, {"completed":true}));
 		for(i in $tmp){
 			console.log($tmp[i]);
-
+			$total = $scope.calculTotal($tmp[i].Book.prize, $tmp[i].ConditionList[0].Condition.reducing, 1);
 			$t = {Row: {
+					id : response,
 					transaction_id : $scope.transaction_id,
 					book_id: $tmp[i].Book.id,
 					name_book: $tmp[i].Book.name,
@@ -84,14 +85,22 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 					Condition: $tmp[i].ConditionList[0],
 					reducing: $tmp[i].ConditionList[0].Condition.reducing,
 					name_condition: $tmp[i].ConditionList[0].Condition.name,
-					prize_total: $scope.calculTotal($tmp[i].Book.prize, $tmp[i].ConditionList[0].Condition.reducing, 1),
+					prize_total: $total,
 					amount: 1,
 					prize_unit : $tmp[i].Book.prize,
 					ConditionList: $tmp[i].ConditionList
 					}}
+			$http.get($scope.urlAddRow+'/'+$tmp[i].Book.id+'/'+$tmp[i].ConditionList[0].Condition.id+'/'+$tmp[i].ConditionList[0].Condition.reducing+'/'+1+'/'+$total).success(function(response) {
+					      	
+							if(response > 0){
 
-			$scope.achats.push($t);		
+
+							}else{
+								alert('Erreur');
+							}
+					    });	
 		}
+		$scope.achats.push($t);		
 		$scope.clicked = false;
 	}
 
@@ -104,8 +113,14 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	}
 
 	$scope.removeAchat = function(index){
-		$scope.achats.splice(index,1);
-
+		$http.get($scope.urlDeleteRow+'/'+$scope.achats[index].Row.id).success(function(response) {				      	
+			if(response > 0){
+				
+				$scope.achats.splice(index,1);
+			}else{
+				alert('Erreur');
+			}
+	    });	
 	}
 
 	$scope.updateGrades = function(){
@@ -149,7 +164,14 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	*	Recalcul du total si modification de la quantité ou de la réduction
 	*/
 	$scope.changeRow = function(index){
-			$scope.achats[index].Row.prize_total = $scope.calculTotal($scope.achats[index].Row.prize_unit,$scope.achats[index].Row.reducing,$scope.achats[index].Row.amount);
+		$scope.achats[index].Row.prize_total = $scope.calculTotal($scope.achats[index].Row.prize_unit,$scope.achats[index].Row.reducing,$scope.achats[index].Row.amount);
+		$tmp = $scope.achats[index].Row;
+		//updateRow($id, $condition_id, $reducing, $amount,$prize_total){
+		$http.get($scope.urlUpdateRow+'/'+$tmp.id+'/'+$tmp.condition_id+'/'+$tmp.reducing+'/'+$tmp.amount+'/'+$tmp.prize_total).success(function(response) {
+			      	if(response == 0){
+			      		alert("Erreur");
+			      	}
+			    });	
 	}
 
 	/**
@@ -157,6 +179,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	*	Permet de mettre à jour le champs de réduction
 	*/
 	$scope.updateCondition = function(index){
+		console.log('update');
 		$scope.achats[index].Row.reducing = $scope.achats[index].Row.Condition.Condition.reducing;
 		$scope.achats[index].Row.name_condition = $scope.achats[index].Row.Condition.Condition.name;
 		$scope.changeRow(index);
