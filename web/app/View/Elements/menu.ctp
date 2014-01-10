@@ -13,7 +13,7 @@
 		<li><?php echo $this->Html->Link('Parents', array('controller' => 'clients', 'action' => 'index', 'admin' => true)); ?></li>
 		<li><?php echo $this->Html->Link('Associations', array('controller' => 'associations', 'action' => 'index', 'admin' => true)); ?></li>
 		<li><?php echo $this->Html->Link('Factures', array('controller' => 'transactions', 'action' => 'index', 'admin' => true)); ?></li>
-    <li><?php echo $this->Html->Link('Stock', array('controller' => 'stocks', 'action' => 'index', 'admin' => true)); ?></li>
+    <li><?php echo $this->Html->Link('Stock', array('controller' => 'stocks', 'action' => 'index')); ?></li>
 		<li><?php echo $this->Html->Link('Règlements', array('controller' => 'typereglements', 'action' => 'index', 'admin' => true)); ?></li>
     <li><?php echo $this->Html->Link('', array('controller' => 'users', 'action' => 'choice', 'admin' => true),
                                           array('class' => 'glyphicon glyphicon-user')) ?></li>
