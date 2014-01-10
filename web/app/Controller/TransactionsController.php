@@ -374,23 +374,14 @@ class TransactionsController extends AppController {
 	*	Quelques appels ajax pour les différentes étapes
 	*/
 
-	public function getLivre($filiere = null, $classe = null){
-			$this->loadModel('book');
-			debug($this->book->find('all'));
-	}
-
 	public function getGrades($id){
-		$this->loadModel('grade');
-		echo json_encode($this->grade->find('all', array('conditions' => array('sector_id' => $id), 'recursive' => -1)));
-		$this->layout = null;
 		$this->autoRender = false;
+		echo json_encode($this->Transaction->Row->Book->Subject->Grade->find('all', array('conditions' => array('sector_id' => $id), 'recursive' => -1)));
 	}
 
 	public function getBooks($id){
-		$this->loadModel('Book');
-		echo json_encode($this->Book->find('all', array('fields' => array('Book.id, Book.name, Book.prize, Subject.name'), 'conditions' => array('grade_id' => $id))));
-		$this->layout = null;
 		$this->autoRender = false;
+		echo json_encode($this->Transaction->Row->Book->find('all', array('fields' => array('Book.id, Book.name, Book.prize, Subject.name'), 'conditions' => array('grade_id' => $id))));
 	}
 }
 ?>

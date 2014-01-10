@@ -117,7 +117,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	}
 
 	$scope.updateBooks = function(){
-		$http.get($scope.urlGetBooks+'/'+$scope.choixClasse.grade.id).success(function(response) {
+		$http.get($scope.urlGetBooks+'/'+$scope.choixClasse.Grade.id).success(function(response) {
 						$scope.livres = response;
 				    });			
 

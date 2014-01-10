@@ -15,7 +15,7 @@
                 </span>
 
                 <span id="classes-list">
-                 &nbsp&nbsp<strong>Classe</strong> : <select ng-model="choixClasse" ng-options="value.grade.name for value in classes track by value.grade.id"
+                 &nbsp&nbsp<strong>Classe</strong> : <select ng-model="choixClasse" ng-options="value.Grade.name for value in classes track by value.Grade.id"
                   ng-change="updateBooks()"required></select>
                 </span>
             </form>
