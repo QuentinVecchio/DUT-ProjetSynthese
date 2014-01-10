@@ -25,7 +25,7 @@
           <ul class="list-unstyled" id="todo-list">
             <li class="list-group-item" ng-repeat="livre in livres | orderBy:name" ng-class="{completed : livre.completed}">
                 <input type="checkbox" class="toggle" ng-model="livre.completed">
-                <label id="book_name" class="form-control">{{livre.Subject.name}}: {{livre.book.name}}</label>
+                <label id="book_name" class="form-control">{{livre.Subject.name}}: {{livre.Book.name}}</label>
             </li>
           </ul>
         </section>

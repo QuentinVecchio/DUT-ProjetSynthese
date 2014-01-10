@@ -80,15 +80,15 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 
 			$t = {Row: {
 					transaction_id : $scope.transaction_id,
-					book_id: $tmp[i].book.id,
-					name_book: $tmp[i].book.name,
+					book_id: $tmp[i].Book.id,
+					name_book: $tmp[i].Book.name,
 					name_subject: $tmp[i].Subject.name,
 					Condition: $scope.etats[0],
 					reducing: $scope.etats[0].Condition.reducing,
 					name_condition: $scope.etats[0].Condition.name,
-					prize_total: $scope.calculTotal($tmp[i].book.prize, $scope.etats[0].Condition.reducing, 1),
+					prize_total: $scope.calculTotal($tmp[i].Book.prize, $scope.etats[0].Condition.reducing, 1),
 					amount: 1,
-					prize_unit : $tmp[i].book.prize
+					prize_unit : $tmp[i].Book.prize
 					}}
 
 			$scope.achats.push($t);		
@@ -113,14 +113,12 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 		$scope.livres=[];
 		$http.get($scope.urlGetGrades+'/'+$scope.choixFiliere.Sector.id).success(function(response) {
 				      	$scope.classes = response;
-				      	console.log($scope.classes);
 				    });			
 	}
 
 	$scope.updateBooks = function(){
 		$http.get($scope.urlGetBooks+'/'+$scope.choixClasse.grade.id).success(function(response) {
 						$scope.livres = response;
-						console.log($scope.livres);
 				    });			
 
 	}

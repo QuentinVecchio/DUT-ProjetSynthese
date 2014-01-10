@@ -387,8 +387,8 @@ class TransactionsController extends AppController {
 	}
 
 	public function getBooks($id){
-		$this->loadModel('book');
-		echo json_encode($this->book->find('all', array('fields' => array('Book.id, Book.name, Book.prize, Subject.name'), 'conditions' => array('grade_id' => $id))));
+		$this->loadModel('Book');
+		echo json_encode($this->Book->find('all', array('fields' => array('Book.id, Book.name, Book.prize, Subject.name'), 'conditions' => array('grade_id' => $id))));
 		$this->layout = null;
 		$this->autoRender = false;
 	}
