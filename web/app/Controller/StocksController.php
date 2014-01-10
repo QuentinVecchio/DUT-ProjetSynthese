@@ -13,5 +13,12 @@ class StocksController extends AppController{
 		$this->set('stock', $stock);
 	}
 
+	/**
+	*	Visualisation du stock de livres par état et par vendu/déposé
+	*/
+	public function index(){
+
+	}
+
 }
  ?>

@@ -27,10 +27,27 @@ class BooksController extends AppController{
 
 			$this->request->data = array('Book' => $this->request->data);	
 			$this->request->data['Book']['subject_id'] = $idGrade;
-			debug($this->data);
+
 			if($this->Book->save($this->data)){
-				$this->Session->setFlash('Classe ajoutée avec succès', 'message', array('type' => 'success'));
-				$this->redirect(array('controller' => 'books', 'action' => 'index', $this->data['Book']['subject_id']));
+
+				/* On construit les lignes nécessaires pour le stocks, tout a 0*/
+				$this->loadModel('Condition');
+				$listCondition = $this->Condition->find('list');
+				$stock = array();
+				foreach ($listCondition as $key => $value) {
+					$stock[$key]['condition_id'] = $key;
+					$stock[$key]['book_id'] = $this->Book->id;
+					$stock[$key]['depot'] = 0;
+					$stock[$key]['vente'] = 0;
+				}
+				$this->loadModel('Stock');
+				if($this->Stock->saveMany($stock)){
+					$this->Session->setFlash('Livre ajouté avec succès', 'message', array('type' => 'success'));
+					$this->redirect(array('controller' => 'books', 'action' => 'index', $this->data['Book']['subject_id']));
+				}else{
+					$this->Session->setFlash('Erreur lors de l\'ajout du livre', 'message', array('type' => 'warning'));
+				}
+				
 			}else{
 				$this->request->data['Book']['prize'] = intval($this->data['Book']['prize']);
 			}

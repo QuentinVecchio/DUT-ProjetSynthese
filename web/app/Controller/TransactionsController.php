@@ -13,7 +13,7 @@ class TransactionsController extends AppController {
 
 
 	/**
-	*	Visualisation d'une factur
+	*	Visualisation d'une facture
 	*/
 	public function admin_view($facture_id) {
 		if(!is_numeric($facture_id) || is_numeric($facture_id) <= 0){
