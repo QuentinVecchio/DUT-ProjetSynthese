@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Ven 10 Janvier 2014 à 14:53
+-- Généré le: Ven 10 Janvier 2014 à 17:16
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.4.16
 
@@ -196,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `rows` (
   KEY `condition_id` (`condition_id`),
   KEY `book_id` (`book_id`),
   KEY `transaction_id` (`transaction_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=136 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=203 ;
 
 --
 -- Contenu de la table `rows`
@@ -208,9 +208,7 @@ INSERT INTO `rows` (`id`, `condition_id`, `book_id`, `transaction_id`, `name_boo
 (126, 1, 1, 32, 'Mon premier livre', 'FranÃ§ais', 'Bon', 15, 1, '20.00', '17.00'),
 (127, 1, 4, 33, 'Un premier livre', 'MathÃ©matiques', 'Bon', 15, 1, '45.00', '38.25'),
 (128, 1, 7, 33, 'Un second livres', 'MathÃ©matiques', 'Bon', 15, 1, '55.00', '46.75'),
-(129, 1, 1, 33, 'Mon premier livre', 'FranÃ§ais', 'Bon', 15, 1, '20.00', '17.00'),
-(134, 1, 8, 34, 'Maths pour les nuls', 'MathÃ©matiques', 'Bon', 15, 1, '50.00', '42.50'),
-(135, 1, 1, 34, 'Mon premier livre', 'FranÃ§ais', 'Bon', 15, 1, '20.00', '17.00');
+(129, 1, 1, 33, 'Mon premier livre', 'FranÃ§ais', 'Bon', 15, 1, '20.00', '17.00');
 
 -- --------------------------------------------------------
 
@@ -258,12 +256,12 @@ CREATE TABLE IF NOT EXISTS `stocks` (
 
 INSERT INTO `stocks` (`id`, `book_id`, `condition_id`, `depot`, `vente`) VALUES
 (1, 8, 1, 0, 0),
-(2, 8, 2, 0, 0),
-(3, 8, 3, 0, 0),
+(2, 8, 2, 50, 17),
+(3, 8, 3, 60, 0),
 (4, 1, 1, 0, 0),
-(5, 1, 2, 25, 0),
-(6, 1, 3, 0, 0),
-(7, 4, 1, 0, 0),
+(5, 1, 2, 25, 13),
+(6, 1, 3, 10, 0),
+(7, 4, 1, 50, 17),
 (8, 4, 2, 0, 0),
 (9, 4, 3, 0, 0),
 (10, 6, 1, 0, 0),
