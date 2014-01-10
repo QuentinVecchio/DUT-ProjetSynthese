@@ -381,7 +381,23 @@ class TransactionsController extends AppController {
 
 	public function getBooks($id){
 		$this->autoRender = false;
-		echo json_encode($this->Transaction->Row->Book->find('all', array('fields' => array('Book.id, Book.name, Book.prize, Subject.name'), 'conditions' => array('grade_id' => $id))));
+		$this->loadModel('Condition');
+		$this->Transaction->Row->Book->bindModel(array('hasMany' => array('Stock' => array('conditions' => array('(Stock.depot - Stock.vente) >' => 0)))));
+
+		$tmp = $this->Transaction->Row->Book->find('all', array('fields' => array('Book.id, Book.name, Book.prize, Subject.name'), 'conditions' => array('grade_id' => $id)));
+		foreach ($tmp as $key => $value) {
+			if(empty($value['Stock'])){
+				unset($tmp[$key]);
+			}else{
+				$conditionList = array();
+				foreach ($value['Stock'] as $k => $value) {
+					$conditionList[] = $value['condition_id'];
+				}
+
+				$tmp[$key]['ConditionList'] = $this->Condition->findAllById($conditionList);
+			}
+		}
+		echo json_encode($tmp);
 	}
 }
 ?>

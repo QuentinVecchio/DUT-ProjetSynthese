@@ -82,7 +82,7 @@
                         <td>{{achat.Row.name_subject}}</td>
                         <td>{{achat.Row.name_book}}</td>
                         <td class="prix">{{achat.Row.prize_unit | number:2}}&nbsp€</td>
-                        <td><select name="{{$index}}[Row][condition_id]" ng-model="achat.Row.Condition"  ng-options="value.Condition.name for value in etats track by value.Condition.id" ng-change="updateCondition($index)"></select></td>
+                        <td><select name="{{$index}}[Row][condition_id]" ng-model="achat.Row.Condition"  ng-options="value.Condition.name for value in achat.Row.ConditionList track by value.Condition.id" ng-change="updateCondition($index)"></select></td>
 
                         <td><input type="text" name="{{$index}}[Row][reducing]" ng-model="achat.Row.reducing"  ng-change="changeRow($index)" style="width:50px; height:25px;"></td>
 
