@@ -3,6 +3,8 @@ class TransactionsController extends AppController {
 
 
 	public function admin_index(){
+		$this->Transaction->unbindModel(array('hasMany' => array('Row'), 'hasAndBelongsToMany' => array('Typereglement')));
+		$this->Transaction->recursive = 2;
 		$this->set('list', $this->Transaction->find('all'));
 	}
 
