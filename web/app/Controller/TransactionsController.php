@@ -121,15 +121,20 @@ class TransactionsController extends AppController {
 		}
 
 		//Transaction pour angularjs
+		$this->loadModel('Stock');
+		//$this->Stock->binMo
 		foreach ($listAchat as $key => $value) {
 			$listAchat[$key]['Row']['amount'] = intval($listAchat[$key]['Row']['amount']);
 			$listAchat[$key]['Row']['Condition']['Condition'] = current($this->Transaction->Row->Condition->findById($listAchat[$key]['Row']['condition_id']));
+			//$stock = $this->Stock->findAllByBookId($value['Row']['book_id']);
+			//debug($stock);
+
+
 		}
 
 
 		$this->set('listAchat', $listAchat);
 		$this->set('listFiliere', $this->Transaction->Row->Book->Subject->Grade->Sector->find('all'));
-		$this->set('listCondition', $this->Transaction->Row->Condition->find('all'));
 
 	}
 
@@ -389,12 +394,19 @@ class TransactionsController extends AppController {
 			if(empty($value['Stock'])){
 				unset($tmp[$key]);
 			}else{
+
 				$conditionList = array();
-				foreach ($value['Stock'] as $k => $value) {
-					$conditionList[] = $value['condition_id'];
+				foreach ($value['Stock'] as $k => $v) {
+					$conditionList[] = $v['condition_id'];
+				}
+				$resCondition = $this->Condition->findAllById($conditionList);
+				foreach ($resCondition as $k1 => $v1) {
+					$resCondition[$k1]['Condition']['max'] = $v['depot'] - $v['vente'];
 				}
 
-				$tmp[$key]['ConditionList'] = $this->Condition->findAllById($conditionList);
+
+				$tmp[$key]['ConditionList'] = $resCondition;
+				unset($tmp[$key]['Stock']);
 			}
 		}
 		echo json_encode($tmp);

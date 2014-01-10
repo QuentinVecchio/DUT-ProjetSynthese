@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Jeu 09 Janvier 2014 à 09:55
+-- Généré le: Ven 10 Janvier 2014 à 14:53
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.4.16
 
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `books` (
   `subject_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `subjet_id` (`subject_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Contenu de la table `books`
@@ -72,7 +72,8 @@ INSERT INTO `books` (`id`, `name`, `prize`, `ISBN`, `subject_id`) VALUES
 (1, 'Mon premier livre', 20, '2567', 7),
 (4, 'Un premier livre', 45, 'coucou', 1),
 (6, 'AnglaisFacile', 20, 'AA', 3),
-(7, 'Un second livres', 55, 'AAA', 1);
+(7, 'Un second livres', 55, 'AAA', 1),
+(8, 'Maths pour les nuls', 50, '9780000000000', 1);
 
 -- --------------------------------------------------------
 
@@ -195,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `rows` (
   KEY `condition_id` (`condition_id`),
   KEY `book_id` (`book_id`),
   KEY `transaction_id` (`transaction_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=130 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=136 ;
 
 --
 -- Contenu de la table `rows`
@@ -207,7 +208,9 @@ INSERT INTO `rows` (`id`, `condition_id`, `book_id`, `transaction_id`, `name_boo
 (126, 1, 1, 32, 'Mon premier livre', 'FranÃ§ais', 'Bon', 15, 1, '20.00', '17.00'),
 (127, 1, 4, 33, 'Un premier livre', 'MathÃ©matiques', 'Bon', 15, 1, '45.00', '38.25'),
 (128, 1, 7, 33, 'Un second livres', 'MathÃ©matiques', 'Bon', 15, 1, '55.00', '46.75'),
-(129, 1, 1, 33, 'Mon premier livre', 'FranÃ§ais', 'Bon', 15, 1, '20.00', '17.00');
+(129, 1, 1, 33, 'Mon premier livre', 'FranÃ§ais', 'Bon', 15, 1, '20.00', '17.00'),
+(134, 1, 8, 34, 'Maths pour les nuls', 'MathÃ©matiques', 'Bon', 15, 1, '50.00', '42.50'),
+(135, 1, 1, 34, 'Mon premier livre', 'FranÃ§ais', 'Bon', 15, 1, '20.00', '17.00');
 
 -- --------------------------------------------------------
 
@@ -247,7 +250,28 @@ CREATE TABLE IF NOT EXISTS `stocks` (
   PRIMARY KEY (`id`),
   KEY `book_id` (`book_id`,`condition_id`),
   KEY `etat_id` (`condition_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+
+--
+-- Contenu de la table `stocks`
+--
+
+INSERT INTO `stocks` (`id`, `book_id`, `condition_id`, `depot`, `vente`) VALUES
+(1, 8, 1, 0, 0),
+(2, 8, 2, 0, 0),
+(3, 8, 3, 0, 0),
+(4, 1, 1, 0, 0),
+(5, 1, 2, 25, 0),
+(6, 1, 3, 0, 0),
+(7, 4, 1, 0, 0),
+(8, 4, 2, 0, 0),
+(9, 4, 3, 0, 0),
+(10, 6, 1, 0, 0),
+(11, 6, 2, 0, 0),
+(12, 6, 3, 0, 0),
+(13, 7, 1, 0, 0),
+(14, 7, 2, 0, 0),
+(15, 7, 3, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -36904,7 +36928,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `client_id` (`client_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
 
 --
 -- Contenu de la table `transactions`
@@ -36912,7 +36936,8 @@ CREATE TABLE IF NOT EXISTS `transactions` (
 
 INSERT INTO `transactions` (`id`, `user_id`, `date`, `type`, `close`, `completed`, `client_id`) VALUES
 (32, 1, '2014-01-09', 'achat', 0, 1, 8),
-(33, 1, '2014-01-09', 'achat', 0, 1, 8);
+(33, 1, '2014-01-09', 'achat', 0, 1, 8),
+(34, 1, '2014-01-10', 'achat', 0, 0, 10);
 
 -- --------------------------------------------------------
 
@@ -36950,7 +36975,7 @@ CREATE TABLE IF NOT EXISTS `typereglements` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Contenu de la table `typereglements`
@@ -36958,7 +36983,8 @@ CREATE TABLE IF NOT EXISTS `typereglements` (
 
 INSERT INTO `typereglements` (`id`, `name`) VALUES
 (1, 'Espece'),
-(2, 'Cheque');
+(2, 'Cheque'),
+(3, 'Carte Multipass');
 
 -- --------------------------------------------------------
 
@@ -37023,9 +37049,9 @@ ALTER TABLE `records`
 -- Contraintes pour la table `rows`
 --
 ALTER TABLE `rows`
-  ADD CONSTRAINT `rows_ibfk_3` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `rows_ibfk_1` FOREIGN KEY (`condition_id`) REFERENCES `conditions` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `rows_ibfk_2` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `rows_ibfk_2` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `rows_ibfk_3` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `stocks`

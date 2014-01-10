@@ -4,7 +4,7 @@
 </div>
 <div ng-app="GBL" ng-controller="CtrlLivres" class="clearFix">
 <section id="book_choice" ng-show="clicked" ng-init="clicked=false" class="container animated fadeIn" style="clear:both;">
-        <header id="header" ng-init="etats=<?php echo htmlentities(json_encode($listCondition)); ?>;transaction_id=<?php echo $this->Session->read('Transaction.achat.transaction_id') ?>">
+        <header id="header" ng-init="transaction_id=<?php echo $this->Session->read('Transaction.achat.transaction_id') ?>">
           <div ng-init="filieres=<?php echo htmlentities(json_encode($listFiliere)) ?>;<?php if(isset($listAchat)) echo 'achats='.htmlentities(json_encode($listAchat)); ?>"></div>
           <div ng-init="urlGetGrades='<?php echo $this->Html->url(array('controller' =>'transactions', 'action' => 'getGrades', 'full_base' => true)) ?>'"></div>
           <div ng-init="urlGetBooks='<?php echo $this->Html->url(array('controller' =>'transactions', 'action' => 'getBooks', 'full_base' => true)) ?>'"></div>
@@ -87,7 +87,7 @@
                         <td><input type="text" name="{{$index}}[Row][reducing]" ng-model="achat.Row.reducing"  ng-change="changeRow($index)" style="width:50px; height:25px;"></td>
 
 
-                        <td><input name="{{$index}}[Row][amount]" type="number" ng-init="achat.Row.amount" min="1" ng-model="achat.Row.amount" style="width:50px; height:25px;" ng-change="changeRow($index)"></td>
+                        <td><input name="{{$index}}[Row][amount]" type="number" ng-init="achat.Row.amount" min="1" ng-model="achat.Row.amount" style="width:50px; height:25px;" ng-change="changeRow($index)">{{achat.Row.Condition.Condition.max}}</td>
 
                         <td class="prix">{{achat.Row.prize_total | number:2}}&nbsp€</td>
 

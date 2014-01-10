@@ -73,8 +73,6 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	var anciens;
 	$scope.TransfertLivre = function(){
 		$tmp = angular.copy(filterFilter($scope.livres, {"completed":true}));
-		console.log('affichage');
-		console.log($scope.etats);
 		for(i in $tmp){
 			console.log($tmp[i]);
 
@@ -83,10 +81,10 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 					book_id: $tmp[i].Book.id,
 					name_book: $tmp[i].Book.name,
 					name_subject: $tmp[i].Subject.name,
-					Condition: $scope.etats[0],
-					reducing: $scope.etats[0].Condition.reducing,
-					name_condition: $scope.etats[0].Condition.name,
-					prize_total: $scope.calculTotal($tmp[i].Book.prize, $scope.etats[0].Condition.reducing, 1),
+					Condition: $tmp[i].ConditionList[0],
+					reducing: $tmp[i].ConditionList[0].Condition.reducing,
+					name_condition: $tmp[i].ConditionList[0].Condition.name,
+					prize_total: $scope.calculTotal($tmp[i].Book.prize, $tmp[i].ConditionList[0].Condition.reducing, 1),
 					amount: 1,
 					prize_unit : $tmp[i].Book.prize,
 					ConditionList: $tmp[i].ConditionList
