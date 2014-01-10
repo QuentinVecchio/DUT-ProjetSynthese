@@ -2,10 +2,31 @@
 class TransactionsController extends AppController {
 
 
+	/**
+	*	Permet de lister les factures
+	*/
 	public function admin_index(){
 		$this->Transaction->unbindModel(array('hasMany' => array('Row'), 'hasAndBelongsToMany' => array('Typereglement')));
 		$this->Transaction->recursive = 2;
 		$this->set('list', $this->Transaction->find('all'));
+	}
+
+
+	/**
+	*	Visualisation d'une factur
+	*/
+	public function admin_view($facture_id) {
+		if(!is_numeric($facture_id) || is_numeric($facture_id) <= 0){
+			$this->redirect(array('controller' => 'transactions', 'action' => 'index'));
+		}
+
+		$facture = $this->Transaction->findById($facture_id);
+		if(empty($facture)){
+			$this->redirect(array('controller' => 'transactions', 'action' => 'index'));
+		}
+
+		$this->set('facture', $facture);
+
 	}
 
 	/**

@@ -22,7 +22,7 @@
 	            	<td><?php echo $v['Client']['name'].' '.$v['Client']['lastname']; ?></td>
 	            	<td><?php echo $v['Client']['houseNumber'].' '.$v['Client']['street'].' '.$v['Client']['Town']['name'] ?></td>
 	            	<td>
-	            		<?php echo $this->Html->Link('Visualiser', array('contoller' => 'transactions', 'action' => 'view', $v['Transaction']['id']), array('class' => 'btn btn-primary')) ?>
+	            		<?php echo $this->Html->Link('Visualiser', array('controller' => 'transactions', 'action' => 'view', $v['Transaction']['id']), array('class' => 'btn btn-primary')) ?>
 					</td>
 	        	</tr>       
 		<?php endforeach; ?>
