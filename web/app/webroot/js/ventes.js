@@ -26,10 +26,15 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	}, true)
 
 	$scope.$watch('livres', function(){
-		if($scope.livres){
-			$scope.variable = filterFilter($scope.livres, {completed:true}).length; 
+		if($scope.livres != null){
+			$scope.variable = 0; 
+			for(i in $scope.livres){
+				if($scope.livres[i].completed){
+					$scope.variable += 1;
+				}
+			}
 		}
-	}, true)
+	}, true);
 
 	/*if($location.path() == '')
 		{
@@ -70,37 +75,40 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 			}*/
 		}
 
-	var anciens;
 	$scope.TransfertLivre = function(){
 		$tmp = angular.copy(filterFilter($scope.livres, {"completed":true}));
+
+		/**
+		*	Il y a une erreur, l'appel ajax est asynchrone ce qui fait que la boucle va trop vite
+		*	On perd donc le compteur qui sera égale a la valeur finale, et on ajoute dans le tableau toujours la même valeur
+		*/
 		for(i in $tmp){
-			console.log($tmp[i]);
-			$total = $scope.calculTotal($tmp[i].Book.prize, $tmp[i].ConditionList[0].Condition.reducing, 1);
-			$t = {Row: {
-					id : response,
-					transaction_id : $scope.transaction_id,
-					book_id: $tmp[i].Book.id,
-					name_book: $tmp[i].Book.name,
-					name_subject: $tmp[i].Subject.name,
-					Condition: $tmp[i].ConditionList[0],
-					reducing: $tmp[i].ConditionList[0].Condition.reducing,
-					name_condition: $tmp[i].ConditionList[0].Condition.name,
-					prize_total: $total,
-					amount: 1,
-					prize_unit : $tmp[i].Book.prize,
-					ConditionList: $tmp[i].ConditionList
-					}}
-			$http.get($scope.urlAddRow+'/'+$tmp[i].Book.id+'/'+$tmp[i].ConditionList[0].Condition.id+'/'+$tmp[i].ConditionList[0].Condition.reducing+'/'+1+'/'+$total).success(function(response) {
-					      	
-							if(response > 0){
+			if($scope.livres[i].completed){
+				$total = $scope.calculTotal($tmp[i].Book.prize, $tmp[i].ConditionList[0].Condition.reducing, 1);
+				$http.get($scope.urlAddRow+'/'+$tmp[i].Book.id+'/'+$tmp[i].ConditionList[0].Condition.id+'/'+$tmp[i].ConditionList[0].Condition.reducing+'/'+1+'/'+$total).success(function(response,i) {
+					if(response > 0){
+						$t ={Row: {
+							id : response,
+							transaction_id : $scope.transaction_id,
+							book_id: $scope.livres[i].Book.id,
+							name_book: $scope.livres[i]].Book.name,
+							name_subject: $scope.livres[i]].Subject.name,
+							Condition: $scope.livres[i]].ConditionList[0],
+							reducing: $scope.livres[i]].ConditionList[0].Condition.reducing,
+							name_condition: $scope.livres[i].ConditionList[0].Condition.name,
+							prize_total: $total,
+							amount: 1,
+							prize_unit : $scope.livres[i].Book.prize,
+							ConditionList: $scope.livres[i].ConditionList
+							}};
+						$scope.achats.push($t);		
 
-
-							}else{
-								alert('Erreur');
-							}
-					    });	
+					}else{
+						alert('Erreur');
+					}
+			    });	
+			}
 		}
-		$scope.achats.push($t);		
 		$scope.clicked = false;
 	}
 
@@ -146,9 +154,9 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	}
 
 	$scope.checkAllTodo = function(allchecked){
-		$scope.livres.forEach(function(livre){
-			livre.completed = !allchecked;
-		})
+		for(i in $scope.livres){
+			$scope.livres[i].completed = !allchecked;
+		}
 	}
 	
 
@@ -166,7 +174,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	$scope.changeRow = function(index){
 		$scope.achats[index].Row.prize_total = $scope.calculTotal($scope.achats[index].Row.prize_unit,$scope.achats[index].Row.reducing,$scope.achats[index].Row.amount);
 		$tmp = $scope.achats[index].Row;
-		//updateRow($id, $condition_id, $reducing, $amount,$prize_total){
+
 		$http.get($scope.urlUpdateRow+'/'+$tmp.id+'/'+$tmp.condition_id+'/'+$tmp.reducing+'/'+$tmp.amount+'/'+$tmp.prize_total).success(function(response) {
 			      	if(response == 0){
 			      		alert("Erreur");

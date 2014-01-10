@@ -404,6 +404,11 @@ class TransactionsController extends AppController {
 						 'reducing' => $reducing, 'amount' => $amount, 'prize_unit' => $book['Book']['prize'], 'prize_total' => $prize_total);
 
 			if($this->Transaction->Row->save($row)){
+				$this->loadModel('Stock');
+				$this->Stock->recursive = -1;
+				$ligneStock = $this->Stock->findByBookIdAndConditionId($book_id, $condition_id);
+				$ligneStock['Stock']['vente'] += 1;
+				$this->Stock->save($ligneStock);
 				echo $this->Transaction->Row->id;
 			}else{
 				echo 0;

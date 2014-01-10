@@ -26,7 +26,7 @@
         <section id="main">
          <input title="Tout cocher" type="checkbox"  id="toggle-all" class="" ng-model="allchecked" ng-click="checkAllTodo(allchecked)"><strong>&nbspTout cocher</strong>
           <ul class="list-unstyled" id="todo-list">
-            <li class="list-group-item" ng-repeat="livre in livres | orderBy:name" ng-class="{completed : livre.completed}">
+            <li class="list-group-item" ng-repeat="livre in livres | orderBy:name" ng-init="livre.completed=false" ng-class="{completed : livre.completed}">
                 <input type="checkbox" class="toggle" ng-model="livre.completed">
                 <label id="book_name" class="form-control">{{livre.Subject.name}}: {{livre.Book.name}}</label>
             </li>
