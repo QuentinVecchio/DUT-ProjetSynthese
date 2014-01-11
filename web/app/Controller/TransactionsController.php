@@ -418,6 +418,13 @@ class TransactionsController extends AppController {
 						if($max > 1){
 							if($this->Transaction->Row->save($row)){
 								$row['id'] = $this->Transaction->Row->id; 
+
+								//On met a jour le stock
+								$v['Stock']['vente'] += 1;
+								if(!$this->Stock->save($v)){
+									$error[] =array('type' => 'Erreur lors de la mise a jour stock',
+							   						 'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a pas pu être compté'); 
+								}
 							}else{
 								$error[] =array('type' => 'Erreur lors de l\'ajout en base de donnée',
 							    'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a pas pu être ajouté'); 
@@ -461,14 +468,184 @@ class TransactionsController extends AppController {
 	}
 
 
-	
+
 
 	/**
 	*	Modifie une ligne
 	*/
-	public function updateRow($id, $condition_id, $reducing, $amount,$prize_total){
+	public function updateRow(){
 		$this->autoRender = false;
-		$current = $this->Transaction->Row->findById($id);
+		$this->loadModel('Stock');
+		$res = array();
+		$error = array();
+		$row = $this->data;
+		$conditionList = array();
+		$valid = true;
+		if(!empty($this->data)){
+			$rowInDataBase = $this->Transaction->Row->findById($this->data['id']);
+			if(!empty($rowInDataBase)){
+				$this->Stock->recursive =  -1;
+				$stockInDataBase = $this->Stock->findAllByBookId($this->data['book_id']);
+
+				foreach ($stockInDataBase as $k => $v) {
+					$max = $v['Stock']['depot'] - $v['Stock']['vente'];
+
+					// L'ancien état = le nouveau = l'état courant de la boucle
+					if($rowInDataBase['Row']['condition_id'] == $v['Stock']['condition_id'] &&
+					 $v['Stock']['condition_id'] == $row['condition_id']){
+
+						$nouveauStock = $v['Stock']['vente'] - $rowInDataBase['Row']['amount'] + $row['amount'];
+						if($v['Stock']['depot'] - $nouveauStock >= 0){
+							$stockInDataBase[$k]['Stock']['vente'] = $nouveauStock;
+							$v = $stockInDataBase[$k];
+							//$max = $v['Stock']['depot'] - ($v['Stock']['vente'] + $row['amount']);
+							if($this->Stock->save($v)){
+								//$max = $v['Stock']['depot'] - $v['Stock']['vente'] + $row['amount'];
+							}else{
+								$error[] =array('type' => 'Erreur lors de la mise à jour du stock',
+							   					'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a pas pu être mis à jour'); 									
+							}
+						}else{
+							$valid = false;
+							$row['amount'] = intval($rowInDataBase['Row']['amount']);
+							//$max = $v['Stock']['depot'] - $v['Stock']['vente'];
+							$error[] =array('type' => 'Plus de stock',
+						   					'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a plus cette quantité'); 																
+						}
+						$max = $v['Stock']['depot'] - $v['Stock']['vente'] + $row['amount'];
+
+					}else if($v['Stock']['condition_id'] == $row['condition_id']){
+						$nouveauStock = $v['Stock']['vente'] + $row['amount'];
+						//Si des livres sont encore disponibles
+						if($v['Stock']['depot'] - $nouveauStock >= 0){
+							$stockInDataBase[$k]['Stock']['vente'] = $nouveauStock;
+							$v = $stockInDataBase[$k];
+							//$max = $v['Stock']['depot'] - ($v['Stock']['vente'] + $row['amount']);
+							if($this->Stock->save($v)){
+								//$max = $v['Stock']['depot'] - $v['Stock']['vente'] + $row['amount'];
+							}else{
+								$error[] =array('type' => 'Erreur lors de la mise à jour du stock',
+							   					'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a pas pu être mis à jour'); 									
+							}
+						}else{
+							$valid = false;
+							//$row['amount'] = intval($rowInDataBase['Row']['amount']);
+							//$max = $v['Stock']['depot'] - $v['Stock']['vente'];
+							$error[] =array('type' => 'Plus de stock',
+						   					'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a plus cette quantité'); 																
+						}
+
+						$max = $v['Stock']['depot'] - $v['Stock']['vente'] + $row['amount'];					
+					}else if($v['Stock']['condition_id'] == $rowInDataBase['Row']['condition_id']){
+						$nouveauStock = $v['Stock']['vente'] - $rowInDataBase['Row']['amount'];
+						//Si des livres sont encore disponibles
+						if($v['Stock']['depot'] - $nouveauStock >= 0){
+							$stockInDataBase[$k]['Stock']['vente'] = $nouveauStock;
+							$v = $stockInDataBase[$k];
+							//$max = $v['Stock']['depot'] - ($v['Stock']['vente'] + $row['amount']);
+							if($this->Stock->save($v)){
+								//$max = $v['Stock']['depot'] - $v['Stock']['vente'] + $row['amount'];
+							}else{
+								$error[] =array('type' => 'Erreur lors de la mise à jour du stock',
+							   					'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a pas pu être mis à jour'); 									
+							}
+						}else{
+							$valid = false;
+							//$row['amount'] = intval($rowInDataBase['Row']['amount']);
+							//$max = $v['Stock']['depot'] - $v['Stock']['vente'];
+							$error[] =array('type' => 'Plus de stock',
+						   					'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a plus cette quantité'); 																
+						}
+					$max = $v['Stock']['depot'] - $v['Stock']['vente'] + $row['amount'];
+					}
+
+					//On ajoute l'ancienne quantité
+					/*if($rowInDataBase['Row']['condition_id'] == $v['Stock']['condition_id']){
+						//$valeurStock = $max + $rowInDataBase['Row']['amount'];
+						$stockInDataBase[$k]['Stock']['vente'] = $v['Stock']['vente'] +$this->data['amount'];
+						if($this->Stock->save($v)){
+							$max = $v['Stock']['depot'] - $v['Stock']['vente'];
+						}else{
+							$error[] =array('type' => 'Erreur lors de la mise à jour du stock',
+						   					'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a pas pu être mis à jour'); 									
+						}
+					}
+
+					if($v['Stock']['condition_id'] == $row['condition_id']){
+
+						// Si les livres en plus sont en stock
+						$valeurStock = $max-$this->data['amount'];
+						if($valeurStock >= 0){
+							if($this->Transaction->Row->save($this->data)){
+								//On met a jour le stock avec la nouvelle quantité
+								$stockInDataBase[$k]['Stock']['vente'] = $v['Stock']['vente'] -$this->data['amount'];
+								if($this->Stock->save($v)){
+									$max = $valeurStock;
+								}else{
+									$error[] =array('type' => 'Erreur lors de la mise à jour du stock',
+							    					'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a pas pu être mis à jour'); 									
+								}
+							}else{
+								$error[] =array('type' => 'Erreur lors de l\'ajout en base de donnée',
+							    				'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a pas pu être mise à jour'); 
+							}
+						}else{
+							// Sinon il ne reste pas de livre en stock, on met une erreur et on quitte la boucle
+							$valid = false;
+							$error[] =array('type' => 'Stock Insufisant',
+											'message' => 'Le livre '. $row['name_book'].' n\'est plus disponible dans l\'état '.$row['name_condition'].' pour la quantité demandée'); 
+						}
+					}*/
+
+					//si il reste des livres
+					if($max > 0){
+						$tmp = $this->Transaction->Row->Condition->findById($v['Stock']['condition_id']);
+						$tmp['Condition']['max'] = $max;
+						$conditionList[] = $tmp;
+						// L'état courant
+						if($v['Stock']['condition_id'] == $row['condition_id']){
+							$row['Condition'] = $tmp;
+						}
+					}
+				}
+
+				if($valid){
+					if($this->Transaction->Row->save($this->data)){
+						//On met a jour le stock avec la nouvelle quantité
+						//$stockInDataBase[$k]['Stock']['vente'] = $v['Stock']['vente'] -$this->data['amount'];
+						if($this->Stock->save($v)){
+							//$max = $valeurStock;
+						}else{
+							$error[] =array('type' => 'Erreur lors de la mise à jour du stock',
+					    					'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a pas pu être mis à jour'); 									
+						}
+					}else{
+						$error[] =array('type' => 'Erreur lors de l\'ajout en base de donnée',
+					    				'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a pas pu être mise à jour'); 
+					}
+				}
+				
+				$row['ConditionList'] = $conditionList;
+				$res[]['Row'] = $row;
+			}else{
+				$error[] = array('type' => 'Erreur de recherche de la ligne',
+								 'message' => 'Tentative de modification d\'une ligne inexistante');
+			}
+		}else{
+			$error[] = array('type' => 'Pas de valeur',
+							 'message' => 'Aucune valeur envoyée au serveur');
+		}
+
+
+
+		$response = array('rows' => $res, 'errors' => $error);
+
+		echo json_encode($response);
+
+
+
+
+		/*$current = $this->Transaction->Row->findById($id);
 		$book = $this->Transaction->Row->Book->findById($current['Row']['book_id']);
 		$condition = $this->Transaction->Row->Condition->findById($condition_id);
 
@@ -480,7 +657,7 @@ class TransactionsController extends AppController {
 			echo 1;
 		}else{
 			echo 0;
-		}
+		}*/
 	}
 
 	/**

@@ -78,11 +78,8 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	$scope.TransfertLivre = function(){
 		$tmp = angular.copy(filterFilter($scope.livres, {"completed":true}));
 
-		/**
-		*	Il y a une erreur, l'appel ajax est asynchrone ce qui fait que la boucle va trop vite
-		*	On perd donc le compteur qui sera égale a la valeur finale, et on ajoute dans le tableau toujours la même valeur
-		*/
 		$selectedAchat = [];
+		// Parcours des livres, construction des lignes a soumettre si selectionné
 		for(i in $tmp){
 			if($scope.livres[i].completed){
 				$total = $scope.calculTotal($tmp[i].Book.prize, $tmp[i].ConditionList[0].Condition.reducing, 1);
@@ -99,25 +96,14 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 					prize_unit : $tmp[i].Book.prize,
 					}}
 				$selectedAchat.push($t);		
-				/*$http.get($scope.urlAddRow).success(function(response,i) {
-					if(response > 0){
-
-					}else{
-						alert('Erreur');
-					}
-			    });	*/
 			}
 		}
+
+		// On poste les livres
 		$http.post($scope.urlAddRow, $selectedAchat).success(function(response){
-			console.log('response');
-			console.log(response);
+			// $scope.errors a traiter encore (message d'erreur)
 			$scope.achats = response.rows;
-			//$scope.achats.push(response);
 		});
-		console.log($selectedAchat);
-		//$scope.achats = $selectedAchat;
-		//$scope.achats.splice($scope.achats.length+1,$selectedAchat);
-		console.log($scope.achats);
 		$scope.clicked = false;
 	}
 
@@ -182,13 +168,23 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	*/
 	$scope.changeRow = function(index){
 		$scope.achats[index].Row.prize_total = $scope.calculTotal($scope.achats[index].Row.prize_unit,$scope.achats[index].Row.reducing,$scope.achats[index].Row.amount);
-		$tmp = $scope.achats[index].Row;
+		$data = angular.copy($scope.achats[index].Row);
 
-		$http.get($scope.urlUpdateRow+'/'+$tmp.id+'/'+$tmp.condition_id+'/'+$tmp.reducing+'/'+$tmp.amount+'/'+$tmp.prize_total).success(function(response) {
-			      	if(response == 0){
-			      		alert("Erreur");
+		$data.condition_id = $data.Condition.Condition.id;
+		$data.ConditionList = undefined;
+		$data.Condition = undefined;
+
+		console.log('data');
+		console.log($data);
+		$http.post($scope.urlUpdateRow, $data).success(function(response){
+					console.log('update');
+			      	console.log(response);
+			      	if(response.errors.length == 0){
+			      		$scope.achats.splice(index, 1, response.rows[0]);
+			      	}else{
+			      		console.log('Erreur');
 			      	}
-			    });	
+		});
 	}
 
 	/**
