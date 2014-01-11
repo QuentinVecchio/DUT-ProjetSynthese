@@ -82,33 +82,42 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 		*	Il y a une erreur, l'appel ajax est asynchrone ce qui fait que la boucle va trop vite
 		*	On perd donc le compteur qui sera égale a la valeur finale, et on ajoute dans le tableau toujours la même valeur
 		*/
+		$selectedAchat = [];
 		for(i in $tmp){
 			if($scope.livres[i].completed){
 				$total = $scope.calculTotal($tmp[i].Book.prize, $tmp[i].ConditionList[0].Condition.reducing, 1);
-				$http.get($scope.urlAddRow+'/'+$tmp[i].Book.id+'/'+$tmp[i].ConditionList[0].Condition.id+'/'+$tmp[i].ConditionList[0].Condition.reducing+'/'+1+'/'+$total).success(function(response,i) {
+				$t = {Row: {
+					transaction_id : $scope.transaction_id,
+					book_id: $tmp[i].Book.id,
+					name_book: $tmp[i].Book.name,
+					name_subject: $tmp[i].Subject.name,
+					reducing: $tmp[i].ConditionList[0].Condition.reducing,
+					name_condition: $tmp[i].ConditionList[0].Condition.name,
+					condition_id: $tmp[i].ConditionList[0].Condition.id,
+					prize_total: $total,
+					amount: 1,
+					prize_unit : $tmp[i].Book.prize,
+					}}
+				$selectedAchat.push($t);		
+				/*$http.get($scope.urlAddRow).success(function(response,i) {
 					if(response > 0){
-						$t ={Row: {
-							id : response,
-							transaction_id : $scope.transaction_id,
-							book_id: $scope.livres[i].Book.id,
-							name_book: $scope.livres[i]].Book.name,
-							name_subject: $scope.livres[i]].Subject.name,
-							Condition: $scope.livres[i]].ConditionList[0],
-							reducing: $scope.livres[i]].ConditionList[0].Condition.reducing,
-							name_condition: $scope.livres[i].ConditionList[0].Condition.name,
-							prize_total: $total,
-							amount: 1,
-							prize_unit : $scope.livres[i].Book.prize,
-							ConditionList: $scope.livres[i].ConditionList
-							}};
-						$scope.achats.push($t);		
 
 					}else{
 						alert('Erreur');
 					}
-			    });	
+			    });	*/
 			}
 		}
+		$http.post($scope.urlAddRow, $selectedAchat).success(function(response){
+			console.log('response');
+			console.log(response);
+			$scope.achats = response.rows;
+			//$scope.achats.push(response);
+		});
+		console.log($selectedAchat);
+		//$scope.achats = $selectedAchat;
+		//$scope.achats.splice($scope.achats.length+1,$selectedAchat);
+		console.log($scope.achats);
 		$scope.clicked = false;
 	}
 

@@ -394,27 +394,74 @@ class TransactionsController extends AppController {
 	*/
 
 	/**
-	*	Ajoute une ligne
+	*	Ajoute des lignes lors de la sélection
 	*/
-	public function addRow($book_id, $condition_id, $reducing, $amount,$prize_total){
-			$book = $this->Transaction->Row->Book->findById($book_id);
-			$condition = $this->Transaction->Row->Condition->findById($condition_id);
-			$row = array('book_id' => $book_id, 'condition_id' => $condition_id, 'transaction_id' => $this->Session->read('Transaction.achat.transaction_id'),
-						 'name_book' => $book['Book']['name'], 'name_subject' => $book['Subject']['name'], 'name_condition'=> $condition['Condition']['name'],
-						 'reducing' => $reducing, 'amount' => $amount, 'prize_unit' => $book['Book']['prize'], 'prize_total' => $prize_total);
+	public function addRow(){
 
-			if($this->Transaction->Row->save($row)){
-				$this->loadModel('Stock');
-				$this->Stock->recursive = -1;
-				$ligneStock = $this->Stock->findByBookIdAndConditionId($book_id, $condition_id);
-				$ligneStock['Stock']['vente'] += 1;
-				$this->Stock->save($ligneStock);
-				echo $this->Transaction->Row->id;
-			}else{
-				echo 0;
+		$this->loadModel('Stock');
+		$res = array();
+		$error = array();
+		if(!empty($this->data)){
+			foreach ($this->data as $key => $row) {
+
+				$row = current($row);
+
+				$stock = $this->Stock->findAllByBookId($row['book_id']);
+
+				$conditionList = array();
+				$valid = true;
+				foreach ($stock as $k => $v) {
+					$max = $v['Stock']['depot'] - $v['Stock']['vente'];
+
+					if($v['Stock']['condition_id'] == $row['condition_id']){
+						// Si il reste un exemplaire on peut enregistrer la ligne
+						if($max > 1){
+							if($this->Transaction->Row->save($row)){
+								$row['id'] = $this->Transaction->Row->id; 
+							}else{
+								$error[] =array('type' => 'Erreur lors de l\'ajout en base de donnée',
+							    'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a pas pu être ajouté'); 
+							}
+						}else{
+							// Sinon il ne reste pas de livre en stock, on met une erreur et on quitte la boucle
+							$valid = false;
+							$error[] =array('type' => 'Stock Insufisant',
+											'message' => 'Le livre '. $row['name_book'].' n\'est plus disponible dans l\'état '.$row['name_condition']); 
+							break;
+						}
+					}
+
+					//si il reste des livres
+					if($max > 0){
+						$tmp = $this->Transaction->Row->Condition->findById($v['Stock']['condition_id']);
+						$tmp['Condition']['max'] = $max;
+						$conditionList[] = $tmp;
+
+						// L'état courant
+						if($v['Stock']['condition_id'] == $row['condition_id']){
+							$row['Condition'] = $tmp;
+						}
+					}
+				}
+
+				//Si le livre a été ajouté en BDD
+				if($valid){
+					$row['ConditionList'] = $conditionList;
+					$res[]['Row'] = $row;
+				}
 			}
-			$this->autoRender = false;
+		}
+
+		$response = array('rows' => $res, 'errors' => $error);
+
+
+		echo json_encode($response);
+
+		$this->autoRender = false;
 	}
+
+
+	
 
 	/**
 	*	Modifie une ligne
