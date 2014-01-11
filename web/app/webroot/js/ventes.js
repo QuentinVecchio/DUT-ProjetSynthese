@@ -12,6 +12,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 {
 	$scope.mt =0;
 	$scope.achats = [];
+	$scope.copyAchats = [];
 		
 	$scope.$watch('achats', function(){
 		console.log('oui');
@@ -103,6 +104,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 		$http.post($scope.urlAddRow, $selectedAchat).success(function(response){
 			// $scope.errors a traiter encore (message d'erreur)
 			$scope.achats = response.rows;
+			$scope.copyAchats = angular.copy($scope.achats);
 		});
 		$scope.clicked = false;
 	}
@@ -177,11 +179,14 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 		console.log('data');
 		console.log($data);
 		$http.post($scope.urlUpdateRow, $data).success(function(response){
+					console.log($scope.copyAchats);
 					console.log('update');
 			      	console.log(response);
 			      	if(response.errors.length == 0){
 			      		$scope.achats.splice(index, 1, response.rows[0]);
+			      		$scope.copyAchats = angular.copy($scope.achats);
 			      	}else{
+			      		$scope.achats = angular.copy($scope.copyAchats);
 			      		console.log('Erreur');
 			      	}
 		});
