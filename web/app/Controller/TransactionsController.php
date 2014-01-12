@@ -224,9 +224,6 @@ class TransactionsController extends AppController {
 		$listAchat = $this->Transaction->Row->findAllByTransactionId($this->Session->read('Transaction.achat.transaction_id'));
 		$this->set('listLivre', $listAchat);
 
-		$this->set('listCondition', $this->Transaction->Row->Condition->find('all'));
-
-
 	}
 
 	/**
@@ -395,9 +392,6 @@ class TransactionsController extends AppController {
 		$this->Transaction->Row->recursive =  -1;
 		$listAchat = $this->Transaction->Row->findAllByTransactionId($this->Session->read('Transaction.depot.transaction_id'));
 		$this->set('listLivre', $listAchat);
-
-		$this->set('listCondition', $this->Transaction->Row->Condition->find('all'));
-
 
 	}
 
