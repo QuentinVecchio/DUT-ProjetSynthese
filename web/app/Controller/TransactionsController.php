@@ -73,7 +73,12 @@ class TransactionsController extends AppController {
 			}
 		}
 
-		$listEnCours = $this->Transaction->findAllByCompletedAndType(0, 'achat');
+		$listEnCours = $this->Transaction->find('all', array('conditions' => array(
+																	'completed' => 0,
+																	'type' => 'achat',
+																	'user_id' => $this->Auth->user('id')
+																	)
+															));
 		$this->set('listEnCours', $listEnCours);
 
 
@@ -353,7 +358,7 @@ class TransactionsController extends AppController {
 
 
 	/**
-	*	Reinitialise le panier
+	*	Reinitialise le panier et met a jour le stock
 	*/
 	public function refresh(){
 
@@ -362,6 +367,18 @@ class TransactionsController extends AppController {
 				$tmp = $this->Transaction->findById($this->Session->read('Transaction.achat.transaction_id'));
 				if($tmp){
 					if($tmp['Transaction']['completed'] == 0){
+						$this->loadModel('Stock');
+						$maj = array();
+					 	foreach ($tmp['Row'] as $key => $value) {
+					 		$this->Stock->recursive = -1;
+					 		$ligneStock = $this->Stock->findByBookIdAndConditionId($value['book_id'], $value['condition_id']);
+					 		$ligneStock['Stock']['vente'] -= $value['amount'];
+					 		$maj[] = current($ligneStock);
+					 	}
+					 	if(!$this->Stock->saveMany($maj)){
+							$this->Session->setFlash('Error lors de la mise a jour du stock','message', array('type' => 'warning'));
+					 	}
+
 						if($this->Transaction->delete($tmp['Transaction']['id'])){
 							$this->Session->setFlash('Vous venez d\'annuler une vente','message', array('type' => 'warning'));
 						}

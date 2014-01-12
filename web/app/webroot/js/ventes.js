@@ -103,7 +103,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 		// On poste les livres
 		$http.post($scope.urlAddRow, $selectedAchat).success(function(response){
 			// $scope.errors a traiter encore (message d'erreur)
-			if(response.errors.length >= 0){
+			if(response.errors.length > 0){
 	      		console.log('Erreur:');
 	      		for(i in response.errors){
 	      			console.log(response.errors[i].type+':');
