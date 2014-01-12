@@ -1,7 +1,7 @@
 <?php $this->extend('corps_transaction_sale') ?>
 <div style="text-align:center;"><h3>Facture de <?php echo $this->Session->read('Transaction.achat.Client.lastname').' '.$this->Session->read('Transaction.achat.Client.name') ?>  </h3></div>
 <div style="margin-left : 150px;">
-  <p>Facture :n°<?php echo $this->Session->read('Transaction.achat.transaction_id') ?> du <?php echo date('d/m/Y', time());?></p>
+  <p>Facture : n°<?php echo $this->Session->read('Transaction.achat.transaction_id') ?> du <?php echo date('d/m/Y', time());?></p>
   <p><?php echo $this->Session->read('Transaction.achat.Client.lastname').' '.$this->Session->read('Transaction.achat.Client.name') ?></p>
   <p><?php echo $this->Session->read('Transaction.achat.Client.houseNumber').' '.
           $this->Session->read('Transaction.achat.Client.street').' '.$this->Session->read('Transaction.achat.Town.name').' '.$this->Session->read('Transaction.achat.Town.zip_code'); ?></p>
@@ -42,7 +42,7 @@
    </tr>
   </tbody>
 </table>
-<div style="margin :auto;">
+<div style="margin-left : 150px;">
   <h5>Mode de paiement</h5>
   <table>
     <thead>
