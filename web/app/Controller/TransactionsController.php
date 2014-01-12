@@ -332,7 +332,7 @@ class TransactionsController extends AppController {
 			$this->redirect($step_pred);
 		}
 
-		$step_succ = array('controller' => 'transactions', 'action' => 'reglement');
+		$step_succ = array('controller' => 'transactions', 'action' => 'recapDepot');
 		$this->set('step_for_progress_bar', 2);
 		$this->set('pred_for_progress_bar', $step_pred);		
 		$this->set('suiv_for_progress_bar', $step_succ);		
@@ -379,14 +379,29 @@ class TransactionsController extends AppController {
 	*/
 	public function recapDepot(){
 		$step_pred = array('controller' => 'transactions', 'action' => 'depot');
+		if(!$this->Session->check('Transaction.depot') || $this->Session->read('Transaction.depot.step') < 3){
+			$this->redirect($step_pred);
+		}
+		
+		$step_succ =  array('controller' => 'transactions', 'action' => 'end');
 		$this->set('step_for_progress_bar', 3);
 		$this->set('pred_for_progress_bar', $step_pred);
 		$this->set('suiv_for_progress_bar', '#');
 
-		if(!$this->Session->check('Transaction.depot.Row')){
-			$this->redirect($step_pred);
-		}
+		$this->Transaction->TransactionsTypereglement->bindModel(array('belongsTo' => array('Typereglement')));
+		$this->set('transactions',$this->Transaction->TransactionsTypereglement->findAllByTransactionId($this->Session->read('Transaction.depot.transaction_id')));
+
+
+		$this->Transaction->Row->recursive =  -1;
+		$listAchat = $this->Transaction->Row->findAllByTransactionId($this->Session->read('Transaction.depot.transaction_id'));
+		$this->set('listLivre', $listAchat);
+
+		$this->set('listCondition', $this->Transaction->Row->Condition->find('all'));
+
+
 	}
+
+
 
 
 	/**
