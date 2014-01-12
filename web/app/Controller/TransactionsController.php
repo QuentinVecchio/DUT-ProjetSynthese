@@ -306,6 +306,16 @@ class TransactionsController extends AppController {
 				}
 			}
 		}
+
+		$listEnCours = $this->Transaction->find('all', array('conditions' => array(
+																	'completed' => 0,
+																	'type' => 'depot',
+																	'user_id' => $this->Auth->user('id')
+																	)
+															));
+		$this->set('listEnCours', $listEnCours);
+
+
 	}
 
 	/**
@@ -314,25 +324,52 @@ class TransactionsController extends AppController {
 	*	Etape du dépôt des livres
 	*/
 	public function depot($clientID = null){
+
 		$step_pred = array('controller' => 'transactions', 'action' => 'init');
-		$this->set('step_for_progress_bar', 2);
-		$this->set('pred_for_progress_bar', $step_pred);		
-		$this->set('suiv_for_progress_bar', '#');		
-		
 
-		if(isset($clientID) && is_numeric($clientID)){
-			if(!$this->Session->check('Transaction.depot.Client')){
-				$client = current(current($this->Transaction->Client->find('all', array('conditions' => array('id' => $clientID)
-																		,'recursive' => -1))));
-				if($client){
-					$this->Session->write('Transaction.depot.Client', $client);
-				}
-			}
-		}
 
-		if(!$this->Session->check('Transaction.depot.Client')){
+		if(!$this->Session->check('Transaction') || $this->Session->read('Transaction.depot.step') < 2){
 			$this->redirect($step_pred);
 		}
+
+		$step_succ = array('controller' => 'transactions', 'action' => 'reglement');
+		$this->set('step_for_progress_bar', 2);
+		$this->set('pred_for_progress_bar', $step_pred);		
+		$this->set('suiv_for_progress_bar', $step_succ);		
+
+		if(!empty($this->data)){
+			$this->Transaction->Row->deleteAll(array('transaction_id' => $this->Session->read('Transaction.depot.transaction_id')));
+			if($this->Transaction->Row->saveMany($this->data)){
+
+				$total = 0;
+				foreach ($this->data as $key => $value) {
+					$total += $value['Row']['prize_total'];
+				}
+				$this->Session->write('Transaction.depot.total', $total);
+
+				$this->Session->write('Transaction.depot.step', 3);
+				$this->redirect($step_succ);
+			}else{
+				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
+			}
+			$listAchat = $this->data;
+		}else{
+			$listAchat = $this->Transaction->Row->find('all', array('conditions' => array('transaction_id' => $this->Session->read('Transaction.depot.transaction_id')),
+																	'recursive' => -1));
+			
+		}
+
+		//Transaction pour angularjs
+		foreach ($listAchat as $key => $value) {
+			$listAchat[$key]['Row']['amount'] = intval($listAchat[$key]['Row']['amount']);
+			$listAchat[$key]['Row']['Condition']['Condition'] = current($this->Transaction->Row->Condition->findById($listAchat[$key]['Row']['condition_id']));
+		}
+
+
+		$this->set('listAchat', $listAchat);
+		$this->set('listFiliere', $this->Transaction->Row->Book->Subject->Grade->Sector->find('all'));
+		$this->set('listCondition', $this->Transaction->Row->Condition->find('all'));
+
 	}
 
 	/**
@@ -670,5 +707,12 @@ class TransactionsController extends AppController {
 		}
 		echo json_encode($tmp);
 	}
+
+	public function getBooksDepot($id){
+		$this->autoRender = false;
+		echo json_encode($this->Transaction->Row->Book->find('all', array('fields' => array('Book.id, Book.name, Book.prize, Subject.name'), 'conditions' => array('grade_id' => $id))));
+	}
+
+
 }
 ?>
