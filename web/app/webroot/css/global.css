@@ -79,32 +79,26 @@ th,td
 #barreProgress
 {
 	padding: 0px;
-	width: 1000px;
+	width: 1001px;
 	margin: 0 auto;
 	box-shadow: 1px 1px 12px #555;
-	background: rgba(0,0,0,0);
+	background: rgba(255,255,255,0);
 }
-
-	#barreProgress li
-	{
-		overflow: hidden;
-		margin: -2px;
-		border-right: 1px solid black;
-		text-align: center;
-	}
-	#barreProgress li:first-child
-	{
-		margin-left : 1px;
-	}
-	#barreProgress li:last-child
-	{
-		border-right: 0px;
-	}
-	#barreProgress span
-	{
-		font-size: 1.5em;
-		font-weight: bold;
-	}
+#barreProgress li
+{
+	overflow: hidden;
+	border-right: 1px solid black;
+	text-align: center;
+}
+#barreProgress li:last-child
+{
+	border-right: 0px;
+}
+#barreProgress span
+{
+	font-size: 1.5em;
+	font-weight: bold;
+}
 
 .step-2 li
 {
@@ -120,7 +114,7 @@ th,td
 }
 .step-5 li
 {
-	width: 20%;
+	width: 19.7%;
 }
 .etape
 {
@@ -128,18 +122,18 @@ th,td
 	vertical-align: top;
 	color : black;
 	cursor: pointer;
-	background: linear-gradient( #eee, #fff);		
+	background: linear-gradient( #eee, #fff);
 }
-	.etape:hover 
-	{
-		color : rgba(0,0,0,0.6);
-		background: linear-gradient( to top, #ccc, #eee);
-	}
-	.etape h1
-	{
-		font-size: 1.1em;
-		display: inline;
-	}
+.etape:hover 
+{
+	color : rgba(0,0,0,0.6);
+	background: linear-gradient( to top, #ccc, #eee);
+}
+.etape h1
+{
+	font-size: 1.1em;
+	display: inline;
+}
 .page
 {
 	visibility: hidden;
