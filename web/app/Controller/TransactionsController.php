@@ -472,7 +472,7 @@ class TransactionsController extends AppController {
 
 
 	/**
-	*	Modifie une ligne
+	*	Modifie une ligne, vérifie si le stock le permet et le met a jour
 	*/
 	public function updateRow(){
 		$this->autoRender = false;
@@ -493,7 +493,7 @@ class TransactionsController extends AppController {
 
 					// L'ancien état = le nouveau = l'état courant de la boucle
 					if($rowInDataBase['Row']['condition_id'] == $v['Stock']['condition_id'] &&
-					 $v['Stock']['condition_id'] == $row['condition_id']){
+						$v['Stock']['condition_id'] == $row['condition_id']){
 
 						$nouveauStock = $v['Stock']['vente'] - $rowInDataBase['Row']['amount'] + $row['amount'];
 						if($v['Stock']['depot'] - $nouveauStock >= 0){
@@ -514,11 +514,8 @@ class TransactionsController extends AppController {
 						if($v['Stock']['depot'] - $nouveauStock >= 0){
 							$stockInDataBase[$k]['Stock']['vente'] = $nouveauStock;
 							$v = $stockInDataBase[$k];
-							//$max = $v['Stock']['depot'] - ($v['Stock']['vente'] + $row['amount']);
 						}else{
 							$valid = false;
-							//$row['amount'] = intval($rowInDataBase['Row']['amount']);
-							//$max = $v['Stock']['depot'] - $v['Stock']['vente'];
 							$error[] =array('type' => 'Plus de stock',
 						   					'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a plus cette quantité'); 																
 						}
@@ -526,16 +523,14 @@ class TransactionsController extends AppController {
 						$max = $v['Stock']['depot'] - $v['Stock']['vente'] + $row['amount'];					
 					}else if($v['Stock']['condition_id'] == $rowInDataBase['Row']['condition_id']){
 						$nouveauStock = $v['Stock']['vente'] - $rowInDataBase['Row']['amount'];
+
 						//Si des livres sont encore disponibles
 						if($v['Stock']['depot'] - $nouveauStock >= 0){
 							$stockInDataBase[$k]['Stock']['vente'] = $nouveauStock;
 							$v = $stockInDataBase[$k];
-							//$max = $v['Stock']['depot'] - ($v['Stock']['vente'] + $row['amount']);
 							
 						}else{
 							$valid = false;
-							//$row['amount'] = intval($rowInDataBase['Row']['amount']);
-							//$max = $v['Stock']['depot'] - $v['Stock']['vente'];
 							$error[] =array('type' => 'Plus de stock',
 						   					'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a plus cette quantité'); 																
 						}
@@ -558,17 +553,13 @@ class TransactionsController extends AppController {
 
 				if($valid){
 					if($this->Transaction->Row->save($this->data)){
-						if($this->Stock->saveMany($stockInDataBase)){
-							//$max = $v['Stock']['depot'] - $v['Stock']['vente'] + $row['amount'];
-						}else{
+						if(!$this->Stock->saveMany($stockInDataBase)){
 							$error[] =array('type' => 'Erreur lors de la mise à jour du stock',
 						   					'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a pas pu être mis à jour'); 									
 						}
+
 						//On met a jour le stock avec la nouvelle quantité
-						//$stockInDataBase[$k]['Stock']['vente'] = $v['Stock']['vente'] -$this->data['amount'];
-						if($this->Stock->save($v)){
-							//$max = $valeurStock;
-						}else{
+						if(!$this->Stock->save($v)){
 							$error[] =array('type' => 'Erreur lors de la mise à jour du stock',
 					    					'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a pas pu être mis à jour'); 									
 						}
@@ -589,28 +580,9 @@ class TransactionsController extends AppController {
 							 'message' => 'Aucune valeur envoyée au serveur');
 		}
 
-
-
 		$response = array('rows' => $res, 'errors' => $error);
 
 		echo json_encode($response);
-
-
-
-
-		/*$current = $this->Transaction->Row->findById($id);
-		$book = $this->Transaction->Row->Book->findById($current['Row']['book_id']);
-		$condition = $this->Transaction->Row->Condition->findById($condition_id);
-
-		$row = array('condition_id' => $condition_id, 'name_book' => $book['Book']['name'], 'name_subject' => $book['Subject']['name'],
-					 'name_condition'=> $condition['Condition']['name'], 'reducing' => $reducing, 
-					 'amount' => $amount, 'prize_unit' => $book['Book']['prize'], 'prize_total' => $prize_total);
-		$this->Transaction->Row->id = $id;
-		if($this->Transaction->Row->save($row)){
-			echo 1;
-		}else{
-			echo 0;
-		}*/
 	}
 
 	/**

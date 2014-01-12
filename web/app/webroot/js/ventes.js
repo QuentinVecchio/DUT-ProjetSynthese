@@ -103,6 +103,14 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 		// On poste les livres
 		$http.post($scope.urlAddRow, $selectedAchat).success(function(response){
 			// $scope.errors a traiter encore (message d'erreur)
+			if(response.errors.length >= 0){
+	      		console.log('Erreur:');
+	      		for(i in response.errors){
+	      			console.log(response.errors[i].type+':');
+	      			console.log(response.errors[i].message);
+	      		}
+			}
+
 			$scope.achats = response.rows;
 			$scope.copyAchats = angular.copy($scope.achats);
 		});
@@ -158,7 +166,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	
 
 	/**
-	*
+	*	Calcul du prix total
 	*/
 	$scope.calculTotal = function(prize_unit, reducing, amount){
 
@@ -167,6 +175,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 
 	/**
 	*	Recalcul du total si modification de la quantité ou de la réduction
+	*	Appel le serveur pour mettre a jour le stock
 	*/
 	$scope.changeRow = function(index){
 		$scope.achats[index].Row.prize_total = $scope.calculTotal($scope.achats[index].Row.prize_unit,$scope.achats[index].Row.reducing,$scope.achats[index].Row.amount);
@@ -176,18 +185,18 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 		$data.ConditionList = undefined;
 		$data.Condition = undefined;
 
-		console.log('data');
-		console.log($data);
 		$http.post($scope.urlUpdateRow, $data).success(function(response){
-					console.log($scope.copyAchats);
-					console.log('update');
-			      	console.log(response);
+					console.log('Update');
 			      	if(response.errors.length == 0){
 			      		$scope.achats.splice(index, 1, response.rows[0]);
 			      		$scope.copyAchats = angular.copy($scope.achats);
 			      	}else{
 			      		$scope.achats = angular.copy($scope.copyAchats);
-			      		console.log('Erreur');
+			      		console.log('Erreur:');
+			      		for(i in response.errors){
+			      			console.log(response.errors[i].type+':');
+			      			console.log(response.errors[i].message);
+			      		}
 			      	}
 		});
 	}
@@ -197,7 +206,6 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	*	Permet de mettre à jour le champs de réduction
 	*/
 	$scope.updateCondition = function(index){
-		console.log('update');
 		$scope.achats[index].Row.reducing = $scope.achats[index].Row.Condition.Condition.reducing;
 		$scope.achats[index].Row.name_condition = $scope.achats[index].Row.Condition.Condition.name;
 		$scope.changeRow(index);
