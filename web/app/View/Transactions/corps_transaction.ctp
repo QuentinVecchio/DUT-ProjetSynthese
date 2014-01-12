@@ -1,5 +1,15 @@
-<?php debug($this->Session->read('Transaction')); ?>
+<?php 
+	$texte;
+	if($this->Session->check('Transaction.depot.Client')){
+		$texte = 'Parent: '. $this->Session->read('Transaction.depot.Client.name').' '.$this->Session->read('Transaction.depot.Client.lastname');
+	}else{
+		$texte = 'Aucun parent selectionné';
+	}
+
+ ?>
+
 <section>
+	<h1><?php echo $texte; ?></h1>
 	<div>
 		<ul id="barreProgress" class="step-5">	
 			<li class="etape <?php if($step_for_progress_bar == 1)echo 'focus'; ?>">

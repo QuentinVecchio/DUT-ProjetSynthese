@@ -30,7 +30,7 @@ class TransactionsController extends AppController {
 	}
 
 	/**
-	*	Procéssus Vente
+	*	Processus Vente
 	*	Etape: 1
 	*	Initialisation de la vente
 	*/
@@ -85,7 +85,7 @@ class TransactionsController extends AppController {
 	}
 
 	/**
-	*	Procéssus Vente
+	*	Processus Vente
 	*	Etape: 2	
 	*	Etape de vente des livres
 	*/
@@ -104,13 +104,6 @@ class TransactionsController extends AppController {
 		$this->set('suiv_for_progress_bar', $step_succ);		
 
 		if(!empty($this->data)){
-			/*$this->Transaction->Row->deleteAll(array('transaction_id' => $this->Session->read('Transaction.achat.transaction_id')));
-			if($this->Transaction->Row->saveMany($this->data)){
-
-
-			}else{
-				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
-			}*/
 				$total = 0;
 				foreach ($this->data as $key => $value) {
 					$total += $value['Row']['prize_total'];
@@ -208,7 +201,7 @@ class TransactionsController extends AppController {
 
 
 	/**
-	*	Procéssus Vente
+	*	Processus Vente
 	*	Etape: 4	
 	*	Récapitulation des achats du parent
 	*/
@@ -236,7 +229,11 @@ class TransactionsController extends AppController {
 
 	}
 
-
+	/**
+	*	Processus Vente
+	*	Etape: 5	
+	*	Finalisation de la vente
+	*/
 	public function end(){
 		$step_pred =  array('controller' => 'transactions', 'action' => 'reglement');
 
@@ -271,18 +268,44 @@ class TransactionsController extends AppController {
 	*	Etape: 1	
 	*	Initialisation du dépôt
 	*/
-	public function init(){
+	public function init($clientID = null){
+
+		$step_succ =  array('controller' => 'transactions', 'action' => 'depot');
+
 		$this->set('step_for_progress_bar', 1);
 		$this->set('pred_for_progress_bar', '#');
-		$this->set('suiv_for_progress_bar', array('controller' => 'transactions', 'action' => 'depot'));
+		$this->set('suiv_for_progress_bar', $step_succ);
 
 
-
-		if(!$this->Session->check('Transaction.depot.date')){
-			$this->Session->write('Transaction.depot.date', time());
-			$this->Session->write('Transaction.depot.type', 'depot');			
+		if(!$this->Session->check('Transaction.depot')){
+			$this->Session->write('Transaction.depot.step', 1);
 		}
-		$this->Session->delete('Transaction');
+
+		if(isset($clientID) && is_numeric($clientID)){
+			if(!$this->Session->check('Transaction.depot.Client')){
+				$this->Transaction->recursive = 2;
+				$this->Transaction->unbindModel(array('hasMany' => array('Row'), 'hasAndBelongsToMany' => array('Typereglement')));
+
+				$client = $this->Transaction->Client->findById($clientID);
+				if($client){
+					$this->Session->write('Transaction.depot.Client', $client['Client']);
+					$this->Session->write('Transaction.depot.Town', $client['Town']);
+
+					$tmp = array('client_id' => $client['Client']['id'],
+								 'user_id' => $this->Auth->user('id'),
+								 'date' => date('Y-m-d',time(null)),
+								 'type' => 'depot',
+								 'close' => 0,
+								 'completed' => 0,
+								 );
+					$this->Transaction->save($tmp);
+					$this->Session->write('Transaction.depot.transaction_id', $this->Transaction->id);
+					$this->Session->write('Transaction.depot.step', 2);
+					$this->redirect($step_succ);
+
+				}
+			}
+		}
 	}
 
 	/**

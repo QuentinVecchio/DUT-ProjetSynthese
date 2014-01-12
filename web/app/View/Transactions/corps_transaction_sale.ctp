@@ -1,5 +1,3 @@
-<?php //debug($this->Session->read('Transaction')); ?>
-
 <?php 
 	$texte;
 	if($this->Session->check('Transaction.achat.Client')){
