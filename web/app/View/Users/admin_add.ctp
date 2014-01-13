@@ -3,7 +3,7 @@
 		<?php
 			echo $this->Form->create('User', array('class' => 'form-horizontal', 'role' => 'form', 'name' =>'form'));
 		?>
-		<fieldset ng-init="User=<?php if(isset($this->data['User']))echo htmlspecialchars(json_encode($this->data['User']));?>">
+		<fieldset ng-init="User='<?php if(isset($this->data['User']))echo htmlspecialchars(json_encode($this->data['User']));?>'">
 			<legend>Ajout d'un utilisateur</legend>	
 			<div class="form-group">
 				<?php echo $this->Form->input('username', array('placeholder' => 'Identifiant',

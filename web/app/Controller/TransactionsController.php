@@ -8,7 +8,7 @@ class TransactionsController extends AppController {
 	public function admin_index(){
 		$this->Transaction->unbindModel(array('hasMany' => array('Row'), 'hasAndBelongsToMany' => array('Typereglement')));
 		$this->Transaction->recursive = 2;
-		$this->set('list', $this->Transaction->find('all'));
+		$this->set('list', $this->Transaction->find('all', array('conditions' => array('completed' => 1))));
 	}
 
 
@@ -219,13 +219,20 @@ class TransactionsController extends AppController {
 		$this->set('pred_for_progress_bar', $step_pred);
 		$this->set('suiv_for_progress_bar',  $step_succ);
 
-		$this->Transaction->TransactionsTypereglement->bindModel(array('belongsTo' => array('Typereglement')));
-		$this->set('transactions',$this->Transaction->TransactionsTypereglement->findAllByTransactionId($this->Session->read('Transaction.achat.transaction_id')));
+		//$this->Transaction->TransactionsTypereglement->bindModel(array('belongsTo' => array('Typereglement')));
+		//$this->set('transactions',$this->Transaction->TransactionsTypereglement->findAllByTransactionId($this->Session->read('Transaction.achat.transaction_id')));
 
 
-		$this->Transaction->Row->recursive =  -1;
-		$listAchat = $this->Transaction->Row->findAllByTransactionId($this->Session->read('Transaction.achat.transaction_id'));
-		$this->set('listLivre', $listAchat);
+		//$this->Transaction->Row->recursive =  -1;
+		//$listAchat = $this->Transaction->Row->findAllByTransactionId($this->Session->read('Transaction.achat.transaction_id'));
+		//$this->set('listLivre', $listAchat);
+
+		$this->Transaction->Row->unbindModel(array('belongsTo' => array('Transaction', 'Book', 'Condition')));
+		$this->Transaction->unbindModel(array('belongsTo' => array('User')));
+		$facture = $this->Transaction->find('all', array('conditions' => array('Transaction.id' => $this->Session->read('Transaction.achat.transaction_id')), 'recursive' => 2));
+		$facture[0]['Transaction']['total'] = $this->Session->read('Transaction.achat.total');
+		$this->set('facture', $facture);
+
 
 	}
 
