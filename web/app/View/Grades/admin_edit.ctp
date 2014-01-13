@@ -14,8 +14,8 @@
 																		'label' => array('text' => 'Nom de la classe : '))); ?>
 			</div>
 			<div ng-show="form.name.$dirty && form.name.$invalid" class="erreur has-error">
-	        	<span class="control-label" ng-show="form.name.$error.required">Saisir un nom de classe.</div>
-	        	<span class="control-label" ng-show="form.name.$error.pattern">Caractères incorrectes ou longueur insuffisante.</div>
+	        	<span class="control-label" ng-show="form.name.$error.required">Saisir un nom de classe.</span>
+	        	<span class="control-label" ng-show="form.name.$error.pattern">Caractères incorrectes ou longueur insuffisante.</span>
 	        </div>				
 			<?php echo $this->Form->button('Valider', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;',
 																		'ng-disabled' => 'form.$invalid')); ?>

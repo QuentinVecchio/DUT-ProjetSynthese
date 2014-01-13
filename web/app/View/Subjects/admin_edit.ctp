@@ -5,18 +5,17 @@
 		?>
 		<fieldset ng-init="Subject=<?php if(isset($this->data))echo htmlspecialchars(json_encode($this->data));?>">
 			<legend>Edition d'une matière</legend>	
-			<div class="form-group">
-				<?php echo $this->Form->input('grade_id', array('type' => 'text', 'name' => 'grade_id', 'ng-model' => 'Subject.Subject.grade_id', 'div' => array('style' => 'display:none;'))) ?>				
+			<div class="form-group classForm">
 				<?php echo $this->Form->input('name', array('placeholder' => 'Nom','input' => array('class' => 'form-control'),
 																		'name' => 'name',
+																		'style' => 'margin-left : 10px;',
 																		'ng-model' => 'Subject.Subject.name',
 																		'ng-pattern' =>'/^[a-zA-Zéèêàâùûç\- ]{3,}$/',
-																		'label' => array('text' => 'Nom de la matière', 'class' => 'col-sm-4 control-label'),
-																		'div' => array('class' => 'col-sm-10'))); ?>															
+																		'label' => array('text' => 'Nom de la matière : '))); ?>															
 			</div>
-			<div ng-show="form.name.$dirty && form.name.$invalid" class="col-sm-10">
-	        	<div ng-show="form.name.$error.required">Saisir le nom de la matière</div>
-	        	<div ng-show="form.name.$error.pattern">Caractères incorrectes ou longueur insuffisante</div>
+			<div ng-show="form.name.$dirty && form.name.$invalid" class="erreur has-error">
+	        	<span class="control-label" ng-show="form.name.$error.required">Saisir le nom de la matière.</span>
+	        	<span class="control-label" ng-show="form.name.$error.pattern">Caractères incorrectes ou longueur insuffisante.</span>
 	        </div>				
 			<?php echo $this->Form->button('Valider', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;',
 																		'ng-disabled' => 'form.$invalid')); ?>
