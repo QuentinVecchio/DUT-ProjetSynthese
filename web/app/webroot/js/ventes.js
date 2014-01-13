@@ -18,7 +18,6 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 		console.log('oui');
 		$scope.mt = 0;
 		$scope.achats.forEach(function(achat){
-			//alert(achat.Row.prize_unit);
 			var tmp = (achat.Row.prize_unit- achat.Row.prize_unit*achat.Row.reducing / 100)*achat.Row.amount;
 			if(tmp != null){
 				$scope.mt += tmp;
@@ -36,18 +35,6 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 			}
 		}
 	}, true);
-
-	/*if($location.path() == '')
-		{
-		 $location.path('/')
-		}
-	$scope.location = $location;
-	$scope.$watch('location.path()', function(path)
-	{
-		$scope.statusFilter =
-			(path == '/active') ? {completed : false} : null;
-			(path == '/done') ? {completed : true} : null;
-	});*/
 
 	$scope.VerifBook = function(){
 
