@@ -71,8 +71,6 @@ th,td
 	text-align: left;
 }
 
-
-
 /***
 *	PROGRESS BAR
 */
@@ -191,4 +189,17 @@ th,td
 .pageVisible
 {
 	visibility: visible;
+}
+/*
+	STYLE ERREUR DS LES FORMULAIRES
+*/
+.classForm, .erreur
+{
+	display: inline-block;
+	vertical-align: top;
+}
+.erreur
+{
+ 	margin-left : 20px;
+ 	line-height: 28px;
 }

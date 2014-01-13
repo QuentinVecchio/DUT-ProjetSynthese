@@ -5,95 +5,102 @@
 		?>
 		<fieldset ng-init="urlTown='<?php echo $this->Html->url(array('controller' => 'towns', 'action' => 'getTown', 'admin' => false)) ?>'">
 			<legend ng-init="Associations=<?php if(isset($this->data))echo htmlspecialchars(json_encode($this->data));?>">Edition d'une association</legend>
-			<div class="form-group" >
+			<div class="form-group classForm" >
 				<?php echo $this->Form->input('name', array('placeholder' => 'Nom','input' => array('class' => 'form-control'),
 																'name' =>'name',
+																'style' => 'margin-left : 10px;',
 																'ng-minLength' =>2, 'ng-maxLength' =>15,
 																'ng-pattern' =>' /^[a-zA-Z0-9-\'@/:,«»!?&.éèêëïöôùçà ]{1,}$/',
 																'ng-model' => 'Associations.Association.name',
 																'autocomplete' => 'off',
-																'label' => array('text' => 'Nom', 'class' => 'col-sm-4 control-label'),
-																'div' => array('class' => 'col-sm-10'))); ?>
+																'label' => array('text' => 'Nom : '))); ?>
 			</div>
-			<div ng-show="form.name.$dirty && form.name.$invalid" class="col-sm-12">
-	          <div ng-show="form.name.$error.required">Saisir votre nom.</div>
-	          <div ng-show="form.name.$error.minlength">Nom trop petit.</div>
-	          <div ng-show="form.name.$error.maxlength">Nom trop long.</div>
-	          <div ng-show="form.name.$error.pattern">Caractere incorrecte.</div>
+			<div ng-show="form.name.$dirty && form.name.$invalid" class="erreur has-error">
+	          <span class="control-label" ng-show="form.name.$error.required">Saisir votre nom.</span>
+	          <span class="control-label" ng-show="form.name.$error.minlength">Nom trop petit.</span>
+	          <span class="control-label" ng-show="form.name.$error.maxlength">Nom trop long.</span>
+	          <span class="control-label" ng-show="form.name.$error.pattern">Caractere incorrecte.</span>
 	        </div>
 
-
-
-			<div class="form-group">
+			<br>
+			<div class="form-group classForm">
 				<?php echo $this->Form->input('houseNumber', array('placeholder' => 'N° rue','input' => array('class' => 'form-control'),
 																'name' =>'houseNumber',
+																'style' => 'margin-left : 10px;',
 																'ng-model' => 'Associations.Association.houseNumber',
 																'ng-pattern' => '/^[0-9]{1,3}$|^[0-9]{1,3} bis|ter$/',
 																'autocomplete' => 'off',
-																'label' => array('text' => 'N° rue:', 'class' => 'col-sm-4 control-label'), 
-																'div' => array('class' => 'col-sm-10'))); ?>
+																'label' => array('text' => 'N° rue : '))); ?>
 			</div>
-			<div ng-show="form.houseNumber.$dirty && form.houseNumber.$invalid" class="col-sm-10">
-	          <div ng-show="form.houseNumber.$error.required">Saisir votre numero de rue.</div>
-	          <div ng-show="form.houseNumber.$error.pattern">Numero de rue incorrecte.</div>
+			<div ng-show="form.houseNumber.$dirty && form.houseNumber.$invalid" class="erreur has-error">
+	          <span class="control-label" ng-show="form.houseNumber.$error.required">Saisir votre numero de rue.</span>
+	          <span class="control-label" ng-show="form.houseNumber.$error.pattern">Numero de rue incorrecte.</span>
 	        </div>
 
-
-			<div class="form-group">
+			<br>
+			<div class="form-group classForm">
 				<?php echo $this->Form->input('street', array('placeholder' => 'Rue','input' => array('class' => 'form-control'),
 																'name' =>'street',
+																'style' => 'margin-left : 10px;',
 																'ng-model' => 'Associations.Association.street',
 																'ng-pattern' => '/^[a-zA-Z-\'éèêëïöôùçà ]{1,}$/',
 																'autocomplete' => 'off',
-																'label' => array('text' => 'Rue:', 'class' => 'col-sm-4 control-label'), 
-																'div' => array('class' => 'col-sm-10'))); ?>
-			</div>			
-			<div ng-show="form.street.$dirty && form.street.$invalid" class="col-sm-10">
-	          <div ng-show="form.street.$error.required">Saisir votre nom de rue.</div>
-	          <div ng-show="form.street.$error.pattern">Nom de rue incorrecte.</div>
+																'label' => array('text' => 'Rue : '))); ?>
+			</div>
+			<div ng-show="form.street.$dirty && form.street.$invalid" class="erreur has-error">
+	          <span class="control-label" ng-show="form.street.$error.required">Saisir votre nom de rue.</span>
+	          <span class="control-label" ng-show="form.street.$error.pattern">Nom de rue incorrecte.</span>
 	        </div>
-			<div class="form-group">
+			
+			<br>
+			<div class="form-group classForm">
 				<?php echo $this->Form->input('zip_code', array('ng-model' => 'Associations.Town.zip_code',
 																'placeholder' => 'Code postal',
 																'name' => 'zip_code',
+																'style' => 'margin-left : 10px;',
 																'ng-change' => 'traitement()',
 																'autocomplete' => 'off',
-																'label' => array('text' => 'Code postal:', 'class' => 'col-sm-4 control-label'), 
-																'div' => array('class' => 'col-sm-10'))); ?>
+																'label' => array('text' => 'Code postal : '))); ?>
 			</div>
+
+			<br>
 			<div class="form-group" ng-show="existe">
-				<div class="col-sm-10">
-					<label for="ville"  class="col-sm-4 control-label">Ville</label>
-					<select class="form-control" style="width:164px; margin-left:304px;" ng-model="Associations.Association.town_id" ng-init="initTown()" name="town_id" ng-options="value.Town.name for value in villes track by value.Town.id" ng-change="updateZipCode()" required></select>
+				<div class="classForm">
+					<label for="ville"  class="col-sm-4 control-label">Ville : </label>
+					<select class="form-control" style="width:164px; margin-left:100px;" ng-model="Associations.Association.town_id" ng-init="initTown()" name="town_id" ng-options="value.Town.name for value in villes track by value.Town.id" ng-change="updateZipCode()" required></select>
 				</div>
 			</div>
-			<span class="col-sm-10" ng-show="existePas">Aucune ville trouvée</span>
+			<div ng-show="form.email.$dirty && form.email.$invalid" class="erreur has-error">
+	          	<span class="control-label" ng-show="existePas">Aucune ville trouvée</span>
+	        </div>
+			
 				
-			<div class="form-group">
+			<div class="form-group classForm">
 				<?php echo $this->Form->input('phone', array('placeholder' => 'Téléphone','input' => array('class' => 'form-control'),
 																'name' => 'phone',
 																'ng-model' => 'Associations.Association.phone',
 																'autocomplete' => 'off',
+																'style' => 'margin-left : 10px;',
 																'ng-pattern' => '/^0[1-9][0-9]{8}$|^[+]33[1-9][0-9]{8}$|^[+]352[0-9]{6,}$|^00352[0-9]{6,}$/',
-																'label' => array('text' => 'Numéro de Téléphone', 'class' => 'col-sm-4 control-label'), 
-																'div' => array('class' => 'col-sm-10'))); ?>
+																'label' => array('text' => 'Numéro de Téléphone : '))); ?>
 			</div>
-			<div ng-show="form.phone.$dirty && form.phone.$invalid" class="col-sm-10">
-		        <div ng-show="form.phone.$error.required">Saisir votre numero de telephone.</div>
-		        <div ng-show="form.phone.$error.pattern">Numero invalide.</div>
+			<div ng-show="form.phone.$dirty && form.phone.$invalid" class="erreur has-error">
+		        <span class="control-label" ng-show="form.phone.$error.required">Saisir votre numero de telephone.</span>
+		        <span class="control-label" ng-show="form.phone.$error.pattern">Numero invalide.</span>
 	        </div>
 
-			<div class="form-group">
+			<br>
+			<div class="form-group classForm">
 				<?php echo $this->Form->input('email', array('placeholder' => 'Adresse mail','input' => array('class' => 'form-control'),
 																'name' => 'email',
 																'ng-model' => 'Associations.Association.email',	
-																'autocomplete' => 'off',				
-																'label' => array('text' => 'Adresse Mail', 'class' => 'col-sm-4 control-label'), 
-																'div' => array('class' => 'col-sm-10'))); ?>
+																'autocomplete' => 'off',	
+																'style' => 'margin-left : 10px;',			
+																'label' => array('text' => 'Adresse Mail : '))); ?>
 			</div>
-			<div ng-show="form.email.$dirty && form.email.$invalid" class="col-sm-10">
-	          <div ng-show="form.email.$error.required">Saisir une adresse mail</div>
-	          <div ng-show="form.email.$error.email">Adresse mail incorrecte</div>
+			<div ng-show="form.email.$dirty && form.email.$invalid" class="erreur has-error">
+	          <span class="control-label" ng-show="form.email.$error.required">Saisir une adresse mail</span>
+	          <span class="control-label" ng-show="form.email.$error.email">Adresse mail incorrecte</span>
 	        </div>
 
 

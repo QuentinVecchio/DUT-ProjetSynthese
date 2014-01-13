@@ -3,20 +3,20 @@
 		<?php
 			echo $this->Form->create('Sector', array('class' => 'form-horizontal', 'role' => 'form', 'name' => 'form'));
 		?>
-		<fieldset ng-init="Sector=<?php if(isset($this->data['Sector']))echo htmlspecialchars(json_encode($this->data['Sector']));?>">
-			<legend>Edition d'une filière</legend>	
-			<div class="form-group">
-				<?php echo $this->Form->input('name', array('input' => array('class' => 'form-control'),
+		<fieldset ng-init="Sector=<?php if(isset($this->data))echo htmlspecialchars(json_encode($this->data));?>">
+			<legend>Edition d'une Filière</legend>	
+			<div class="form-group classForm">
+				<?php echo $this->Form->input('name', array('placeholder' => 'Nom','input' => array('class' => 'form-control'),
 																'name' => 'name',
-																'ng-model' => 'Sector.name',
+																'style' => 'margin-left : 10px;',
+																'ng-model' => 'Sector.Sector.name',
 																'ng-pattern' =>'/^[A-Z ]{1,}$/',
-																'label' => array('text' => 'Nom de la filière', 'class' => 'col-sm-4 control-label'),
-																'div' => array('class' => 'col-sm-10'))); ?>
+																'label' => array('text' => 'Nom de la filière : '))); ?>
 			</div>
-			<div ng-show="form.name.$dirty && form.name.$invalid" class="col-sm-10">
-	        	<div ng-show="form.name.$error.required">Saisir un nom de filière</div>
-	        	<div ng-show="form.name.$error.pattern">Caractères incorrectes.</div>
-	        </div>					
+			<div ng-show="form.name.$dirty && form.name.$invalid" class="erreur has-error">
+				<span class="control-label" ng-show="form.name.$error.required">Saisir un nom de filière</span>
+		        <span class="control-label" ng-show="form.name.$error.pattern">Caractères incorrectes.</span>
+	        </div>				
 			<?php echo $this->Form->button('Valider', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;',
 															'ng-disabled' => 'form.$invalid')); ?>
 		</fieldset>
