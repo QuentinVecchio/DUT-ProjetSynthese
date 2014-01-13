@@ -125,7 +125,7 @@
 				<label for="association_id" class="col-sm-4 control-label" style="width : 150px;">Association : </label>
 				<?php echo $this->Form->select('association_id', $listAssoc, array('class' => 'form-control input-sm', 'style' => 'width: 200px; margin-left: 10px;', 'name' => 'association_id')); ?>
 			</div>
-			<?php echo $this->Form->button('Ajouter', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;','ng-disabled' => 'form.$invalid')); ?>
+			<?php echo $this->Form->button('Valider', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;','ng-disabled' => 'form.$invalid')); ?>
 		</fieldset>
 		<?php
 			echo $this->Form->end();
