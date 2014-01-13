@@ -203,6 +203,11 @@ class TransactionsController extends AppController {
 		}
 		$this->set('listTypeReglement', $listTypeReglement);
 
+		$this->Transaction->recursive = -1;
+		$this->set('oldTransaction', $this->Transaction->findAllByClientIdAndClose($this->Session->read('Transaction.achat.Client.id'),0));
+
+
+
 	}
 
 

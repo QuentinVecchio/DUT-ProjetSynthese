@@ -3,6 +3,8 @@
 																transactionId=<?php echo $this->Session->read('Transaction.achat.transaction_id') ?>;
 																total=<?php echo $this->Session->read('Transaction.achat.total');?>;
 																initialisation();">
+<?php debug($oldTransaction) ?>
+
 	<h1 style="text-align : center;">Règlement</h1>
 	<div class="formulaire" style="width: 300px;padding: 10px;margin: auto;margin-top : 10px;">
 		<?php echo $this->Form->create(); ?>
