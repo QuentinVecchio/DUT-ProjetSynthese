@@ -3,7 +3,7 @@
 		<?php
 			echo $this->Form->create('Sector', array('class' => 'form-horizontal', 'role' => 'form', 'name' => 'form'));
 		?>
-		fieldset ng-init="Sector=<?php if(isset($this->data))echo htmlspecialchars(json_encode($this->data));?>">
+		<fieldset ng-init="Sector=<?php if(isset($this->data))echo htmlspecialchars(json_encode($this->data));?>">
 			<legend>Edition d'une Filière</legend>	
 			<div class="form-group classForm">
 				<?php echo $this->Form->input('name', array('placeholder' => 'Nom','input' => array('class' => 'form-control'),
