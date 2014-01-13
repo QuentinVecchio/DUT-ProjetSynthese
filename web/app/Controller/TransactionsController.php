@@ -65,6 +65,7 @@ class TransactionsController extends AppController {
 								 'type' => 'achat',
 								 'close' => 0,
 								 'completed' => 0,
+								 'total' => 0
 								 );
 					$this->Transaction->save($tmp);
 					$this->Session->write('Transaction.achat.transaction_id', $this->Transaction->id);
@@ -111,6 +112,10 @@ class TransactionsController extends AppController {
 					$total += $value['Row']['prize_total'];
 				}
 				$this->Session->write('Transaction.achat.total', $total);
+				$this->Transaction->id = $this->Session->read('Transaction.achat.transaction_id');
+				$this->Transaction->save(array('total' => $total));
+
+
 				$this->Session->write('Transaction.achat.step', 3);
 			$this->redirect($step_succ);
 			$listAchat = $this->data;
@@ -345,6 +350,9 @@ class TransactionsController extends AppController {
 					$total += $value['Row']['prize_total'];
 				}
 				$this->Session->write('Transaction.depot.total', $total);
+				$this->Transaction->id = $this->Session->read('Transaction.achat.transaction_id');
+				$this->Transaction->save(array('total' => $total));
+
 
 				$this->Session->write('Transaction.depot.step', 3);
 				$this->redirect($step_succ);

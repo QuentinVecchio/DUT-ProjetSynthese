@@ -7,6 +7,7 @@ class StocksController extends AppController{
 		$stock = $this->Transaction->Row->find('all',array( 'fields' => array('Transaction.date', 'book_id',
 																			  'Transaction.type', 'Row.name_condition',
 																			  'condition_id','SUM(amount) AS amount',
+																			  'Row.name_book',
 																			  'prize_unit','SUM(prize_total) AS total'),
 															'group' => array('Transaction.date','type', 'book_id','condition_id')
 															));
