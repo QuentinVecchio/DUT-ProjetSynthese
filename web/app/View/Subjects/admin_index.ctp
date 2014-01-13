@@ -1,3 +1,7 @@
+<a class="btn btn-primary btn-retour" href="<?php echo $this->Html->url( array('controller' => 'grades', 'action' => 'index', 'admin' => true, $idSubject)) ?>">
+
+<span class="glyphicon glyphicon-chevron-left"></span>
+	Retourner à la liste des classes</a>
 <table class="table table-bordered">
 	<caption>
 			<h4>Liste des matières</h4><br>

@@ -1,3 +1,7 @@
+<a class="btn btn-primary btn-retour" href="<?php echo $this->Html->url( array('controller' => 'sectors', 'action' => 'index', 'admin' => true)) ?>">
+
+<span class="glyphicon glyphicon-chevron-left"></span>
+	Retourner à la liste des filières</a>
 <table class="table table-bordered">
 	<caption>
 			<h4>Liste des classes</h4><br>

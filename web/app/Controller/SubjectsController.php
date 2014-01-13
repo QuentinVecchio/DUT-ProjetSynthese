@@ -23,6 +23,7 @@ class SubjectsController extends AppController{
 				$this->redirect(array('controller' => 'subjects', 'action' => 'index', $this->data['Subject']['grade_id']));
 			}
 		}
+		$this->set('idSubject', $idSubject);
 	}
 
 	/**
@@ -42,6 +43,7 @@ class SubjectsController extends AppController{
 		}else{
 			$this->data = $this->Subject->findById($id);
 		}
+		$this->set('idSubject', $id);
 	}
 
 

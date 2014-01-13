@@ -1,3 +1,7 @@
+<a class="btn btn-primary btn-retour" href="<?php echo $this->Html->url( array('controller' => 'subjects', 'action' => 'index', 'admin' => true, $idSubject)) ?>">
+
+<span class="glyphicon glyphicon-chevron-left"></span>
+	Retourner à la liste des matières</a>
 <div class="formulaire row" style="width : 700px; margin:auto;" ng-app="app">
 	<div class="span4 offset6" ng-controller="Controller">
 		<?php

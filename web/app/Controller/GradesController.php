@@ -17,12 +17,12 @@ class GradesController extends AppController{
 		if(!empty($this->data)){
 			$this->request->data = array('Grade' => $this->request->data);	
 			$this->request->data['Grade']['sector_id'] = $idSector;
-
 			if($this->Grade->save($this->data)){
 				$this->Session->setFlash('Classe ajoutée avec succès', 'message', array('type' => 'success'));
 				$this->redirect(array('controller' => 'grades', 'action' => 'index', $this->data['Grade']['sector_id']));
 			}
 		}
+		$this->set('idSector', $idSector);
 	}
 
 	/**
@@ -39,6 +39,7 @@ class GradesController extends AppController{
 		}else{
 			$this->data = $this->Grade->findById($id);
 		}
+		$this->set('idSector', $id);
 	}
 
 

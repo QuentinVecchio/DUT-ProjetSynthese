@@ -1,6 +1,8 @@
 <h1>Facture:</h1>
-<?php echo $this->Html->Link('< Retourner à la liste des factures', array('controller' => 'transactions', 'action' => 'index', 'admin' => true),
-																array('class' => 'btn btn-primary')) ?>
+<a class="btn btn-primary" href="<?php echo $this->Html->url( array('controller' => 'transactions', 'action' => 'index', 'admin' => true)) ?>">
+
+<span class="glyphicon glyphicon-chevron-left"></span>
+	Retourner à la liste des factures</a>
 <?php
 
 	$facture = current($facture);
