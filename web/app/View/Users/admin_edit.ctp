@@ -62,8 +62,8 @@
 			
 			<br>
 			<div class="form-group classForm">
-				<?php echo $this->Form->radio('status', array('operateur' => 'operateur', 'admin' => 'administrateur'),
-														 array('legend' => false, 'value' => $typeUtil, 'name' => 'status'));?>
+				<?php echo $this->Form->radio('status', array('operateur' => ' Opérateur', 'admin' => ' Administrateur'),
+														 array('legend' => false, 'value' => $typeUtil, 'name' => 'status', 'style' => 'margin-left: 10px;'));?>
 			</div>
 			<?php 
 					if ($this->Form->isFieldError('status')) {
