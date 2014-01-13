@@ -1,0 +1,3 @@
+.*~
+^web/app/tmp/cache/.*$
+^web/app/tmp/logs/.*$
