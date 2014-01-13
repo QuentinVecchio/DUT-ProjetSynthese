@@ -206,6 +206,7 @@ class TransactionsController extends AppController {
 	*	Récapitulation des achats du parent
 	*/
 	public function recapSale(){
+		$this->helpers[] = 'Facture';
 		$step_pred =  array('controller' => 'transactions', 'action' => 'reglement');
 		if(!$this->Session->check('Transaction.achat') || $this->Session->read('Transaction.achat.step') < 4){
 			$this->redirect($step_pred);
