@@ -214,3 +214,10 @@ th,td
 {
 	text-align : left;
 }
+
+.jumbotron{
+	height:120px;
+	padding: 0;
+	padding-left: 20px;
+	padding-top: 18px;
+}

@@ -9,7 +9,7 @@
  ?>
 
 <section>
-	<h1><?php echo $texte; ?></h1>
+	<h1 class="jumbotron"><p><font size="6"><strong>Vente</strong></font></p><?php echo $texte; ?></h1>
 	<div>
 		<ul id="barreProgress" class="step-5">	
 			<li class="etape <?php if($step_for_progress_bar == 1)echo 'focus'; ?>">
