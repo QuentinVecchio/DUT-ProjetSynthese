@@ -10,4 +10,5 @@
   $this->start('css'); // indique quel fichier css on utilise
     echo $this->Html->css('facture');
   $this->end();  
+  echo $this->Html->Link('Imprimer', array('controller' => 'transactions', 'action' => 'print', $facture['Transaction']['id']), array('class' => 'btn btn-primary', 'style' => 'margin-left : 20px;'));
  ?>

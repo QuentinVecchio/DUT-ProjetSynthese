@@ -3,6 +3,24 @@ class TransactionsController extends AppController {
 
 
 	/**
+	*	Impression de la facture
+	*/
+	public function admin_print($facture_id) {
+		$listType = $this->Transaction->find('all');
+		$this->Transaction->Row->unbindModel(array('belongsTo' => array('Transaction', 'Book', 'Condition')));
+		$this->Transaction->unbindModel(array('belongsTo' => array('User')));
+		$facture = $this->Transaction->find('all', array('conditions' => array('Transaction.id' => $facture_id), 'recursive' => 2));
+		if(empty($facture)){
+			$this->redirect(array('controller' => 'transactions', 'action' => 'index'));
+		}
+
+		$this->set('facture', $facture);
+        $this->layout = 'pdf'; //this will use the pdf.ctp layout 
+        $this->render();
+	}
+
+
+	/**
 	*	Permet de lister les factures
 	*/
 	public function admin_index(){
