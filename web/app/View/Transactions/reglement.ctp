@@ -27,8 +27,8 @@
 				</div>			
 			</div>
 			<div style="text-align : left;padding-left: 10px;">
-				<span ng-show="reste < 0">Vous devez <span style="color :red;font-weight:bold;">{{donne}}</span> € au client.</span>
-				<span ng-show="reste > 0">Il reste <span style="font-weight: bold;">{{reste}}</span> € à payer.</span>
+				<span ng-show="reste < 0">Vous devez <span style="color :red;font-weight:bold;">{{donne | number:2}}</span> € au client.</span>
+				<span ng-show="reste > 0">Il reste <span style="font-weight: bold;">{{reste | number:2}}</span> € à payer.</span>
 				<span ng-show="reste == 0" style="color : green;">Le client a tout réglé.</span>
 			</div>
 			<input ng-disabled="reglement != total" type="submit" value="Envoyer" class="btn btn-primary" style="margin-left: 175px;">

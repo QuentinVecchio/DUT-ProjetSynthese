@@ -16,6 +16,11 @@ h4
 {
 	font-size: 1.3em;
 }
+.navbar li:active
+{
+	font-size: 1.3em;
+	color:red;
+}
 .navbar-brand
 {
 	font-size: 1.5em;
