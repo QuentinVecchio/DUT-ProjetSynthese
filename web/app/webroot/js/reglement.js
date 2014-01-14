@@ -37,5 +37,15 @@ gestionDemande.controller('ctrl', function FormCtrl($scope) {
 		}
 	},true);
 
+
+	$scope.initClose = function(close){
+		console.log(close);
+		if(close == '0'){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
 	
 });

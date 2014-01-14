@@ -171,17 +171,37 @@ class TransactionsController extends AppController {
 
 			// On enlève les entrées avec un prix vide
 			foreach ($this->request->data as $key => $value) {
-				if(empty($value['amount'])){
-					unset($this->request->data[$key]);
+				if($key === 'Transaction'){
+					foreach ($value as $k => $v) {
+						if(isset($v['close']) && $v['close'] == 'on'){
+							$this->request->data[$key][$k]['close'] =1;
+						}else{
+							unset($this->request->data[$key][$k]);
+						}
+					}
+				}else{
+					if(empty($value['amount'])){
+						unset($this->request->data[$key]);
+					}
 				}
 			}
+
+
+			if(isset($this->data['Transaction']) && !empty($this->data['Transaction'])){
+				$this->Session->write('Transaction.achat.oldTransaction', $this->data['Transaction']);
+				if(!$this->Transaction->saveMany($this->data['Transaction'])){
+					$this->Session->setFlash('Erreur','message', array('type' => 'danger'));
+				}
+			}
+
+			unset($this->request->data['Transaction']);
 
 			$this->Transaction->TransactionsTypereglement->deleteAll(array('transaction_id' => $this->Session->read('Transaction.achat.transaction_id')));
 			if($this->Transaction->TransactionsTypereglement->saveMany($this->data)){
 				$this->Session->write('Transaction.achat.step', 4);
 				$this->redirect($step_succ);
 			}else{
-				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
+				$this->Session->setFlash('Erreur règlement','message', array('type' => 'danger'));
 			}
 		}
 
@@ -204,7 +224,9 @@ class TransactionsController extends AppController {
 		$this->set('listTypeReglement', $listTypeReglement);
 
 		$this->Transaction->recursive = -1;
-		$this->set('oldTransaction', $this->Transaction->findAllByClientIdAndClose($this->Session->read('Transaction.achat.Client.id'),0));
+		$oldTransaction = $this->Transaction->find('all', array('conditions' => array('client_id' => $this->Session->read('Transaction.achat.Client.id'),
+																					  'close' => 0, 'Transaction.id <>' => $this->Session->read('Transaction.achat.transaction_id'))));
+		$this->set('oldTransaction', $oldTransaction);
 
 
 
@@ -232,7 +254,6 @@ class TransactionsController extends AppController {
 		$this->Transaction->Row->unbindModel(array('belongsTo' => array('Transaction', 'Book', 'Condition')));
 		$this->Transaction->unbindModel(array('belongsTo' => array('User')));
 		$facture = $this->Transaction->find('all', array('conditions' => array('Transaction.id' => $this->Session->read('Transaction.achat.transaction_id')), 'recursive' => 2));
-		$facture[0]['Transaction']['total'] = $this->Session->read('Transaction.achat.total');
 		$this->set('facture', $facture);
 
 
@@ -391,23 +412,43 @@ class TransactionsController extends AppController {
 	*/
 	public function recapDepot(){
 		$step_pred = array('controller' => 'transactions', 'action' => 'depot');
+		$step_succ = array('controller' => 'transactions', 'action' => 'endDepot');
 		if(!$this->Session->check('Transaction.depot') || $this->Session->read('Transaction.depot.step') < 3){
 			$this->redirect($step_pred);
 		}
 		
-		$step_succ =  array('controller' => 'transactions', 'action' => 'end');
 		$this->set('step_for_progress_bar', 3);
 		$this->set('pred_for_progress_bar', $step_pred);
 		$this->set('suiv_for_progress_bar', '#');
 
-		$this->Transaction->TransactionsTypereglement->bindModel(array('belongsTo' => array('Typereglement')));
-		$this->set('transactions',$this->Transaction->TransactionsTypereglement->findAllByTransactionId($this->Session->read('Transaction.depot.transaction_id')));
+		$this->Transaction->Row->unbindModel(array('belongsTo' => array('Transaction', 'Book', 'Condition')));
+		$this->Transaction->unbindModel(array('belongsTo' => array('User')));
+		$facture = $this->Transaction->find('all', array('conditions' => array('Transaction.id' => $this->Session->read('Transaction.depot.transaction_id')), 'recursive' => 2));
+		$this->set('facture', $facture);
+
+		if(!empty($this->data)){
+			if($this->Transaction->save($this->data)){
+				$this->Session->write('Transaction.depot.step', 4);
+				$this->redirect($step_succ);
+			}else{
+				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
+			}
+		}
+
+	}
 
 
-		$this->Transaction->Row->recursive =  -1;
-		$listAchat = $this->Transaction->Row->findAllByTransactionId($this->Session->read('Transaction.depot.transaction_id'));
-		$this->set('listLivre', $listAchat);
+	public function endDepot(){
+		$step_pred = array('controller' => 'transactions', 'action' => 'recapDepot');
+		$step_succ = array('#');
 
+		if(!$this->Session->check('Transaction.depot') || $this->Session->read('Transaction.depot.step') < 4){
+			$this->redirect($step_pred);
+		}
+		
+		$this->set('step_for_progress_bar', 4);
+		$this->set('pred_for_progress_bar', $step_pred);
+		$this->set('suiv_for_progress_bar', '#');
 	}
 
 
@@ -432,11 +473,19 @@ class TransactionsController extends AppController {
 		$this->Transaction->recursive = 2;
 		$this->Transaction->unbindModel(array('hasMany' => array('Row'), 'hasAndBelongsToMany' => array('Typereglement')));
 		$tmp = $this->Transaction->findById($id);
-		$this->Session->write('Transaction.achat.Client', $tmp['Client']);
-		$this->Session->write('Transaction.achat.Town', $tmp['Client']['Town']);
-		$this->Session->write('Transaction.achat.transaction_id', $id);
-		$this->Session->write('Transaction.achat.step', 2);
-		$this->redirect(array('controller'=> 'transactions', 'action' => 'sale'));
+		if($tmp['Transaction']['type'] === 'achat'){
+			$ext = 'achat';
+			$action = 'sale';
+		}else{
+			$ext = 'depot';
+			$action = 'depot';
+		}
+		$this->Session->write('Transaction.'.$ext.'.Client', $tmp['Client']);
+		$this->Session->write('Transaction.'.$ext.'.Town', $tmp['Client']['Town']);
+		$this->Session->write('Transaction.'.$ext.'.transaction_id', $id);
+		$this->Session->write('Transaction.'.$ext.'.step', 2);
+
+		$this->redirect(array('controller'=> 'transactions', 'action' => $action));
 		
 	}
 

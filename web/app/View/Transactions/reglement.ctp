@@ -2,12 +2,22 @@
 <section ng-app="gestionReglement" ng-Controller="ctrl" ng-init="list=<?php echo htmlentities(json_encode($listTypeReglement))?>;
 																transactionId=<?php echo $this->Session->read('Transaction.achat.transaction_id') ?>;
 																total=<?php echo $this->Session->read('Transaction.achat.total');?>;
-																initialisation();">
-<?php debug($oldTransaction) ?>
+																initialisation();
+																oldTransaction=<?php echo htmlentities(json_encode($oldTransaction)) ?>">
+<?php //debug($oldTransaction) ?>
 
 	<h1 style="text-align : center;">Règlement</h1>
 	<div class="formulaire" style="width: 300px;padding: 10px;margin: auto;margin-top : 10px;">
+
+
 		<?php echo $this->Form->create(); ?>
+			<ul>
+				<li ng-repeat="t in oldTransaction">
+					<input type="text" name="data[Transaction][{{$index}}][id]" ng-model="t.Transaction.id" style="display:none;">
+					<input type="text" name="data[Transaction][{{$index}}][total]" ng-model="t.Transaction.total" style="display:none;">
+					<input type="checkbox" name="data[Transaction][{{$index}}][close]" ng-model="t.Transaction.isClose" ng-init="t.Transaction.isClose = initClose(t.Transaction.close)"><label for="">{{t.Transaction.date}} {{t.Transaction.total}}</label>
+				</li>
+			</ul>
 			<div ng-repeat="i in list">
 				<div>
 					<label>{{i.Typereglement.name}} :</label>
