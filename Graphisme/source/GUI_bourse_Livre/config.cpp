@@ -7,7 +7,6 @@ Config::Config(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->lineEdit->setText("http://");
-    ui->lineEdit_2->setText("80");
 }
 
 Config::~Config()
@@ -17,13 +16,13 @@ Config::~Config()
 
 void Config::on_buttonBox_accepted()
 {
-    if(ui->lineEdit->text() == "" || ui->lineEdit_2->text() == "")
+    if(ui->lineEdit->text() == "")
     {
         QMessageBox::warning(this, "Attention", "Le serveur est mal configuré, veuillez le reconfigurer.");
     }
     else
     {
-        QString string(ui->lineEdit->text() + ":" + ui->lineEdit_2->text());
+        QString string(ui->lineEdit->text());
         QFile configServeur("../configServeur.txt");
         if(!(configServeur.open(QIODevice::WriteOnly)))
         {

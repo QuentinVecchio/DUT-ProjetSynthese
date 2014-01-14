@@ -87,7 +87,7 @@ void fenetrePrincipale::on_actionDeveloppeurs_triggered()
                 "Matthieu Clin\n" \
                 "Hugo Czekala\n" \
                 "Dylan Koby\n" \
-                "Romain Tribou\n" \
+                "Erreur 404\n" \
                 "Quentin Vecchio\n");
 }
 
@@ -118,11 +118,10 @@ void fenetrePrincipale::on_pageWeb_loadFinished(bool arg1)
     {
         this->barreProgresse->hide();
     }
-    else
+    else if(arg1 == false)
     {
         QMessageBox::warning(this,"Erreur 404","Erreur, page non trouvée, veuillez reconfigurer le serveur.");
         this->barreProgresse->hide();
-        ui->pageWeb->setUrl(QUrl(":/icones/accueil.html"));
     }
 }
 
@@ -134,5 +133,16 @@ void fenetrePrincipale::on_actionUtilisation_triggered()
 
 void fenetrePrincipale::chargement()
 {
+    QFile configServeur("../configServeur.txt");
+    if((configServeur.open(QIODevice::ReadOnly | QIODevice::Text)))
+    {
+        QTextStream flux(&configServeur);
+        this->lien = new QString(flux.readLine());
+        if(!(this->lien->isEmpty()))
+        {
+            ui->pageWeb->setUrl(QUrl(*this->lien));
+        }
+    }
+    configServeur.close();
     ui->actionAccueil->trigger();
 }

@@ -320,5 +320,7 @@
         <file>logos/wooden-picket.png</file>
         <file>logos/write.png</file>
         <file>accueil.html</file>
+        <file>bootstrap.min.css</file>
+        <file>tuto.html</file>
     </qresource>
 </RCC>
