@@ -1,6 +1,6 @@
 <?php $this->extend('corps_transaction') ?>
 <div style="text-align: center;">
-  <h1>Espace vente</h1>
+  <h1>Espace dépôt</h1>
 </div>
 <div ng-app="GBL" ng-controller="CtrlLivresDepot" class="clearFix">
 <section id="book_choice" ng-show="clicked" ng-init="clicked=false" class="container animated fadeIn" style="clear:both;">
@@ -38,7 +38,7 @@
       </section>
       <section id="achats" class="container animated fadeIn" ng-show="!clicked" ng-hide="clicked">
         <header id="header">
-          <h3>Les achats</h3>
+          <h3>Les dépôts</h3>
         </header>
         <?php echo $this->Form->create('Row'); ?>
         <section id="main">
@@ -105,7 +105,7 @@
               <a class="btn btn-primary" ng-click="saveAchats()" href="#" style="margin-left: 700px;">Nouveau</a>
         <!--  </div>
         </footer>-->
-        <input id="BtnSubmit" type="submit" ng-click="VerifBook()" value="Acheter" class="btn btn-success">
+        <input id="BtnSubmit" type="submit" ng-click="VerifBook()" value="Déposer" class="btn btn-success">
         </section>
         <?php echo $this->Form->end(); ?>
 
