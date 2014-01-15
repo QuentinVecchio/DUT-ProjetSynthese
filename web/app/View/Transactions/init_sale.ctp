@@ -78,7 +78,7 @@
       </tbody>
   </table>
   <div ng-show="!match && search.length >1" style="margin:auto;text-align : center;"><p><h2>Parent non trouvé</h2></p></div>
-  <div><?php echo $this->Html->Link('Créer le parent', array('controller' => 'clients', 'action' => 'add'),
+  <div><?php echo $this->Html->Link('Créer le parent', array('controller' => 'clients', 'action' => 'add', '?' => array('action' => 'sale')),
                                array('class' => 'btn btn-primary')) ?>
   </div>
 </section>

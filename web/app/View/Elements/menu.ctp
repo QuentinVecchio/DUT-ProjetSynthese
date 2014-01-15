@@ -1,8 +1,8 @@
-<?php if($this->Session->read('Auth.User.status') == 'admin' && ($this->params['prefix'] == 'admin' || $this->params['controller'] == 'clients' && $this->params['action'] == 'add')): ?>
+<?php if($this->Session->read('Auth.User.status') == 'admin' && $this->params['prefix'] == 'admin'): ?>
 
 <nav class="navbar navbar-inverse" role="navigation">
   <div class="navbar-header">
-    <a class="navbar-brand" href="#">GBL</a>
+    <?php echo $this->Html->Link('GBL', array('controller' => 'stocks', 'action' => 'index', 'admin' => true),array('class' => 'navbar-brand')); ?>
   </div>
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
@@ -13,7 +13,7 @@
 		<li><?php echo $this->Html->Link('Parents', array('controller' => 'clients', 'action' => 'index', 'admin' => true)); ?></li>
 		<li><?php echo $this->Html->Link('Associations', array('controller' => 'associations', 'action' => 'index', 'admin' => true)); ?></li>
 		<li><?php echo $this->Html->Link('Factures', array('controller' => 'transactions', 'action' => 'index', 'admin' => true)); ?></li>
-    <li><?php echo $this->Html->Link('Stock', array('controller' => 'stocks', 'action' => 'index')); ?></li>
+    <li><?php echo $this->Html->Link('Rapports', array('controller' => 'stocks', 'action' => 'index', 'admin' => true)); ?></li>
 		<li><?php echo $this->Html->Link('Règlements', array('controller' => 'typereglements', 'action' => 'index', 'admin' => true)); ?></li>
     <li><?php echo $this->Html->Link('', array('controller' => 'users', 'action' => 'choice', 'admin' => true),
                                           array('class' => 'glyphicon glyphicon-user')) ?></li>
@@ -37,11 +37,7 @@
     <li class="divider-vertical"></li>
     <li> <?php echo $this->Html->Link('Vente', array('controller' => 'transactions', 'action' =>'initSale', 'admin' => false)) ?></li>
 	 	<li class="divider-vertical"></li>
-		<li> <a href="#">Parents</a> </li>
-		<li class="divider-vertical"></li>
-		<li> <a href="#">Livres</a> </li>
-	 	<li class="divider-vertical"></li>
-	 	<li> <a href="#">Stock</a> </li>
+	 	<li><?php  echo $this->Html->Link('Stocks', array('controller' => 'stocks', 'action' => 'index', 'admin' => false)); ?> </li>
 	  <li class="divider-vertical"></li>
   <?php if($this->Session->read('Auth.User.status') == 'admin'): ?>
     <li> <?php echo $this->Html->Link('', array('controller' => 'users', 'action' => 'choice', 'admin' => true),

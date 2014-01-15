@@ -7,7 +7,6 @@
 	}
 
  ?>
-<?php debug($this->Html->url(array('controller' => 'transactions', 'action' => 'depot'))); ?>
 <section>
 	<h1 class="jumbotron"><p><font size="6"><strong>Depôt</strong></font></p><?php echo $texte; ?></h1>
 	<div>

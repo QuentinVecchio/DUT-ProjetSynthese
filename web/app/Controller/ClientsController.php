@@ -9,10 +9,8 @@ class ClientsController extends AppController{
 		$this->set('listParent', $listParent);
 	}
 
-	/**
-	*	Formulaire d'ajout d'une parent
-	*/
-	public function add(){
+
+	public function admin_add(){
 		if(!empty($this->data)){
 			$this->request->data = array('Client' =>$this->data);			
 			if($this->Client->save($this->data)){
@@ -22,6 +20,36 @@ class ClientsController extends AppController{
 					if($this->Session->check('Transaction.depot')){
 						$this->redirect(array('controller' => 'transactions', 'action' => 'init', 'admin' => false, $this->Client->id));
 					}else{
+						$this->redirect(array('controller' => 'transactions', 'action' => 'initSale', 'admin' => false, $this->Client->id));	
+					}
+				}else{
+					$this->redirect(array('action' => 'index', 'admin' => true));
+				}
+			}
+			if(isset($this->data['Client']['town_id'])){
+				$this->request->data['Town'] = current($this->Client->Town->findById($this->data['Client']['town_id']));
+			}			
+		}
+
+		$listAssoc = $this->Client->Association->find('list');
+		$this->set('listAssoc', $listAssoc);
+		$this->render('add');
+	}
+
+
+	/**
+	*	Formulaire d'ajout d'une parent
+	*/
+	public function add(){	
+		if(!empty($this->data)){
+			$this->request->data = array('Client' =>$this->data);			
+			if($this->Client->save($this->data)){
+				$this->Session->setFlash('<strong>Félicitation:</strong>Vous venez d\'ajouter un parent','message', array('type' => 'success'));
+				
+				if(isset($this->params['url']['action']) && !empty($this->params['url']['action'])){
+					if($this->params['url']['action'] === 'depot'){
+						$this->redirect(array('controller' => 'transactions', 'action' => 'init', 'admin' => false, $this->Client->id));
+					}else if ($this->params['url']['action'] ==='sale'){
 						$this->redirect(array('controller' => 'transactions', 'action' => 'initSale', 'admin' => false, $this->Client->id));	
 					}
 				}else{
