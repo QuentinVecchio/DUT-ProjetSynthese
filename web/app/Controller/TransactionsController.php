@@ -385,6 +385,31 @@ class TransactionsController extends AppController {
 		$this->set('suiv_for_progress_bar', $step_succ);		
 
 		if(!empty($this->data)){
+			$this->Transaction->Row->recursive = -1;
+			$old = $this->Transaction->Row->findAllByTransactionId($this->Session->read('Transaction.depot.transaction_id'));
+			$this->loadModel('Stock');
+			$newStock = array();
+			foreach ($old as $key => $value) {
+				$this->Stock->recursive = -1;
+				$stockTmp = $this->Stock->findByBookIdAndConditionId($value['Row']['book_id'], $value['Row']['condition_id']);
+				$newStock[] = array('id' => $stockTmp['Stock']['id'], 'depot' => $stockTmp['Stock']['depot'] - $value['Row']['amount']);
+			}
+			if(!$this->Stock->saveMany($newStock)){
+				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
+			}
+
+			$newStock = array();
+			foreach ($this->data as $key => $value) {
+				$this->Stock->recursive = -1;
+				$stockTmp = $this->Stock->findByBookIdAndConditionId($value['Row']['book_id'], $value['Row']['condition_id']);
+				$newStock[] = array('id' => $stockTmp['Stock']['id'], 'depot' => $stockTmp['Stock']['depot'] + $value['Row']['amount']);
+			}
+
+			if(!$this->Stock->saveMany($newStock)){
+				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
+			}
+
+
 			$this->Transaction->Row->deleteAll(array('transaction_id' => $this->Session->read('Transaction.depot.transaction_id')));
 			if($this->Transaction->Row->saveMany($this->data)){
 
