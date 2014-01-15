@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Ven 10 Janvier 2014 à 17:16
+-- Généré le: Mer 15 Janvier 2014 à 08:57
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.4.16
 
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
   PRIMARY KEY (`id`),
   KEY `association_id` (`association_id`),
   KEY `town_id` (`town_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
 --
 -- Contenu de la table `clients`
@@ -103,8 +103,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
 INSERT INTO `clients` (`id`, `name`, `lastname`, `houseNumber`, `street`, `email`, `phone`, `town_id`, `association_id`) VALUES
 (8, 'Matthieu', 'Clin', '16', 'rue des vergers', 'matthieu.clin@wanadoo.fr', '0303030303', 22176, 1),
 (9, 'Quentin', 'Vecchio', '13', 'rue de l''Ã©cole', 'quentin.vecchio@gmail.com', '0303030303', 21925, 2),
-(10, 'Mathilde', 'Dupont', '15', 'rue du gÃ©nÃ©ral Clin', 'mathilde.dupont@dupont.org', '0505050505', 21776, 2),
-(14, 'dza', 'zefze', '12', 'sgrs', 'fezfjzekl@zdjfklze.com', '0606060606', 4552, NULL);
+(10, 'Mathilde', 'Dupont', '15', 'rue du gÃ©nÃ©ral Clin', 'mathilde.dupont@dupont.org', '0505050505', 21776, 2);
 
 -- --------------------------------------------------------
 
@@ -196,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `rows` (
   KEY `condition_id` (`condition_id`),
   KEY `book_id` (`book_id`),
   KEY `transaction_id` (`transaction_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=203 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=191 ;
 
 --
 -- Contenu de la table `rows`
@@ -208,7 +207,23 @@ INSERT INTO `rows` (`id`, `condition_id`, `book_id`, `transaction_id`, `name_boo
 (126, 1, 1, 32, 'Mon premier livre', 'FranÃ§ais', 'Bon', 15, 1, '20.00', '17.00'),
 (127, 1, 4, 33, 'Un premier livre', 'MathÃ©matiques', 'Bon', 15, 1, '45.00', '38.25'),
 (128, 1, 7, 33, 'Un second livres', 'MathÃ©matiques', 'Bon', 15, 1, '55.00', '46.75'),
-(129, 1, 1, 33, 'Mon premier livre', 'FranÃ§ais', 'Bon', 15, 1, '20.00', '17.00');
+(129, 1, 1, 33, 'Mon premier livre', 'FranÃ§ais', 'Bon', 15, 1, '20.00', '17.00'),
+(149, 1, 4, 38, 'Un premier livre', 'MathÃ©matiques', 'Bon', 15, 2, '45.00', '76.50'),
+(150, 3, 8, 38, 'Maths pour les nuls', 'MathÃ©matiques', 'Mediocre', 45, 2, '50.00', '55.00'),
+(166, 1, 4, 41, 'Un premier livre', 'MathÃ©matiques', 'Bon', 15, 1, '45.00', '38.25'),
+(167, 1, 7, 41, 'Un second livres', 'MathÃ©matiques', 'Bon', 15, 1, '55.00', '46.75'),
+(168, 2, 8, 41, 'Maths pour les nuls', 'MathÃ©matiques', 'Moyen', 30, 1, '50.00', '35.00'),
+(169, 3, 1, 41, 'Mon premier livre', 'FranÃ§ais', 'Mediocre', 45, 2, '20.00', '22.00'),
+(181, 1, 4, 44, 'Un premier livre', 'MathÃ©matiques', 'Bon', 15, 1, '45.00', '38.25'),
+(182, 3, 8, 44, 'Maths pour les nuls', 'MathÃ©matiques', 'Mediocre', 45, 1, '50.00', '27.50'),
+(183, 2, 1, 44, 'Mon premier livre', 'FranÃ§ais', 'Moyen', 30, 1, '20.00', '14.00'),
+(184, 1, 4, 45, 'Un premier livre', 'MathÃ©matiques', 'Bon', 15, 1, '45.00', '38.25'),
+(185, 3, 8, 45, 'Maths pour les nuls', 'MathÃ©matiques', 'Mediocre', 45, 1, '50.00', '27.50'),
+(186, 2, 1, 45, 'Mon premier livre', 'FranÃ§ais', 'Moyen', 30, 1, '20.00', '14.00'),
+(187, 1, 4, 39, 'Un premier livre', 'MathÃ©matiques', 'Bon', 15, 2, '45.00', '76.50'),
+(188, 1, 7, 39, 'Un second livres', 'MathÃ©matiques', 'Bon', 15, 3, '55.00', '140.25'),
+(189, 1, 8, 39, 'Maths pour les nuls', 'MathÃ©matiques', 'Bon', 15, 4, '50.00', '170.00'),
+(190, 1, 1, 39, 'Mon premier livre', 'FranÃ§ais', 'Bon', 15, 2, '20.00', '34.00');
 
 -- --------------------------------------------------------
 
@@ -256,12 +271,12 @@ CREATE TABLE IF NOT EXISTS `stocks` (
 
 INSERT INTO `stocks` (`id`, `book_id`, `condition_id`, `depot`, `vente`) VALUES
 (1, 8, 1, 0, 0),
-(2, 8, 2, 50, 17),
-(3, 8, 3, 60, 0),
+(2, 8, 2, 0, 0),
+(3, 8, 3, 0, 0),
 (4, 1, 1, 0, 0),
-(5, 1, 2, 25, 13),
-(6, 1, 3, 10, 0),
-(7, 4, 1, 50, 17),
+(5, 1, 2, 0, 0),
+(6, 1, 3, 0, 0),
+(7, 4, 1, 0, 0),
 (8, 4, 2, 0, 0),
 (9, 4, 3, 0, 0),
 (10, 6, 1, 0, 0),
@@ -36922,20 +36937,26 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `type` varchar(255) NOT NULL,
   `close` int(11) NOT NULL,
   `completed` int(11) NOT NULL,
-  `client_id` int(11) NOT NULL,
+  `total` decimal(8,2) NOT NULL,
+  `client_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `client_id` (`client_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
 
 --
 -- Contenu de la table `transactions`
 --
 
-INSERT INTO `transactions` (`id`, `user_id`, `date`, `type`, `close`, `completed`, `client_id`) VALUES
-(32, 1, '2014-01-09', 'achat', 0, 1, 8),
-(33, 1, '2014-01-09', 'achat', 0, 1, 8),
-(34, 1, '2014-01-10', 'achat', 0, 0, 10);
+INSERT INTO `transactions` (`id`, `user_id`, `date`, `type`, `close`, `completed`, `total`, `client_id`) VALUES
+(32, 1, '2014-01-09', 'achat', 0, 1, '150.00', 8),
+(33, 1, '2014-01-09', 'achat', 0, 1, '80.00', 8),
+(38, 1, '2014-01-12', 'achat', 0, 1, '90.00', 8),
+(39, 1, '2014-01-12', 'depot', 1, 0, '420.75', 9),
+(41, 1, '2014-01-12', 'depot', 1, 0, '75.00', 9),
+(44, 1, '2014-01-13', 'achat', 0, 1, '79.75', 8),
+(45, 1, '2014-01-13', 'achat', 0, 1, '79.75', 9),
+(48, 1, '2014-01-15', 'depot', 0, 1, '0.00', NULL);
 
 -- --------------------------------------------------------
 
@@ -36951,7 +36972,7 @@ CREATE TABLE IF NOT EXISTS `transactions_typereglements` (
   PRIMARY KEY (`id`),
   KEY `transaction_id` (`transaction_id`,`typereglement_id`),
   KEY `typereglement_id` (`typereglement_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=55 ;
 
 --
 -- Contenu de la table `transactions_typereglements`
@@ -36961,7 +36982,13 @@ INSERT INTO `transactions_typereglements` (`id`, `transaction_id`, `typereglemen
 (36, 32, 1, '100.00'),
 (37, 32, 2, '2.00'),
 (38, 33, 1, '50.00'),
-(39, 33, 2, '52.00');
+(39, 33, 2, '52.00'),
+(40, 38, 1, '1.50'),
+(41, 38, 3, '130.00'),
+(46, 44, 1, '75.00'),
+(47, 44, 2, '4.00'),
+(48, 44, 3, '0.75'),
+(54, 45, 2, '79.75');
 
 -- --------------------------------------------------------
 
@@ -37068,8 +37095,8 @@ ALTER TABLE `subjects`
 -- Contraintes pour la table `transactions`
 --
 ALTER TABLE `transactions`
-  ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`);
+  ADD CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Contraintes pour la table `transactions_typereglements`
