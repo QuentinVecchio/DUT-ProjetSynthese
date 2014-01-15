@@ -48,7 +48,8 @@ class GradesController extends AppController{
 	*/
 	public function admin_delete($id){
 		$idSector = $this->Grade->findById($id);
-		$idSector = current($idSector)['sector_id'];
+		$idSector = current($idSector);
+		$idSector = $idSector['sector_id'];
 		if($this->Grade->delete($id)){
 				$this->Session->setFlash('Vous venez de supprimer une classe !','message', array('type' => 'danger'));
 				$this->redirect(array('controller' =>'grades', 'action' => 'index', $idSector));			
