@@ -1,0 +1,4 @@
+^app/tmp/cache/.*$
+^app/tmp/Logs/.*$
+
+^app/Config/database.php$
