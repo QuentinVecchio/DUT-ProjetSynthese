@@ -48,7 +48,7 @@
 
 
 <?php 
-	echo $this->Html->Link('Ajouter', array('controller' => 'clients', 'action' => 'add', 'admin' => false), array('class' => 'btn btn-primary'));
+	echo $this->Html->Link('Ajouter', array('controller' => 'clients', 'action' => 'add', 'admin' => true), array('class' => 'btn btn-primary'));
  ?>
 <?php 
 	echo $this->Html->Link('Imprimer', array('controller' => 'clients', 'action' => 'print'), array('class' => 'btn btn-primary', 'style' => 'margin-left : 20px;'));

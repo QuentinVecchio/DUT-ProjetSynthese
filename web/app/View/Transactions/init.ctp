@@ -95,6 +95,6 @@ $this->end();
     </div>
     <div class="formulaire" style="width: 600px;margin: auto;padding:10px;">
       <h2>Le parent : <?php echo $this->Session->read('Transaction.depot.Client.name').' '.$this->Session->read('Transaction.depot.Client.lastname'); ?></h2>
-      <?php echo $this->Html->link('Désélectionner ?', array('controller' => 'transactions', 'action' => 'refresh'), array('confirm' => 'Etes-vous sûr?', 'class' => 'btn btn-danger')) ?>
+      <?php echo $this->Html->link('Désélectionner ?', array('controller' => 'transactions', 'action' => 'refresh', '?' => array('type' => 'depot')), array('confirm' => 'Etes-vous sûr?', 'class' => 'btn btn-danger')) ?>
   </div>
  <?php endif; ?>
