@@ -226,3 +226,12 @@ th,td
 	padding-left: 20px;
 	padding-top: 18px;
 }
+
+#choixPaiement
+{
+	width: 320px;  
+	margin : auto;
+	margin-top : 20px;
+	padding : 5px;
+	box-shadow: 1px 1px 12px #555;
+}
