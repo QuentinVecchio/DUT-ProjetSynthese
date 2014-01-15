@@ -42,7 +42,7 @@
 					        </tr>   
 					    <?php endforeach ?>
    							<tr>
-						    	<td colspan="7"></td>
+						    	<td colspan="7" style="border : none;"></td>
 						    	<td>Total :</td>
 						    	<td><?php echo $Transaction['total']?></td>
 						   	</tr>
