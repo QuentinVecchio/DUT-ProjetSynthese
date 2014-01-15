@@ -16,10 +16,10 @@ class ClientsController extends AppController{
 			if($this->Client->save($this->data)){
 				$this->Session->setFlash('<strong>Félicitation:</strong>Vous venez d\'ajouter un parent','message', array('type' => 'success'));
 				
-				if($this->Session->check('Transaction')){
-					if($this->Session->check('Transaction.depot')){
+				if(isset($this->params['url']['action']) && !empty($this->params['url']['action'])){
+					if($this->params['url']['action'] === 'depot'){
 						$this->redirect(array('controller' => 'transactions', 'action' => 'init', 'admin' => false, $this->Client->id));
-					}else{
+					}else if ($this->params['url']['action'] ==='sale'){
 						$this->redirect(array('controller' => 'transactions', 'action' => 'initSale', 'admin' => false, $this->Client->id));	
 					}
 				}else{

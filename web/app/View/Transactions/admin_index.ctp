@@ -31,7 +31,7 @@
 	            		 			
 	            	<?php else: ?>
         				<td>Parent supprimé</td>
-        				<td>Information non displonibles</td>
+        				<td>Informations non displonibles</td>
 	            	<?php endif; ?>
 	            	<td>
 	            		<?php echo $this->Html->Link('Visualiser', array('controller' => 'transactions', 'action' => 'view', $v['Transaction']['id']), array('class' => 'btn btn-primary')) ?>

@@ -317,7 +317,6 @@ class TransactionsController extends AppController {
 	*	Initialisation du dépôt
 	*/
 	public function init($clientID = null){
-
 		$step_succ =  array('controller' => 'transactions', 'action' => 'depot');
 
 		$this->set('step_for_progress_bar', 1);
@@ -394,7 +393,7 @@ class TransactionsController extends AppController {
 					$total += $value['Row']['prize_total'];
 				}
 				$this->Session->write('Transaction.depot.total', $total);
-				$this->Transaction->id = $this->Session->read('Transaction.achat.transaction_id');
+				$this->Transaction->id = $this->Session->read('Transaction.depot.transaction_id');
 				$this->Transaction->save(array('total' => $total));
 
 
@@ -476,13 +475,57 @@ class TransactionsController extends AppController {
 	*	Suppression d'une transaction
 	*/
 	public function deleteTransactionSale($id) {
-		if($this->Transaction->delete($id)){
-			$this->Session->setFlash('Vous venez de supprimer une vente','message', array('type' => 'warning'));
-		}else{
-			$this->Session->setFlash('Erreur lors de la suppression','message', array('type' => 'danger'));
+		$tmp = $this->Transaction->findById($id);
+		if($tmp){
+			if($tmp['Transaction']['completed'] == 0){
+				$this->loadModel('Stock');
+				$maj = array();
+			 	foreach ($tmp['Row'] as $key => $value) {
+			 		$this->Stock->recursive = -1;
+			 		$ligneStock = $this->Stock->findByBookIdAndConditionId($value['book_id'], $value['condition_id']);
+			 		$ligneStock['Stock']['vente'] -= $value['amount'];
+			 		$maj[] = current($ligneStock);
+			 	}
+			 	if(!$this->Stock->saveMany($maj)){
+					$this->Session->setFlash('Error lors de la mise a jour du stock','message', array('type' => 'warning'));
+			 	}
+
+				if($this->Transaction->delete($tmp['Transaction']['id'])){
+					$this->Session->setFlash('Vous venez d\'annuler une vente','message', array('type' => 'warning'));
+				}
+			}
 		}
 		$this->redirect(array('controller' => 'transactions', 'action' => 'initSale'));
 	}
+
+	/**
+	*	Suppression d'une transaction
+	*/
+	public function deleteTransactionDepot($id) {
+		$tmp = $this->Transaction->findById($id);
+		if($tmp){
+			if($tmp['Transaction']['completed'] == 0){
+				$this->loadModel('Stock');
+				$maj = array();
+			 	foreach ($tmp['Row'] as $key => $value) {
+			 		$this->Stock->recursive = -1;
+			 		$ligneStock = $this->Stock->findByBookIdAndConditionId($value['book_id'], $value['condition_id']);
+			 		$ligneStock['Stock']['depot'] -= $value['amount'];
+			 		$maj[] = current($ligneStock);
+			 	}
+			 	if(!$this->Stock->saveMany($maj)){
+					$this->Session->setFlash('Error lors de la mise a jour du stock','message', array('type' => 'warning'));
+			 	}
+
+				if($this->Transaction->delete($tmp['Transaction']['id'])){
+					$this->Session->setFlash('Vous venez d\'annuler un dépot','message', array('type' => 'warning'));
+				}
+			}
+		}
+		$this->redirect(array('controller' => 'transactions', 'action' => 'init'));
+	}
+
+
 
 	/**
 	*	Reprise d'une transaction
@@ -513,8 +556,9 @@ class TransactionsController extends AppController {
 	*/
 	public function refresh(){
 
-		if($this->Session->check('Transaction.achat')){
-			if($this->Session->check('Transaction.achat.transaction_id')){
+		$type = $this->params['url']['type'];
+		if(isset($type) && !empty($type)){
+			if($type == 'sale'){
 				$tmp = $this->Transaction->findById($this->Session->read('Transaction.achat.transaction_id'));
 				if($tmp){
 					if($tmp['Transaction']['completed'] == 0){
@@ -535,25 +579,36 @@ class TransactionsController extends AppController {
 						}
 					}
 				}
-			}
-			$this->Session->delete('Transaction');
-			$this->redirect(array('controller' => 'transactions', 'action' => 'initSale'));	
-		}else if($this->Session->check('Transaction.depot')){
-			if($this->Session->check('Transaction.depot.transaction_id')){
+				$this->Session->delete('Transaction');
+			$this->redirect(array('controller' => 'transactions', 'action' => 'initSale'));
+			}else if($type == 'depot'){
 				$tmp = $this->Transaction->findById($this->Session->read('Transaction.depot.transaction_id'));
 				if($tmp){
 					if($tmp['Transaction']['completed'] == 0){
+						$this->loadModel('Stock');
+						$maj = array();
+					 	foreach ($tmp['Row'] as $key => $value) {
+					 		$this->Stock->recursive = -1;
+					 		$ligneStock = $this->Stock->findByBookIdAndConditionId($value['book_id'], $value['condition_id']);
+					 		$ligneStock['Stock']['depot'] -= $value['amount'];
+					 		$maj[] = current($ligneStock);
+					 	}
+					 	if(!$this->Stock->saveMany($maj)){
+							$this->Session->setFlash('Error lors de la mise a jour du stock','message', array('type' => 'warning'));
+					 	}
+
 						if($this->Transaction->delete($tmp['Transaction']['id'])){
-							$this->Session->setFlash('Vous venez d\'annuler un dépôt','message', array('type' => 'warning'));
+							$this->Session->setFlash('Vous venez d\'annuler une vente','message', array('type' => 'warning'));
 						}
 					}
 				}
+				$this->Session->delete('Transaction');
+				$this->redirect(array('controller' => 'transactions', 'action' => 'init'));
+			}else{
+				$this->redirect(array('controller' => 'transactions', 'action' => 'init'));
 			}
-
-			$this->Session->delete('Transaction');
-			$this->redirect(array('controller' => 'transactions', 'action' => 'init'));	
 		}
-
+		$this->redirect(array('controller' => 'transactions', 'action' => 'init'));
 	}
 
 

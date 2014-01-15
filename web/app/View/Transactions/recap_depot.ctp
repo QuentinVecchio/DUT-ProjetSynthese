@@ -1,4 +1,4 @@
-<?php $this->extend('corps_transaction_sale') ?>
+<?php $this->extend('corps_transaction') ?>
 
 <section>
   <?php echo $this->Form->create(); ?>

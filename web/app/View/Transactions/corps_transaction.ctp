@@ -10,7 +10,7 @@
 <section>
 	<h1 class="jumbotron"><p><font size="6"><strong>Depôt</strong></font></p><?php echo $texte; ?></h1>
 	<div>
-		<ul id="barreProgress" class="step-5">	
+		<ul id="barreProgress" class="step-4">	
 			<li class="etape <?php if($step_for_progress_bar == 1)echo 'focus'; ?>">
 				<a href="<?php echo ($this->Html->url(array('controller' => 'transactions', 'action' => 'init'))); ?>"><span>1</span><h1> - Parent</h1><p>Choix du parent</p></a>
 			</li><!--
@@ -18,13 +18,10 @@
 				<a href="<?php echo ($this->Html->url(array('controller' => 'transactions', 'action' => 'depot'))); ?>"><span>2</span><h1> - Dépôt</h1><p>Liste des livres à déposer</p></a>
 			</li><!--
 			--><li class="etape <?php if($step_for_progress_bar == 3)echo 'focus'; ?>">
-				<a href="<?php echo ($this->Html->url(array('controller' => 'transactions', 'action' => 'recapDepot'))); ?>"><span>3</span><h1> - Recapitulation</h1><p>Liste des livres déposer</p></a>
+				<a href="<?php echo ($this->Html->url(array('controller' => 'transactions', 'action' => 'recapDepot'))); ?>"><span>3</span><h1> - Facture</h1><p>Visualisation facture</p></a>
 			</li><!--
 			--><li class="etape <?php if($step_for_progress_bar == 4)echo 'focus'; ?>">
-				<a href="<?php echo ($this->Html->url(array('controller' => 'transactions', 'action' => 'depot'))); ?>"><span>4</span><h1> - Facture</h1><p>Visualisation facture</p></a>
-			</li><!--
-			--><li class="etape <?php if($step_for_progress_bar == 5)echo 'focus'; ?>">
-				<a href="<?php echo ($this->Html->url(array('controller' => 'transactions', 'action' => 'depot'))); ?>"><span>5</span><h1> - Validation</h1><p>Validation du dépôt</p></a>
+				<a href="<?php echo ($this->Html->url(array('controller' => 'transactions', 'action' => 'endDepot'))); ?>"><span>4</span><h1> - Validation</h1><p>Validation du dépôt</p></a>
 			</li><!--
 			--></ul>
 		<div id="btnGroup">
