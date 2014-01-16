@@ -147,11 +147,14 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 		$selectedAchat = angular.copy($scope.achats[index]);
 		$selectedAchat.Row.ConditionList = undefined;
 		$selectedAchat.Row.Condition = undefined;
+		$selectedAchat.Row.condition_id = undefined;
 		$selectedAchat.Row.id = undefined;
 		console.log($selectedAchat);
 
+		$send = new Array();
+		$send.push($selectedAchat);
 		// On poste les livres
-		/*$http.post($scope.urlAddRow, $selectedAchat).success(function(response){
+		$http.post($scope.urlAddRow, $send).success(function(response){
 			// $scope.errors a traiter encore (message d'erreur)
 			console.log(response);
 			if(response.errors.length > 0){
@@ -162,11 +165,11 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	      		}
 			}else{
 
-				$scope.achats.splice(index+1, 0, angular.copy($scope.achats[index]));
+				$scope.achats.splice(index+1, 0, response.rows[0]);
 			}
 
 			$scope.copyAchats = angular.copy($scope.achats);
-		});*/
+		});
 
 	}
 
