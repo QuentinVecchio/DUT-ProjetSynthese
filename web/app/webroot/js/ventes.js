@@ -70,26 +70,25 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 		// Parcours des livres, construction des lignes a soumettre si selectionné
 		for(i in $tmp){
 			if($scope.livres[i].completed){
-				$total = $scope.calculTotal($tmp[i].Book.prize, $tmp[i].ConditionList[0].Condition.reducing, 1);
+				//$total = $scope.calculTotal($tmp[i].Book.prize, $tmp[i].ConditionList[0].Condition.reducing, 1);
 				$t = {Row: {
 					transaction_id : $scope.transaction_id,
 					book_id: $tmp[i].Book.id,
 					name_book: $tmp[i].Book.name,
 					name_subject: $tmp[i].Subject.name,
 					reducing: $tmp[i].ConditionList[0].Condition.reducing,
-					name_condition: $tmp[i].ConditionList[0].Condition.name,
-					condition_id: $tmp[i].ConditionList[0].Condition.id,
-					prize_total: $total,
+					
 					amount: 1,
 					prize_unit : $tmp[i].Book.prize,
 					}}
-				$selectedAchat.push($t);		
+				$selectedAchat.push($t);
 			}
 		}
 
 		// On poste les livres
 		$http.post($scope.urlAddRow, $selectedAchat).success(function(response){
 			// $scope.errors a traiter encore (message d'erreur)
+			console.log(response);
 			if(response.errors.length > 0){
 	      		console.log('Erreur:');
 	      		for(i in response.errors){
@@ -114,11 +113,15 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 
 	$scope.removeAchat = function(index){
 		$http.get($scope.urlDeleteRow+'/'+$scope.achats[index].Row.id).success(function(response) {				      	
-			if(response > 0){
+			if(response.errors.length == 0){
 				
 				$scope.achats.splice(index,1);
 			}else{
-				alert('Erreur');
+	      		console.log('Erreur:');
+	      		for(i in response.errors){
+	      			console.log(response.errors[i].type+':');
+	      			console.log(response.errors[i].message);
+	      		}				
 			}
 	    });	
 	}
@@ -138,7 +141,33 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	}
 
 	$scope.duplicateAchat = function(index){
-		$scope.achats.splice(index+1, 0, angular.copy($scope.achats[index]));
+
+
+		// Parcours des livres, construction des lignes a soumettre si selectionné
+		$selectedAchat = angular.copy($scope.achats[index]);
+		$selectedAchat.Row.ConditionList = undefined;
+		$selectedAchat.Row.Condition = undefined;
+		$selectedAchat.Row.id = undefined;
+		console.log($selectedAchat);
+
+		// On poste les livres
+		/*$http.post($scope.urlAddRow, $selectedAchat).success(function(response){
+			// $scope.errors a traiter encore (message d'erreur)
+			console.log(response);
+			if(response.errors.length > 0){
+	      		console.log('Erreur:');
+	      		for(i in response.errors){
+	      			console.log(response.errors[i].type+':');
+	      			console.log(response.errors[i].message);
+	      		}
+			}else{
+
+				$scope.achats.splice(index+1, 0, angular.copy($scope.achats[index]));
+			}
+
+			$scope.copyAchats = angular.copy($scope.achats);
+		});*/
+
 	}
 
 	$scope.editTodo = function(todo){

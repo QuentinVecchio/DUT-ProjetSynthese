@@ -294,14 +294,12 @@ class TransactionsController extends AppController {
 		$this->set('suiv_for_progress_bar',  '#');
 
 		$this->Transaction->id = $this->Session->read('Transaction.achat.transaction_id');
-		if($this->Transaction->save(array('completed' => 1))){
+		if($this->Transaction->save(array('completed' => 1, 'close' => 1))){
 			$this->Session->setFlash('Vente terminée','message', array('type' => 'success'));
 		}else{
 			$this->Session->setFlash('Erreur','message', array('type' => 'warning'));
 		}
 		$this->Session->delete('Transaction.achat');
-
-
 
 	}
 
@@ -394,8 +392,10 @@ class TransactionsController extends AppController {
 				$stockTmp = $this->Stock->findByBookIdAndConditionId($value['Row']['book_id'], $value['Row']['condition_id']);
 				$newStock[] = array('id' => $stockTmp['Stock']['id'], 'depot' => $stockTmp['Stock']['depot'] - $value['Row']['amount']);
 			}
-			if(!$this->Stock->saveMany($newStock)){
-				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
+			if(!empty($newStock)){
+				if(!$this->Stock->saveMany($newStock)){
+					$this->Session->setFlash('Erreur mise à jour ancien stock','message', array('type' => 'alert'));
+				}
 			}
 
 			$newStock = array();
@@ -405,8 +405,10 @@ class TransactionsController extends AppController {
 				$newStock[] = array('id' => $stockTmp['Stock']['id'], 'depot' => $stockTmp['Stock']['depot'] + $value['Row']['amount']);
 			}
 
-			if(!$this->Stock->saveMany($newStock)){
-				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
+			if(!empty($newStock)){
+				if(!$this->Stock->saveMany($newStock)){
+					$this->Session->setFlash('Erreur mise à jour du nouveau stock','message', array('type' => 'alert'));
+				}
 			}
 
 
@@ -425,7 +427,7 @@ class TransactionsController extends AppController {
 				$this->Session->write('Transaction.depot.step', 3);
 				$this->redirect($step_succ);
 			}else{
-				$this->Session->setFlash('Erreur','message', array('type' => 'alert'));
+				$this->Session->setFlash('Erreur mise à jour ligne stock','message', array('type' => 'alert'));
 			}
 			$listAchat = $this->data;
 		}else{
@@ -467,7 +469,6 @@ class TransactionsController extends AppController {
 		$this->Transaction->unbindModel(array('belongsTo' => array('User')));
 		$facture = $this->Transaction->find('all', array('conditions' => array('Transaction.id' => $this->Session->read('Transaction.depot.transaction_id')), 'recursive' => 2));
 		$this->set('facture', $facture);
-
 		if(!empty($this->data)){
 			if($this->Transaction->save($this->data)){
 				$this->Session->write('Transaction.depot.step', 4);
@@ -491,7 +492,18 @@ class TransactionsController extends AppController {
 		$this->set('step_for_progress_bar', 4);
 		$this->set('pred_for_progress_bar', $step_pred);
 		$this->set('suiv_for_progress_bar', '#');
+	
+		$this->Transaction->id = $this->Session->read('Transaction.depot.transaction_id');
+		if($this->Transaction->save(array('completed' => 1))){
+			$this->Session->setFlash('Vente terminée','message', array('type' => 'success'));
+		}else{
+			$this->Session->setFlash('Erreur','message', array('type' => 'warning'));
+		}
+		$this->Session->delete('Transaction.depot');
+
 	}
+
+
 
 
 
@@ -658,52 +670,92 @@ class TransactionsController extends AppController {
 
 				$conditionList = array();
 				$valid = true;
-				foreach ($stock as $k => $v) {
-					$max = $v['Stock']['depot'] - $v['Stock']['vente'];
+				if(isset($row['condition_id']) && is_numeric($row['condition_id'])){
+					foreach ($stock as $k => $v) {
+						$max = $v['Stock']['depot'] - $v['Stock']['vente'];
 
-					if($v['Stock']['condition_id'] == $row['condition_id']){
-						// Si il reste un exemplaire on peut enregistrer la ligne
-						if($max > 1){
-							$this->Transaction->Row->create();
-							if($this->Transaction->Row->save($row)){
-								$row['id'] = $this->Transaction->Row->id; 
+						if($v['Stock']['condition_id'] == $row['condition_id']){
+							// Si il reste un exemplaire on peut enregistrer la ligne
+							if($max > 1){
+								$this->Transaction->Row->create();
+								if($this->Transaction->Row->save($row)){
+									$row['id'] = $this->Transaction->Row->id; 
 
-								//On met a jour le stock
-								$v['Stock']['vente'] += 1;
-								if(!$this->Stock->save($v)){
-									$error[] =array('type' => 'Erreur lors de la mise a jour stock',
-							   						 'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a pas pu être compté'); 
+									//On met a jour le stock
+									$v['Stock']['vente'] += 1;
+									if(!$this->Stock->save($v)){
+										$error[] =array('type' => 'Erreur lors de la mise a jour stock',
+								   						 'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a pas pu être compté'); 
+									}
+								}else{
+									$error[] =array('type' => 'Erreur lors de l\'ajout en base de donnée',
+								    'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a pas pu être ajouté'); 
 								}
 							}else{
-								$error[] =array('type' => 'Erreur lors de l\'ajout en base de donnée',
-							    'message' => 'Le livre '. $row['name_book'].' dans l\'état '.$row['name_condition'].' n\'a pas pu être ajouté'); 
+								// Sinon il ne reste pas de livre en stock, on met une erreur et on quitte la boucle
+								$valid = false;
+								$error[] =array('type' => 'Stock Insufisant',
+												'message' => 'Le livre '. $row['name_book'].' n\'est plus disponible dans l\'état '.$row['name_condition']); 
+								break;
 							}
-						}else{
-							// Sinon il ne reste pas de livre en stock, on met une erreur et on quitte la boucle
-							$valid = false;
-							$error[] =array('type' => 'Stock Insufisant',
-											'message' => 'Le livre '. $row['name_book'].' n\'est plus disponible dans l\'état '.$row['name_condition']); 
-							break;
+						}
+
+						//si il reste des livres
+						if($max > 0){
+							$tmp = $this->Transaction->Row->Condition->findById($v['Stock']['condition_id']);
+							$tmp['Condition']['max'] = $max;
+							$conditionList[] = $tmp;
+
+							// L'état courant
+							if($v['Stock']['condition_id'] == $row['condition_id']){
+								$row['Condition'] = $tmp;
+							}
+						}
+						//Si le livre a été ajouté en BDD
+						if($valid){
+							$row['ConditionList'] = $conditionList;
+							$res[]['Row'] = $row;
+						}
+					}
+				}else{
+
+					$conditionList = array();
+					$first = true;
+
+					foreach ($stock as $key => $value) {
+						$max = $value['Stock']['depot'] - $value['Stock']['vente'];
+
+						if($max > 0){
+
+							$tmp = $this->Transaction->Row->Condition->findById($value['Stock']['condition_id']);
+							if($first){
+
+								$this->Transaction->Row->create();
+								$row['condition_id'] = $tmp['Condition']['id'];
+								$row['name_condition'] = $tmp['Condition']['name'];
+								if($this->Transaction->Row->save($row)){
+									$row['id'] = $this->Transaction->Row->id; 
+									$row['prize_total'] = (($row['prize_unit']-$row['prize_unit']*$tmp['Condition']['reducing']/100)*$row['amount']); 
+									$stock[$key]['Stock']['vente'] += 1;
+									$this->Stock->save($stock[$key]);
+								}
+								$tmp['Condition']['max'] = $max;
+								$row['Condition'] = $tmp;
+								$first = false;
+							}
+							$tmp['Condition']['max'] = $max;
+							$conditionList[] = $tmp;
 						}
 					}
 
-					//si il reste des livres
-					if($max > 0){
-						$tmp = $this->Transaction->Row->Condition->findById($v['Stock']['condition_id']);
-						$tmp['Condition']['max'] = $max;
-						$conditionList[] = $tmp;
-
-						// L'état courant
-						if($v['Stock']['condition_id'] == $row['condition_id']){
-							$row['Condition'] = $tmp;
-						}
+					if(empty($conditionList)){
+						$error[] =array('type' => 'Stock Insufisant',
+										'message' => 'Le livre '. $row['name_book'].' n\'est plus disponible'); 
+					}else{
+						$row['ConditionList'] = $conditionList;
+						$res[]['Row'] = $row;
 					}
-				}
 
-				//Si le livre a été ajouté en BDD
-				if($valid){
-					$row['ConditionList'] = $conditionList;
-					$res[]['Row'] = $row;
 				}
 			}
 		}
@@ -838,11 +890,26 @@ class TransactionsController extends AppController {
 	*/
 	public function deleteRow($id){
 		$this->autoRender = false;
-		if($this->Transaction->Row->delete($id)){
-			echo 1;
+		$this->loadModel('Stock');
+		$res = array();
+		$error = array();		
+		$row = $this->Transaction->Row->findById($id);
+		if(!empty($row)){
+			$stock = $this->Stock->findByBookIdAndConditionId($row['Row']['book_id'], $row['Row']['condition_id']);
+			$stock['Stock']['vente'] -= $row['Row']['amount'];
+			$this->Stock->save($stock);
+			if(!$this->Transaction->Row->delete($id)){
+				$error[] = array ('type' => 'Ligne non trouvée', 'message' => 'La ligne n\'a pas été trouvée dans la base de données ');
+			}
 		}else{
-			echo 0;
+			$error[] = array ('type' => 'Ligne non trouvée', 'message' => 'La ligne n\'a pas été trouvée dans la base de données ');
 		}
+
+
+		$response = array('rows' => $res, 'errors' => $error);
+
+		echo json_encode($response);
+
 	}
 
 

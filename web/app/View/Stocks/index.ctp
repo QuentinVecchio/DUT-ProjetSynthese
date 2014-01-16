@@ -18,12 +18,12 @@
 		<tr>
 			<th>Matière</th>
 			<th>Nom</th>
-			<th>Médiocre</th>
-			<th>Moyen</th>
 			<th>Bon</th>
-			<th>Médiocre</th>
 			<th>Moyen</th>
+			<th>Médiocre</th>
 			<th>Bon</th>
+			<th>Moyen</th>
+			<th>Médiocre</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -31,11 +31,12 @@
 		<tr>
 			<td><?php echo $v['Subject']['name']; ?></td>
 			<td><?php echo $v['Book']['name']; ?></td>
-			<?php foreach ($v['Stock'] as $key => $value): ?>
-					<td><?php echo $value['depot']; ?></td>
-					<td><?php echo $value['vente']; ?></td>
-			<?php endforeach; ?>
-
+			<td><?php echo $v['Stock'][0]['depot']; ?></td>
+			<td><?php echo $v['Stock'][1]['depot']; ?></td>
+			<td><?php echo $v['Stock'][2]['depot']; ?></td>
+			<td><?php echo $v['Stock'][0]['vente']; ?></td>
+			<td><?php echo $v['Stock'][1]['vente']; ?></td>
+			<td><?php echo $v['Stock'][2]['vente']; ?></td>
 			
 		</tr>
 		<?php endforeach; ?>
