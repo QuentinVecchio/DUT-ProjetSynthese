@@ -48,7 +48,7 @@
 
 </section>
 <section ng-app="app" ng-controller="Controller">
-  <div class="formulaire" style="width: 400px;margin: auto;padding-bottom:10px;">
+  <div class="formulaire" style="width: 400px;margin: auto;padding-bottom:10px; text-align :center;">
     <legend>Choix du parent :</legend>
     <div ng-init="urlSearch='<?php echo $this->Html->Url(array('controller' => 'clients', 'action' => 'getClient')); ?>';
             urlStep1='<?php echo $this->Html->Url(array('controller' => 'transactions', 'action' => 'init')) ?>'">
