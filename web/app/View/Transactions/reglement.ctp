@@ -8,31 +8,52 @@
 
 	<h1 style="text-align : center;">Règlement</h1>
 	<div class="formulaire" style="width: 300px;padding: 10px;margin: auto;margin-top : 10px;">
+		<fieldset>
+			<?php echo $this->Form->create(); ?>
+				<fieldset ng-disabled="reste == 0">
+					<legend>Remise : </legend>
+					<ul>
+						<li ng-repeat="t in oldTransaction">
+							<input type="text" name="data[Transaction][{{$index}}][id]" ng-model="t.Transaction.id" style="display:none;">
+							<input type="text" name="data[Transaction][{{$index}}][total]" ng-model="t.Transaction.total" style="display:none;">
+							<input type="checkbox" name="data[Transaction][{{$index}}][close]" ng-model="t.Transaction.isClose" ng-init="t.Transaction.isClose = initClose(t.Transaction.close,t.Transaction.total)" ng-change="utilise(t.Transaction.isClose,t.Transaction.total)"><label for="">Bon du {{t.Transaction.date}} de {{t.Transaction.total}}€</label>
+						</li>
+					</ul>
+					<p style="text-align : ">Valeur total des bons : {{totalBon}}€</p>
+				</fieldset>
+				<fieldset>
+					<legend>Règlement : </legend>
+					<div ng-repeat="i in list">
+						<div ng-if="i.Typereglement.name != 'Bon' && i.Typereglement.name != 'Rendu'" ng-show="afficheMode">
+							<label>{{i.Typereglement.name}} :</label>
+							<input type="number" min="0" step="0.01" name="data[{{$index}}][amount]"  ng-init="i.Typereglement.amount = i.TransactionsTypereglement[0].amount || 0"  ng-model="i.Typereglement.amount" ng-change="traitement($index)">
+							<input style="visibility : hidden; width :20px;"  ng-model="i.Typereglement.id" name="data[{{$index}}][typereglement_id]">
+							<input style="visibility : hidden; width :20px;;" type="text" ng-model="i.Typereglement.transaction_id" ng-init="i.Typereglement.transaction_id = transactionId" name="data[{{$index}}][transaction_id]">
+						</div>
+						
+						<div ng-if="i.Typereglement.name == 'Bon'" ng-show="bon > 0">
+							<label>{{i.Typereglement.name}} :</label>
+							<span name="data[{{$index}}][amount]" ng-model="bon">{{bon}}€</span>
+							<input style="visibility : hidden; width :20px;"  ng-model="i.Typereglement.id" name="data[{{$index}}][typereglement_id]">
+							<input style="visibility : hidden; width :20px;;" type="text" ng-model="i.Typereglement.transaction_id" ng-init="i.Typereglement.transaction_id = transactionId" name="data[{{$index}}][transaction_id]">
+						</div>
 
-
-		<?php echo $this->Form->create(); ?>
-			<ul>
-				<li ng-repeat="t in oldTransaction">
-					<input type="text" name="data[Transaction][{{$index}}][id]" ng-model="t.Transaction.id" style="display:none;">
-					<input type="text" name="data[Transaction][{{$index}}][total]" ng-model="t.Transaction.total" style="display:none;">
-					<input type="checkbox" name="data[Transaction][{{$index}}][close]" ng-model="t.Transaction.isClose" ng-init="t.Transaction.isClose = initClose(t.Transaction.close)"><label for="">{{t.Transaction.date}} {{t.Transaction.total}}</label>
-				</li>
-			</ul>
-			<div ng-repeat="i in list">
-				<div>
-					<label>{{i.Typereglement.name}} :</label>
-					<input type="number" min="0" step="0.01" name="data[{{$index}}][amount]"  ng-init="i.Typereglement.amount = i.TransactionsTypereglement[0].amount || 0"  ng-model="i.Typereglement.amount" ng-change="traitement($index)">
-					<input style="visibility : hidden; width :20px;"  ng-model="i.Typereglement.id" name="data[{{$index}}][typereglement_id]">
-					<input style="visibility : hidden; width :20px;;" type="text" ng-model="i.Typereglement.transaction_id" ng-init="i.Typereglement.transaction_id = transactionId" name="data[{{$index}}][transaction_id]">
-				</div>			
-			</div>
-			<div style="text-align : left;padding-left: 10px;">
-				<span ng-show="reste < 0">Vous devez <span style="color :red;font-weight:bold;">{{donne | number:2}}</span> € au client.</span>
-				<span ng-show="reste > 0">Il reste <span style="font-weight: bold;">{{reste | number:2}}</span> € à payer.</span>
-				<span ng-show="reste == 0" style="color : green;">Le client a tout réglé.</span>
-			</div>
-			<input ng-disabled="reglement != total" type="submit" value="Envoyer" class="btn btn-primary" style="margin-left: 175px;">
-		<?php echo $this->Form->end(); ?>
+						<div ng-if="i.Typereglement.name == 'Rendu'" ng-show="bon > 0">
+							<label>{{i.Typereglement.name}} :</label>
+							<span name="data[{{$index}}][amount]" ng-model="rendu">{{rendu}}€</span>
+							<input style="visibility : hidden; width :20px;"  ng-model="i.Typereglement.id" name="data[{{$index}}][typereglement_id]">
+							<input style="visibility : hidden; width :20px;;" type="text" ng-model="i.Typereglement.transaction_id" ng-init="i.Typereglement.transaction_id = transactionId" name="data[{{$index}}][transaction_id]">
+						</div>		
+					</div>
+					<div style="text-align : left;padding-left: 10px;">
+						<span ng-show="reste < 0">Vous devez <span style="color :red;font-weight:bold;">{{donne | number:2}}</span> € au client.</span>
+						<span ng-show="reste > 0">Il reste <span style="font-weight: bold;">{{reste | number:2}}</span> € à payer.</span>
+						<span ng-show="reglement == total" style="color : green;">Le client a tout réglé.</span>
+					</div>
+					<input ng-disabled="reglement < total" type="submit" value="Payer" class="btn btn-success" style="margin-left: 200px;">
+					</fieldset>
+			<?php echo $this->Form->end(); ?>
+		</fieldset>
 	</div>
 <?php 
 $this->start('script');
