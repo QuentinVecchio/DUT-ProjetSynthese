@@ -24,9 +24,37 @@ class TransactionsController extends AppController {
 	*	Permet de lister les factures
 	*/
 	public function admin_index(){
+
+		$conditions = array();
+		if(!empty($this->data)){
+			debug($this->data);
+			if(isset($this->data['Transaction']['type']) && $this->data['Transaction']['type'] == 'tous'){
+				unset($this->request->data['Transaction']['type']);
+			}
+			if(isset($this->data['Transaction']['user_id']) && $this->data['Transaction']['user_id'] == 'tous'){
+				unset($this->request->data['Transaction']['user_id']);
+			}
+			if(isset($this->data['Client']['name']) && !empty($this->data['Client']['name'])) {
+				$this->request->data['Transaction']['Client.name LIKE'] = $this->data['Client']['name'].'%';
+			}
+
+			if(isset($this->data['Client']['lastname']) && !empty($this->data['Client']['lastname'])) {
+				$this->request->data['Transaction']['Client.lastname LIKE'] = $this->data['Client']['lastname'].'%';
+			}
+
+			$conditions = $this->data['Transaction'];
+		}
+
+		$conditions['completed'] = 1;
+
+		$listOperateur = $this->Transaction->User->find('list',array('fields' => 'username'));
+		$listOperateur['tous'] = 'Tous';
+		$this->set('listOperateur', $listOperateur);
+
+
 		$this->Transaction->unbindModel(array('hasMany' => array('Row'), 'hasAndBelongsToMany' => array('Typereglement')));
 		$this->Transaction->recursive = 2;
-		$this->set('list', $this->Transaction->find('all', array('conditions' => array('completed' => 1))));
+		$this->set('list', $this->Transaction->find('all', array('conditions' => $conditions)));
 	}
 
 
