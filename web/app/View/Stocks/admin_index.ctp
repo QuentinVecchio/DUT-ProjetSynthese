@@ -1,3 +1,28 @@
+<section>
+	<?php $type =(isset($this->data['Transaction']['type']) && !empty($this->data['Transaction']['type'])) ? $this->data['Transaction']['type']: 'tous'; ?>
+	<?php $condition =(isset($this->data['Transaction']['condition_id']) && !empty($this->data['Transaction']['condition_id'])) ? $this->data['Transaction']['condition_id']: 'tous'; ?>
+	<?php echo $this->Form->create(); ?>
+			<?php echo $this->Form->input('type', array('options' => array(
+										    'depot'=>'Dépôt',
+										    'achat'=>'Achat',
+										    'tous' => 'Tous'
+										 		),
+											'label' => 'Les types de facture',
+											'selected' => $type
+										 		)); ?>
+
+			<?php echo $this->Form->input('condition_id', array('options' => array($listCondition),
+											'label' => 'Les conditions',
+											'selected' => $condition
+										 		)); ?>
+
+			<?php echo $this->Form->input('amount >=', array('label' => 'Quantité minimum')) ?>
+			<?php echo $this->Form->input('prize_total >=', array('label' => 'Prix minimum')) ?>
+
+	<?php echo $this->Form->end('Filtrer'); ?>
+
+
+</section>
 <table class="table table-bordered">
 	<caption>
 			<h4>Flux quotidiens</h4><br>

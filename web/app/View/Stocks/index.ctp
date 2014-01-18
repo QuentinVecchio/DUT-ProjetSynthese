@@ -1,21 +1,23 @@
-<table class="table table-bordered">
+<div ng-app="Stock" ng-controller="CtrlStockEdit">
+	<label for="">Filiere:</label><input type="text" ng-model="filiere">
+	<label for="">Classe:</label><input type="text" ng-model="classe">
+	<label for="">Matière:</label><input type="text" ng-model="matiere">
+	<label for="">Livre:</label><input type="text" ng-model="livre">
+
+
+<table class="table table-bordered" ng-init="stock=<?php echo htmlentities(json_encode($stock)) ?>">
 	<caption>
 			<h4>Visualisation du stock</h4><br>
-			<strong>Par matière:&nbsp</strong>
-			<?php 
-				echo $this->Form->create();
-					echo $this->Form->select('Subject.id', $listMatiere).'&nbsp';
-				echo $this->Form->end(array('label'=>'Filtrer','div'=>false, 'class'=>'btn btn-primary'));
-			 ?>
-			<br>
 	</caption>
 	<thead>
 		<tr>
-			<th colspan="2">Livre</th>
+			<th colspan="4">Livre</th>
 			<th colspan="3">Dépôt</th>
 			<th colspan="3">Vente</th>
 		</tr>
 		<tr>
+			<th>Filière</th>
+			<th>Classe</th>
 			<th>Matière</th>
 			<th>Nom</th>
 			<th>Bon</th>
@@ -27,18 +29,32 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?php foreach ($stock as $k =>$v): ?>
-		<tr>
-			<td><?php echo $v['Subject']['name']; ?></td>
-			<td><?php echo $v['Book']['name']; ?></td>
-			<td><?php echo $v['Stock'][0]['depot']; ?></td>
-			<td><?php echo $v['Stock'][1]['depot']; ?></td>
-			<td><?php echo $v['Stock'][2]['depot']; ?></td>
-			<td><?php echo $v['Stock'][0]['vente']; ?></td>
-			<td><?php echo $v['Stock'][1]['vente']; ?></td>
-			<td><?php echo $v['Stock'][2]['vente']; ?></td>
-			
+		<tr ng-repeat="i in stock | filter:{Subject.Grade.Sector.name: filiere, Subject.Grade.name: classe, Book.name: livre, Subject.name: matiere}">
+			<td>{{i.Subject.Grade.Sector.name}}</td>
+			<td>{{i.Subject.Grade.name}}</td>
+			<td>{{i.Subject.name}}</td>
+			<td>{{i.Book.name}}</td>
+			<td ng-repeat="l in i.Stock">
+				<span>{{l.depot}}</span>
+			</td>
+			<td ng-repeat="l in i.Stock">
+				<span>{{l.vente}}</span>
+			</td>
 		</tr>
-		<?php endforeach; ?>
 	</tbody>
-</table>		
+</table>	
+<input id="BtnSubmit" type="submit" ng-click="VerifStock()" value="Enregistrer" class="btn btn-success">
+<?php echo $this->Form->end(); ?>
+</div>
+
+<?php 
+$this->start('script');
+  echo $this->Html->script('stock');
+$this->end();
+?>
+
+<?php
+$this->start('css');
+  echo $this->Html->css('vente_depot');
+$this->end();
+?>

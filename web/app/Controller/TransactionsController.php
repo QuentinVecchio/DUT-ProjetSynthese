@@ -27,7 +27,6 @@ class TransactionsController extends AppController {
 
 		$conditions = array();
 		if(!empty($this->data)){
-			debug($this->data);
 			if(isset($this->data['Transaction']['type']) && $this->data['Transaction']['type'] == 'tous'){
 				unset($this->request->data['Transaction']['type']);
 			}
