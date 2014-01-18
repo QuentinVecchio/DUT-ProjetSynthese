@@ -230,9 +230,7 @@ class TransactionsController extends AppController {
 					}
 				}
 			}
-			debug($this->data);
-
-			/*if(isset($this->data['Transaction']) && !empty($this->data['Transaction'])){
+			if(isset($this->data['Transaction']) && !empty($this->data['Transaction'])){
 				$this->Session->write('Transaction.achat.oldTransaction', $this->data['Transaction']);
 				if(!$this->Transaction->saveMany($this->data['Transaction'])){
 					$this->Session->setFlash('Erreur: Mise à jour des transactions','message', array('type' => 'danger'));
@@ -243,11 +241,12 @@ class TransactionsController extends AppController {
 
 			$this->Transaction->TransactionsTypereglement->deleteAll(array('transaction_id' => $this->Session->read('Transaction.achat.transaction_id')));
 			if($this->Transaction->TransactionsTypereglement->saveMany($this->data)){
+				
 				$this->Session->write('Transaction.achat.step', 4);
 				$this->redirect($step_succ);
 			}else{
 				$this->Session->setFlash('Erreur règlement','message', array('type' => 'danger'));
-			}*/
+			}
 		}
 
 		if(!$this->Session->check('Transaction.achat') || $this->Session->read('Transaction.achat.step') < 3){

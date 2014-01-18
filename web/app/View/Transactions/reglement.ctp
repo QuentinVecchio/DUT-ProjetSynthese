@@ -10,7 +10,7 @@
 	<div class="formulaire" style="width: 300px;padding: 10px;margin: auto;margin-top : 10px;">
 		<fieldset>
 			<?php echo $this->Form->create(''); ?>
-				<fieldset ng-disabled="reste == 0">
+				<fieldset >
 					<legend>Remise : </legend>
 					<ul>
 						<li ng-repeat="t in oldTransaction">
