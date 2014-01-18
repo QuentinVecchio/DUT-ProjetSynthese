@@ -9,13 +9,13 @@
 	<h1 style="text-align : center;">Règlement</h1>
 	<div class="formulaire" style="width: 300px;padding: 10px;margin: auto;margin-top : 10px;">
 		<fieldset>
-			<?php echo $this->Form->create(); ?>
+			<?php echo $this->Form->create(''); ?>
 				<fieldset ng-disabled="reste == 0">
 					<legend>Remise : </legend>
 					<ul>
 						<li ng-repeat="t in oldTransaction">
-							<input type="text" name="data[Transaction][{{$index}}][id]" ng-model="t.Transaction.id" style="display:none;">
-							<input type="text" name="data[Transaction][{{$index}}][total]" ng-model="t.Transaction.total" style="display:none;">
+							<input type="text" name="data[Transaction][{{$index}}][id]" ng-model="t.Transaction.id" >
+							<input type="text" name="data[Transaction][{{$index}}][total]" ng-model="t.Transaction.total" >
 							<input type="checkbox" name="data[Transaction][{{$index}}][close]" ng-model="t.Transaction.isClose" ng-init="t.Transaction.isClose = initClose(t.Transaction.close,t.Transaction.total)" ng-change="utilise(t.Transaction.isClose,t.Transaction.total)"><label for="">Bon du {{t.Transaction.date}} de {{t.Transaction.total}}€</label>
 						</li>
 					</ul>
@@ -34,15 +34,17 @@
 						<div ng-if="i.Typereglement.name == 'Bon'" ng-show="bon > 0">
 							<label>{{i.Typereglement.name}} :</label>
 							<span name="data[{{$index}}][amount]" ng-model="bon">{{bon}}€</span>
-							<input style="visibility : hidden; width :20px;"  ng-model="i.Typereglement.id" name="data[{{$index}}][typereglement_id]">
-							<input style="visibility : hidden; width :20px;;" type="text" ng-model="i.Typereglement.transaction_id" ng-init="i.Typereglement.transaction_id = transactionId" name="data[{{$index}}][transaction_id]">
+							<input style="display:none;"  ng-model="bon" name="data[{{$index}}][amount]">
+							<input style="display:none;"  ng-model="i.Typereglement.id" name="data[{{$index}}][typereglement_id]">
+							<input style="display:none;" type="text" ng-model="i.Typereglement.transaction_id" ng-init="i.Typereglement.transaction_id = transactionId" name="data[{{$index}}][transaction_id]">
 						</div>
 
 						<div ng-if="i.Typereglement.name == 'Rendu'" ng-show="bon > 0">
 							<label>{{i.Typereglement.name}} :</label>
 							<span name="data[{{$index}}][amount]" ng-model="rendu">{{rendu}}€</span>
-							<input style="visibility : hidden; width :20px;"  ng-model="i.Typereglement.id" name="data[{{$index}}][typereglement_id]">
-							<input style="visibility : hidden; width :20px;;" type="text" ng-model="i.Typereglement.transaction_id" ng-init="i.Typereglement.transaction_id = transactionId" name="data[{{$index}}][transaction_id]">
+							<input style="display:none;"  ng-model="i.Typereglement.id" name="data[{{$index}}][typereglement_id]">
+							<input style="display:none;"  ng-model="rendu" name="data[{{$index}}][amount]">
+							<input style="display:none;" type="text" ng-model="i.Typereglement.transaction_id" ng-init="i.Typereglement.transaction_id = transactionId" name="data[{{$index}}][transaction_id]">
 						</div>		
 					</div>
 					<div style="text-align : left;padding-left: 10px;">

@@ -62,9 +62,9 @@ class TransactionsController extends AppController {
 		$this->set('pred_for_progress_bar', '#');
 		$this->set('suiv_for_progress_bar', $step_succ);
 
-
-		$this->Session->write('Transaction.achat.step', 1);
-
+		if(!$this->Session->check('Transaction.achat')){
+			$this->Session->write('Transaction.achat.step', 1);
+		}
 
 		if(isset($clientID) && is_numeric($clientID)){
 			if(!$this->Session->check('Transaction.achat.Client')){
@@ -203,12 +203,12 @@ class TransactionsController extends AppController {
 					}
 				}
 			}
+			debug($this->data);
 
-
-			if(isset($this->data['Transaction']) && !empty($this->data['Transaction'])){
+			/*if(isset($this->data['Transaction']) && !empty($this->data['Transaction'])){
 				$this->Session->write('Transaction.achat.oldTransaction', $this->data['Transaction']);
 				if(!$this->Transaction->saveMany($this->data['Transaction'])){
-					$this->Session->setFlash('Erreur','message', array('type' => 'danger'));
+					$this->Session->setFlash('Erreur: Mise à jour des transactions','message', array('type' => 'danger'));
 				}
 			}
 
@@ -220,7 +220,7 @@ class TransactionsController extends AppController {
 				$this->redirect($step_succ);
 			}else{
 				$this->Session->setFlash('Erreur règlement','message', array('type' => 'danger'));
-			}
+			}*/
 		}
 
 		if(!$this->Session->check('Transaction.achat') || $this->Session->read('Transaction.achat.step') < 3){
@@ -324,7 +324,9 @@ class TransactionsController extends AppController {
 		$this->set('suiv_for_progress_bar', $step_succ);
 
 
-		$this->Session->write('Transaction.depot.step', 1);
+		if(!$this->Session->check('Transaction.depot')){
+			$this->Session->write('Transaction.depot.step', 1);
+		}
 
 		if(isset($clientID) && is_numeric($clientID)){
 			if(!$this->Session->check('Transaction.depot.Client')){
