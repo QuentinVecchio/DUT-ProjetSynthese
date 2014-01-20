@@ -1,34 +1,13 @@
-<section>
-	<?php $type =(isset($this->data['Transaction']['type']) && !empty($this->data['Transaction']['type'])) ? $this->data['Transaction']['type']: 'tous'; ?>
-	<?php $condition =(isset($this->data['Transaction']['condition_id']) && !empty($this->data['Transaction']['condition_id'])) ? $this->data['Transaction']['condition_id']: 'tous'; ?>
-	<?php echo $this->Form->create(); ?>
-			<?php echo $this->Form->input('type', array('options' => array(
-										    'depot'=>'Dépôt',
-										    'achat'=>'Achat',
-										    'tous' => 'Tous'
-										 		),
-											'label' => 'Les types de facture',
-											'selected' => $type
-										 		)); ?>
-
-			<?php echo $this->Form->input('condition_id', array('options' => array($listCondition),
-											'label' => 'Les conditions',
-											'selected' => $condition
-										 		)); ?>
-
-			<?php echo $this->Form->input('amount >=', array('label' => 'Quantité minimum')) ?>
-			<?php echo $this->Form->input('prize_total >=', array('label' => 'Prix minimum')) ?>
-
-	<?php echo $this->Form->end('Filtrer'); ?>
-
-
-</section>
-<table class="table table-bordered">
+<table class="table table-bordered" ng-init="stock=<?php echo htmlentities(json_encode($stock_index)) ?>" ng-app="Stock" ng-controller="CtrlStockEdit">
 	<caption>
-			<h4>Flux quotidiens</h4><br>
+		<h4>Flux quotidiens</h4><br>
+		<div style="display:inline-block; margin-bottom:25px;">
+			<label for="type" style="margin-right:16px; line-height:2;">Type de transaction:</label><input type="text" ng-model="type" id="type" style="width:150px; height:30px; line-height:1;">
+			<label for="conditions" style="margin-right:16px; margin-left:10px;">Conditions:</label><input type="text" ng-model="conditions" id="conditions" style="width:150px; height:30px; line-height:1;">
+		</div>
 	</caption>
 	<thead>
-		<tr>
+		<tr ng-init="reverse = true">
 			<th>Date</th>
 			<th>Type</th>
 			<th>Livre</th>
@@ -38,16 +17,18 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?php foreach ($stock as $k =>$v): ?>
-		<tr>
-			<td><?php echo $v['Transaction']['date']; ?></td>
-			<td><?php echo $v['Transaction']['type']; ?></td>
-			<td><?php echo $v['Row']['name_book']; ?></td>
-			<td><?php echo $v['Row']['name_condition']; ?></td>
-			<td><?php echo $v[0]['amount']; ?></td>
-			<td><?php echo $v[0]['total']; ?></td>
-		
+		<tr ng-repeat="i in stock | filter:{Transaction.type: type, Row.name_condition: conditions}">
+			<td>{{i.Transaction.date}}</td>
+			<td>{{i.Transaction.type}}</td>
+			<td>{{i.Row.name_book}}</td>
+			<td>{{i.Row.name_condition}}</td>
+			<td>{{i.0.amount}}</td>
+			<td>{{i.0.total}}</td>
 		</tr>
-		<?php endforeach; ?>
 	</tbody>
 </table>		
+<?php 
+$this->start('script');
+  echo $this->Html->script('stock');
+$this->end();
+?>

@@ -3,26 +3,6 @@ class StocksController extends AppController{
 
 	public function admin_index(){
 		
-		$conditions = array();
-		if(!empty($this->data)){
-			if(isset($this->data['Stock']['type']) && $this->data['Stock']['type'] == 'tous'){
-				unset($this->request->data['Stock']['type']);
-			}
-
-			if(isset($this->data['Stock']['condition_id']) && $this->data['Stock']['condition_id'] == 'tous'){
-				unset($this->request->data['Stock']['condition_id']);
-			}
-
-			if(isset($this->data['Stock']['amount >=']) && !is_numeric($this->data['Stock']['amount >=']) && $this->data['Stock']['amount >='] < 0){
-				$this->request->data['Stock']['amount >='] = 0;
-			}
-
-			if(isset($this->data['Stock']['prize_total >=']) && !is_numeric($this->data['Stock']['prize_total >='])){
-				$this->request->data['Stock']['prize_total >='] = 0;
-			}
-
-			$conditions = $this->data['Stock'];
-		}
 		$this->loadModel('Transaction');
 
 
@@ -35,10 +15,9 @@ class StocksController extends AppController{
 																			  'condition_id','SUM(amount) AS amount',
 																			  'Row.name_book',
 																			  'prize_unit','SUM(prize_total) AS total'),
-															'conditions' => $conditions,
 															'group' => array('Transaction.date','type', 'book_id','condition_id')
 															));
-		$this->set('stock', $stock);
+		$this->set('stock_index', $stock);
 
 
 
