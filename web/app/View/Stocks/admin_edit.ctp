@@ -1,14 +1,21 @@
 <div ng-app="Stock" ng-controller="CtrlStockEdit">
-	<label for="">Filiere:</label><input type="text" ng-model="filiere">
-	<label for="">Classe:</label><input type="text" ng-model="classe">
-	<label for="">Matière:</label><input type="text" ng-model="matiere">
-	<label for="">Livre:</label><input type="text" ng-model="livre">
-
-
 	<?php echo $this->Form->create(); ?>
 <table class="table table-bordered" ng-init="stock=<?php echo htmlentities(json_encode($stock_edit)) ?>">
 	<caption>
 			<h4>Renouvellement du stock</h4><br>
+			<div class="jumbotron" style="height:75px; width:1150px; margin-left:1px;">
+				<div class="container" style="margin-left:-30px;">
+					<label for="filiere" style="margin-right:16px; line-height:2;">Filiere:</label><input type="text" ng-model="filiere" id="filiere" style="width:150px; height:30px; line-height:1;">
+					<label for="classe" style="margin-right:16px; margin-left:10px;">Classe:</label><input type="text" ng-model="classe" id="classe" style="width:150px; height:30px; line-height:1;">
+					<label for="matiere" style="margin-right:16px; margin-left:10px;">Matière:</label><input type="text" ng-model="matiere" id="matiere" style="width:150px; height:30px; line-height:1;">
+					<label for="livre" style="margin-right:16px; margin-left:10px;">Livre:</label><input type="text" ng-model="livre" id="livre" style="width:150px; height:30px; line-height:1;">
+				</div>
+    		</div><br>
+    		<div class="jumbotron" style="height:40px; width:1150px; margin-left:1px;">
+    			<div class="container" style="margin-top:-20px; margin-left:-40px;">
+            		<strong>Astuce:</strong> il est possible de trier en fonction du champ en cliquant dessus
+            	</div>
+    		</div><br>
 	</caption>
 	<thead>
 		<tr>
