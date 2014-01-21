@@ -1,4 +1,4 @@
-<a class="btn btn-primary btn-retour" href="<?php echo $this->Html->url( array('controller' => 'grades', 'action' => 'index', 'admin' => true, $idSubject)) ?>">
+<a class="btn btn-primary btn-retour" href="<?php echo $this->Html->url( array('controller' => 'grades', 'action' => 'index', 'admin' => true, $idSector)) ?>">
 
 <span class="glyphicon glyphicon-chevron-left"></span>
 	Retourner à la liste des classes</a>

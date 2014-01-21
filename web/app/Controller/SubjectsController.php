@@ -7,6 +7,9 @@ class SubjectsController extends AppController{
 	public function admin_index($id){
 		$listMatiere = $this->Subject->findAllByGradeId($id);
 		$this->set('listMatiere', $listMatiere);
+		$grade = $this->Subject->Grade->findById($id);
+
+		$this->set('idSector', $grade['Sector']['id']);
 		$this->set('idSubject', $id);
 	}
 
@@ -23,6 +26,9 @@ class SubjectsController extends AppController{
 				$this->redirect(array('controller' => 'subjects', 'action' => 'index', $this->data['Subject']['grade_id']));
 			}
 		}
+		$grade = $this->Subject->Grade->findById($id);
+
+		$this->set('idGrade', $grade['Grade']['id']);		
 		$this->set('idSubject', $idSubject);
 	}
 

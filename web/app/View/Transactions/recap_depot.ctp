@@ -19,12 +19,12 @@
       <legend>Choix du mode de paiement</legend>
         <div class="form-group classForm" style="margin-left : 40px;">
           <?php echo $this->Form->input('id', array('value' => $this->Session->read('Transaction.depot.transaction_id'))); ?>
-          <div class="radio">
-            <?php echo $this->Form->radio('close', $option1, $attributes);?>
-          </div>
-          <div class="radio">
-            <?php echo $this->Form->radio('close', $option2, $attributes);?>
-          </div>
+            <label for="close">Statut :</label>
+            <?php echo $this->Form->select('close', array(
+                                    '0' => 'Remise à la vente',
+                                       '1' => 'Paiement')
+                                ,array('empty' => false)
+                        ); ?>
         </div>
         <?php echo $this->Form->button('Valider', array('class' => 'btn btn-large btn-block btn-success', 'style' => 'border-radius: 0px;',
                                     'ng-disabled' => 'form.$invalid')); ?>

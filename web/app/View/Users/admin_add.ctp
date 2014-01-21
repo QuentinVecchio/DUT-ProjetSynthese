@@ -55,14 +55,13 @@
 
 			<br>
 			<div class="form-group classForm corpsForm">
-				<div class="radio">
-					<?php echo $this->Form->radio('status', array('operateur' => 'Opérateur'),
-						array('legend' => false, 'value' => 'operateur', 'name' => 'status'));?>
-				</div>
-				<div class="radio">
-					<?php echo $this->Form->radio('status', array('admin' => 'Administrateur'),
-						array('legend' => false, 'value' => 'operateur', 'name' => 'status'));?>
-				</div>								
+				<label for="status">Statut :</label>
+				<?php echo $this->Form->select('status', array(
+																'admin' => 'Administrateur',
+										    				   'operateur' => 'Opérateur')
+														,array('empty' => false, 'name'=>'status')
+										); ?>
+						
 			</div>
 			<?php echo $this->Form->button('Valider', array('class' => 'btn btn-large btn-block btn-success',
 															'style' => 'border-radius: 0px;',

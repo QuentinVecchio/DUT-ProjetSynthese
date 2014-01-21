@@ -23,6 +23,7 @@ class BooksController extends AppController{
 	*	Ajout d'un livre
 	*/
 	public function admin_add($idGrade){
+		$this->set('idGrade', $idGrade);
 		if(!empty($this->data)){
 
 			$this->request->data = array('Book' => $this->request->data);	
@@ -58,6 +59,7 @@ class BooksController extends AppController{
 	*	Modification d'un livre
 	*/
 	public function admin_edit($id){
+		$this->set('idGrade', $id);
 		if(!empty($this->data)){
 			$this->Book->id = $id;
 			$this->request->data = array('Book' => $this->request->data);				

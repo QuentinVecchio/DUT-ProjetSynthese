@@ -1,4 +1,4 @@
-<a class="btn btn-primary btn-retour" href="<?php echo $this->Html->url( array('controller' => 'books', 'action' => 'index', 'admin' => true)) ?>">
+<a class="btn btn-primary btn-retour" href="<?php echo $this->Html->url( array('controller' => 'books', 'action' => 'index', 'admin' => true, $idGrade)) ?>">
 
 <span class="glyphicon glyphicon-chevron-left"></span>
 	Retourner à la liste des livres</a>
