@@ -24,7 +24,6 @@ class TransactionsController extends AppController {
 	*	Permet de lister les factures
 	*/
 	public function admin_index(){
-
 		$conditions = array();
 		if(!empty($this->data)){
 			if(isset($this->data['Transaction']['type']) && $this->data['Transaction']['type'] == 'tous'){
