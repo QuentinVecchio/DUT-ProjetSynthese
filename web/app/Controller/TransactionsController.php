@@ -327,6 +327,7 @@ class TransactionsController extends AppController {
 		}else{
 			$this->Session->setFlash('Erreur','message', array('type' => 'warning'));
 		}
+		$this->set('facture_id',$this->Session->read('Transaction.depot.transaction_id'));
 		$this->Session->delete('Transaction.achat');
 
 	}
