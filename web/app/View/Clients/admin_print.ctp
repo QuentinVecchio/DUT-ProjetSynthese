@@ -59,9 +59,8 @@
 			$nomPdf = 'listeParents.pdf';
 			$titre = 'Liste des Parents';
 			$auteur = 'GBL';
-			$lienImage = 'logo.png';
 			$mode = 'I';
-			$pdf = new PDF($nomPdf,$titre,$auteur,$lienImage,$corps,$mode);
+			$pdf = new PDF($nomPdf,$titre,$auteur,$corps,$mode);
 			ob_end_clean();
 			$pdf->afficher();
 ?>

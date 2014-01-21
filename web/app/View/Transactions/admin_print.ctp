@@ -19,12 +19,11 @@
 						$facture=current($facture);
 						$corps .= $this->Facture->genereFacturePdf($facture['Client'], $facture['Client']['Town'], $facture['Transaction'],$facture['Row'],$facture['Typereglement']);
 			//Configuration du pdf
-			$nomPdf = 'facture.pdf';
-			$titre = 'Facture';
-			$auteur = 'GBL';
-			$lienImage = 'logo.png';
+			$nomPdf = 'facture' . $facture['Transaction']['id'] .'pdf';
+			$titre = 'Facture' . $facture['Transaction']['id'];
+			$auteur = $this->Session->read('Auth.User.username');
 			$mode = 'I';
-			$pdf = new PDF($nomPdf,$titre,$auteur,$lienImage,$corps,$mode);
+			$pdf = new PDF($nomPdf,$titre,$auteur,$corps,$mode);
 			ob_end_clean();
 			$pdf->afficher();
 ?>
