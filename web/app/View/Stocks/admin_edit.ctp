@@ -44,27 +44,27 @@
 			<th ng-click="predicate='Stock[0].depot';  reverse=!reverse">
 				<span ng-show="predicate=='Stock[0].depot' &&  reverse==false" class="glyphicon glyphicon-sort-by-attributes"></span>
 				<span ng-show="predicate=='Stock[0].depot' &&  reverse==true" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
-				Bon</th>
+				<?php echo $etats[0]['Condition']['name'] ?></th>
 			<th ng-click="predicate='Stock[1].depot';  reverse=!reverse">
 				<span ng-show="predicate=='Stock[1].depot' &&  reverse==false" class="glyphicon glyphicon-sort-by-attributes"></span>
 				<span ng-show="predicate=='Stock[1].depot' &&  reverse==true" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
-				Moyen</th>
+				<?php echo $etats[1]['Condition']['name'] ?></th>
 			<th ng-click="predicate='Stock[2].depot';  reverse=!reverse">
 				<span ng-show="predicate=='Stock[2].depot' &&  reverse==false" class="glyphicon glyphicon-sort-by-attributes"></span>
 				<span ng-show="predicate=='Stock[2].depot' &&  reverse==true" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
-				Médiocre</th>
+				<?php echo $etats[2]['Condition']['name'] ?></th>
 			<th ng-click="predicate='Stock[0].vente';  reverse=!reverse">
 				<span ng-show="predicate=='Stock[0].vente' &&  reverse==false" class="glyphicon glyphicon-sort-by-attributes"></span>
 				<span ng-show="predicate=='Stock[0].vente' &&  reverse==true" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
-				Bon</th>
+				<?php echo $etats[0]['Condition']['name'] ?></th>
 			<th ng-click="predicate='Stock[1].vente';  reverse=!reverse">
 				<span ng-show="predicate=='Stock[1].vente' &&  reverse==false" class="glyphicon glyphicon-sort-by-attributes"></span>
 				<span ng-show="predicate=='Stock[1].vente' &&  reverse==true" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
-				Moyen</th>
+				<?php echo $etats[1]['Condition']['name'] ?></th>
 			<th ng-click="predicate='Stock[2].vente';  reverse=!reverse">
 				<span ng-show="predicate=='Stock[2].vente' &&  reverse==false" class="glyphicon glyphicon-sort-by-attributes"></span>
 				<span ng-show="predicate=='Stock[2].vente' &&  reverse==true" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
-				<span>Médiocre</span>
+				<span><?php echo $etats[2]['Condition']['name'] ?></span>
 			</th>
 		</tr>
 	</thead>

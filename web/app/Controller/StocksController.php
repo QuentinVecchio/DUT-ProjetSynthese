@@ -45,8 +45,10 @@ class StocksController extends AppController{
 		}
 		
 	}
-
 		$this->set('stock_edit', $stock_edit);
+
+		$conditions = $this->Stock->Condition->find('all', array('fields' => 'Condition.name'));
+		$this->set('etats', $conditions);
 	}
 
 	/**
@@ -58,6 +60,8 @@ class StocksController extends AppController{
 		$this->set('stock', $this->Book->find('all', array('recursive' => 3)));
 
 		$this->loadModel('Transaction');
+		$conditions = $this->Stock->Condition->find('all', array('fields' => 'Condition.name'));
+		$this->set('etats', $conditions);
 
 	}
 

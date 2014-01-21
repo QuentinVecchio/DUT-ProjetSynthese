@@ -30,10 +30,10 @@
 			            </li>
 				    	<li>
 							<?php 
-									echo $this->Html->Link(' Suppression',
+									/*echo $this->Html->Link(' Suppression',
 													 array('controller' => 'conditions', 'action' => 'delete', $v['Condition']['id']),
 													 array(	'confirm' => 'Etes-vous sûr de vouloir le supprimer ?',
-													 		'class' => 'glyphicon glyphicon-remove'));
+													 		'class' => 'glyphicon glyphicon-remove'));*/
 							 ?>				    		
 				    	</li>		              
 				  	</ul>
@@ -44,7 +44,7 @@
   	</tbody>
 </table>
 <?php 
-  echo $this->Html->Link('Ajouter', array('controller' => 'conditions', 'action' => 'add'), array('class' => 'btn btn-primary'));
+  //echo $this->Html->Link('Ajouter', array('controller' => 'conditions', 'action' => 'add'), array('class' => 'btn btn-primary'));
 ?>
 <?php 
   echo $this->Html->Link('Imprimer', array('controller' => 'conditions', 'action' => 'print'), array('class' => 'btn btn-primary', 'style' => 'margin-left : 20px;'));
