@@ -533,6 +533,7 @@ class TransactionsController extends AppController {
 		}else{
 			$this->Session->setFlash('Erreur','message', array('type' => 'warning'));
 		}
+		$this->set('facture_id',$this->Session->read('Transaction.depot.transaction_id'));
 		$this->Session->delete('Transaction.depot');
 
 	}
@@ -982,6 +983,24 @@ class TransactionsController extends AppController {
 		echo json_encode($this->Transaction->Row->Book->find('all', array('fields' => array('Book.id, Book.name, Book.prize, Subject.name'), 'conditions' => array('grade_id' => $id))));
 	}
 
+	/*
+	*	Impression facture dans vente et dépôt
+	*/
+
+	public function imprime($facture_id)
+	{
+		$listType = $this->Transaction->find('all');
+		$this->Transaction->Row->unbindModel(array('belongsTo' => array('Transaction', 'Book', 'Condition')));
+		$this->Transaction->unbindModel(array('belongsTo' => array('User')));
+		$facture = $this->Transaction->find('all', array('conditions' => array('Transaction.id' => $facture_id), 'recursive' => 2));
+		if(empty($facture)){
+			$this->redirect(array('controller' => 'transactions', 'action' => 'index'));
+		}
+
+		$this->set('facture', $facture);
+        $this->layout = 'pdf'; //this will use the pdf.ctp layout 
+        $this->render();
+	}
 
 }
 ?>

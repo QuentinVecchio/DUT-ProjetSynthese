@@ -21,7 +21,7 @@
 			//Configuration du pdf
 			$nomPdf = 'facture' . $facture['Transaction']['id'] .'pdf';
 			$titre = 'Facture' . $facture['Transaction']['id'];
-			$auteur = $this->Session->read('Auth.User.username');
+			$auteur = 'GBL';
 			$mode = 'I';
 			$pdf = new PDF($nomPdf,$titre,$auteur,$corps,$mode);
 			ob_end_clean();
