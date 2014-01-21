@@ -14,6 +14,8 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 	$scope.achats = [];
 	$scope.copyAchats = [];
 		
+	$scope.errors= [];
+	
 	$scope.$watch('achats', function(){
 		console.log('oui');
 		$scope.mt = 0;
@@ -64,11 +66,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 			// $scope.errors a traiter encore (message d'erreur)
 			console.log(response);
 			if(response.errors.length > 0){
-	      		console.log('Erreur:');
-	      		for(i in response.errors){
-	      			console.log(response.errors[i].type+':');
-	      			console.log(response.errors[i].message);
-	      		}
+	      		writeErrors(response.errors);
 			}
 			for(i in response.rows){
 				$scope.achats.push(response.rows[i]);
@@ -92,11 +90,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 				
 				$scope.achats.splice(index,1);
 			}else{
-	      		console.log('Erreur:');
-	      		for(i in response.errors){
-	      			console.log(response.errors[i].type+':');
-	      			console.log(response.errors[i].message);
-	      		}				
+	      		writeErrors(response.errors);			
 			}
 	    });	
 	}
@@ -132,11 +126,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 			// $scope.errors a traiter encore (message d'erreur)
 			console.log(response);
 			if(response.errors.length > 0){
-	      		console.log('Erreur:');
-	      		for(i in response.errors){
-	      			console.log(response.errors[i].type+':');
-	      			console.log(response.errors[i].message);
-	      		}
+	      		writeErrors(response.errors);
 			}else{
 
 				$scope.achats.splice(index+1, 0, response.rows[0]);
@@ -186,11 +176,7 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 			      		$scope.copyAchats = angular.copy($scope.achats);
 			      	}else{
 			      		$scope.achats = angular.copy($scope.copyAchats);
-			      		console.log('Erreur:');
-			      		for(i in response.errors){
-			      			console.log(response.errors[i].type+':');
-			      			console.log(response.errors[i].message);
-			      		}
+			      		writeErrors(response.errors);
 			      	}
 		});
 	}
@@ -204,6 +190,29 @@ app.controller('CtrlLivres', function($scope, filterFilter, $http, $location)
 		$scope.achats[index].Row.name_condition = $scope.achats[index].Row.Condition.Condition.name;
 		$scope.changeRow(index);
 	}
+
+
+	/**
+	*	Affiche les erreurs du serveur dans la console et les ajoutes dans $scope.errors
+	*/
+	function writeErrors(errors){
+		console.log('Erreur:');
+		for(i in errors){
+			console.log('type: '+errors[i].type);
+			console.log('message: '+errors[i].message);
+		}
+		$scope.errors.push(errors);
+		console.log(errors);
+	}
+
+	/**
+	*	Supression d'une erreur lors du clic
+	*/
+	$scope.removeError = function(index){
+		$scope.errors.splice(index,1);
+	}
+
+
 
 
 });

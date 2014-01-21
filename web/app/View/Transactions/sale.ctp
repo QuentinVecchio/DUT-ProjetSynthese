@@ -1,10 +1,15 @@
 <?php $this->extend('corps_transaction_sale') ?>
 <script type="text/javascript">
 </script>
+
+
 <div style="text-align: center;">
   <h1>Espace vente</h1>
 </div>
 <div ng-app="GBL" ng-controller="CtrlLivres" class="clearFix">
+<ul>
+  <li ng-repeat="error in errors">{{error}}</li>
+</ul>
 <section id="book_choice" ng-show="clicked" ng-init="clicked=false" class="container animated fadeIn" style="clear:both;">
         <header id="header" ng-init="transaction_id=<?php echo $this->Session->read('Transaction.achat.transaction_id') ?>">
           <div ng-init="filieres=<?php echo htmlentities(json_encode($listFiliere)) ?>;<?php if(isset($listAchat)) echo 'achats='.htmlentities(json_encode($listAchat)).';copyAchats='.htmlentities(json_encode($listAchat)).';'; ?>"></div>
@@ -61,6 +66,7 @@
                         <td><strong>Etat</strong></td>
                         <td><strong>%</strong></td>
                         <td><strong>Quantité</strong></td>
+                        <td><strong>Max</strong></td>
                         <td><strong>Total</strong></td>
                       </tr>
                     </thead>
@@ -92,7 +98,9 @@
                         <td><input type="text" name="{{$index}}[Row][reducing]" ng-model="achat.Row.reducing"  ng-change="changeRow($index)" style="width:50px; height:25px; text-align:center;"></td>
 
 
-                        <td><input name="{{$index}}[Row][amount]" type="number" ng-init="achat.Row.amount" min="1" ng-model="achat.Row.amount" style="width:50px; height:25px;" ng-change="changeRow($index)">{{achat.Row.Condition.Condition.max}}</td>
+                        <td><input name="{{$index}}[Row][amount]" type="number" ng-init="achat.Row.amount" min="1" ng-model="achat.Row.amount" style="width:50px; height:25px;" ng-change="changeRow($index)" ></td>
+
+                        <td>{{achat.Row.Condition.Condition.max}}</td>
 
                         <td class="prix">{{achat.Row.prize_total | number:2}}&nbsp€</td>
 
