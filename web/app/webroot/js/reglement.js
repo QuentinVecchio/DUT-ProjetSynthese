@@ -2,22 +2,28 @@ var gestionDemande = angular.module('gestionReglement', []);
  
 gestionDemande.controller('ctrl', function FormCtrl($scope) {
 	var sauvegarde = new Array();
+	
+	/*
+	*	Fonction qui initialise le reglement
+	*/
 	$scope.initialisation = function()
 	{
 		$scope.afficheMode = true;
-		$scope.totalBon = parseFloat(0);
-		$scope.totalPaiement = parseFloat(0);
-		$scope.bon = parseFloat(0);
-		$scope.rendu = parseFloat(0);
-		$scope.reglement = 0;
-		$scope.reglement;
-		$scope.reste = $scope.total - $scope.reglement;
+		$scope.totalBon = parseFloat(0);//Valeur total des bon pouvant être utilisé
+		$scope.totalPaiement = parseFloat(0);//Variable qui est égal au total de ce qu'à payé le client avec les modes de paiement
+		$scope.bon = parseFloat(0); //Variable qui est égal au total des bon utilisé 
+		$scope.rendu = parseFloat(0); // Ce qu'on va rendre au client
+		$scope.reglement = 0; //Variable qui est égal au total de ce qu'à payé le client et les bons
+		$scope.reste = $scope.total - $scope.reglement;//Le reste à payer
 		for(i=0;i<$scope.list.length;i++)
 		{
 			sauvegarde[i] = 0;
 		}
 	};
 
+	/*
+	* Fonction qui gère quand on ajoute de l'argent via les modes de paiements
+	*/
 	$scope.traitement = function(valeur)
 	{
 		$scope.reglement -= sauvegarde[valeur];
@@ -37,52 +43,60 @@ gestionDemande.controller('ctrl', function FormCtrl($scope) {
 		$scope.reste = $scope.total - $scope.reglement;
 	};
 
+	/*
+	* Fonction qui gère quand le client 
+	*/
 	$scope.$watch('reglement',function(){
 		if($scope.reste < 0)
 		{	
-			if($scope.totalPaiement > 0 && (($scope.reste - $scope.totalPaiement) < 0))
+			$scope.donne =  -($scope.total - $scope.reglement);
+		}
+	},true);
+
+	/*
+	* Fonction qui gère quand le client 
+	*/
+	$scope.$watch('bon',function(){
+		if($scope.bon > 0)
+		{
+			$scope.variable = ($scope.total - $scope.bon);
+			if($scope.variable <= 0)
 			{
-				if($scope.totalPaiement > $scope.total)
-				{
-					$scope.afficheMode = true;
-				}
-				else
-				{
-					$scope.afficheMode = false;
-				}
-				$scope.reste -= $scope.totalPaiement;
+				$scope.donne -= $scope.totalPaiement;
 				$scope.reglement -= $scope.totalPaiement;
-				$scope.totalPaiement = 0;
-				for(i=0;i<($scope.list.length-2);i++)
+				for(i=0;i<($scope.list.length);i++)
 				{
 					$scope.list[i].Typereglement.amount = 0;
+					sauvegarde[i] = 0;
 				}
+				$scope.totalPaiement = 0;
+				$scope.afficheMode = false;
 			}
-			if($scope.bon > 0)
-			{
-				$scope.donne = $scope.reglement - $scope.total;
-				$scope.rendu = $scope.donne;
-			}
-			else
-			{
-				$scope.reste = 0;
-			}		
 		}
 	},true);
 
+	/*
+	* Foction qui gère quand le client paye plus que ce qu'on lui demande via les modes de paiements
+	*/
 	$scope.$watch('totalPaiement',function(){
-		if($scope.totalPaiement < 0)
+		if($scope.totalPaiement > $scope.total)
 		{	
+			alert('ok1');
 			$scope.totalPaiement = $scope.reglement = 0;
 			$scope.reste = $scope.total;
-			for(i=0;i<($scope.list.length-2);i++)
+			for(i=0;i<($scope.list.length);i++)
 			{
 				$scope.list[i].Typereglement.amount = 0;
+				sauvegarde[i] = 0;
 			}
-
+			$scope.totalPaiement = 0;
+			$scope.afficheMode = true;
 		}
 	},true);
 
+	/*
+	*	Fonction qui initialise les bon
+	*/
 	$scope.initClose = function(close,valeur){
 		$scope.totalBon += parseFloat(valeur);
 		console.log(close);
@@ -93,6 +107,9 @@ gestionDemande.controller('ctrl', function FormCtrl($scope) {
 		}
 	};
 
+	/*
+	*	Fonction qui gère l'utilisation des bons
+	*/
 	$scope.utilise = function(estUtil,valeur)
 	{
 		if(estUtil == true)

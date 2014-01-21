@@ -14,9 +14,9 @@
 					<legend>Remise : </legend>
 					<ul>
 						<li ng-repeat="t in oldTransaction">
-							<input type="text" name="data[Transaction][{{$index}}][id]" ng-model="t.Transaction.id" >
-							<input type="text" name="data[Transaction][{{$index}}][total]" ng-model="t.Transaction.total" >
-							<input type="checkbox" name="data[Transaction][{{$index}}][close]" ng-model="t.Transaction.isClose" ng-init="t.Transaction.isClose = initClose(t.Transaction.close,t.Transaction.total)" ng-change="utilise(t.Transaction.isClose,t.Transaction.total)"><label for="">Bon du {{t.Transaction.date}} de {{t.Transaction.total}}€</label>
+							<input type="checkbox" name="data[Transaction][{{$index}}][close]" ng-model="t.Transaction.isClose" ng-init="t.Transaction.isClose = initClose(t.Transaction.close,t.Transaction.total)" ng-change="utilise(t.Transaction.isClose,t.Transaction.total)"><label for="" style="margin-left : 5px;">Bon du {{t.Transaction.date}} de {{t.Transaction.total}}€</label>
+							<input type="text" name="data[Transaction][{{$index}}][id]" ng-model="t.Transaction.id" style="visibility : hidden;">
+							<input type="text" name="data[Transaction][{{$index}}][total]" ng-model="t.Transaction.total" style="visibility : hidden;">
 						</li>
 					</ul>
 					<p style="text-align : ">Valeur total des bons : {{totalBon}}€</p>
