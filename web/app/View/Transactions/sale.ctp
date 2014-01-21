@@ -7,8 +7,13 @@
   <h1>Espace vente</h1>
 </div>
 <div ng-app="GBL" ng-controller="CtrlLivres" class="clearFix">
-<ul>
-  <li ng-repeat="error in errors">{{error}}</li>
+<ul style="list-style-type:none;">
+  <li ng-repeat="error in errors">
+    <div class="alert alert-<?php echo (isset($type)?$type:'warning');?> alert-dismissable">
+      <button ng-click="removeError($index)" type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <strong>{{error[0].type}}</strong><br>{{error[0].message}}
+    </div>
+  </li>
 </ul>
 <section id="book_choice" ng-show="clicked" ng-init="clicked=false" class="container animated fadeIn" style="clear:both;">
         <header id="header" ng-init="transaction_id=<?php echo $this->Session->read('Transaction.achat.transaction_id') ?>">
@@ -121,45 +126,6 @@
         <input id="BtnSubmit" type="submit" ng-click="VerifBook()" value="Acheter" class="btn btn-success">
         </section>
         <?php echo $this->Form->end(); ?>
-        <!--
-      <section id="facture" class="container animated fadeIn" ng-show="!clicked" ng-hide="clicked">
-        <header id="header">
-          <h3>Aperçu facture</h3>
-        </header>
-        <section id="main">
-          <ul class="list-unstyled">
-              <li>
-                <div class="view_vos_achats">
-                <label id="vos_achats">
-                 <table class="table table-bordered" id="choix">
-                    <thead>
-                      <tr>
-                        <td><strong>Livre</strong></td>
-                        <td><strong>Etat</strong></td>
-                        <td><strong>Quantité</strong></td>
-                        <td><strong>Prix</strong></td>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr ng-repeat="achat in achats">
-                        <td>{{achat.Subject.name}}: {{achat.book.name}}</td>
-                        <td>{{achat.book.etat.conditions.name}}</td>
-                        <td>{{achat.book.qte}}</td>
-                        <td class="prix">{{((achat.book.prize- achat.book.prize*achat.book.etat.conditions.reducing / 100)*achat.book.qte) | number:2 || 0}} €</td>
-                      </tr>
-                    </tbody>
-                </table>
-                  <div class="panel-footer">
-                    Montant total TTC : <strong>{{mt | number:2}}</strong> €
-                  </div>
-              </label>
-            </div>
-          </li>
-          </ul>
-        </section>
-    </section>
-  -->
-
 </div>
 <link rel="stylesheet" href="https://daneden.me/animate/animate.css">
 <script type="text/javascript" source="http://code.angularjs.org/1.2.0/angular-animate.min.js"></script>
