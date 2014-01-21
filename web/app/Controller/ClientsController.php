@@ -11,6 +11,7 @@ class ClientsController extends AppController{
 
 
 	public function admin_add(){
+		$this->set('actionExist', isset($this->params['url']['action']));
 		if(!empty($this->data)){
 			$this->request->data = array('Client' =>$this->data);			
 			if($this->Client->save($this->data)){
@@ -41,6 +42,8 @@ class ClientsController extends AppController{
 	*	Formulaire d'ajout d'une parent
 	*/
 	public function add(){	
+		$this->set('actionExist', !isset($this->params['url']['action']));		
+		
 		if(!empty($this->data)){
 			$this->request->data = array('Client' =>$this->data);			
 			if($this->Client->save($this->data)){

@@ -1,7 +1,10 @@
+<?php if($actionExist): ?>
 <a class="btn btn-primary btn-retour" href="<?php echo $this->Html->url( array('controller' => 'clients', 'action' => 'index', 'admin' => true)) ?>">
 
 <span class="glyphicon glyphicon-chevron-left"></span>
 	Retourner à la liste des parents</a>
+
+<?php endif; ?>
 <div class="formulaire row" style="width : 700px; margin:auto;" ng-app="app">
 	<div class="span4 offset6" ng-controller="Controller">
 		<?php
