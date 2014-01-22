@@ -14,6 +14,7 @@
 																'name' => 'name',
 																'style' => 'margin-left : 10px;',
 																'ng-model' => 'Typereglement.Typereglement.name',
+																'autocomplete' => 'off',
 																'ng-pattern' =>'/^[a-zA-Z ]{1,}$/',
 																'label' => array('text' => 'Nom du réglement : '))); ?>
 			</div>

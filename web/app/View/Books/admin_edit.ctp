@@ -14,6 +14,7 @@
 																					'name' => 'name',
 																					'style' => 'margin-left : 10px;',
 																					'ng-model' => 'Book.Book.name',
+																					'autocomplete' => 'off',
 																					'ng-pattern' =>'/^[a-zA-Z\'éèêëïöôùçà&\- ]{1,}$/',
 																					'label' => array('text' => 'Nom : '))); ?>
 			</div>
@@ -42,6 +43,7 @@
 																					'name' => 'ISBN',
 																					'style' => 'margin-left : 10px;',
 																					'ng-model' => 'Book.Book.ISBN',
+																					'autocomplete' => 'off',
 																					'ng-pattern' =>'/^978[0-9]{10}$|^979[0-9]{10}$/',
 																					'label' => array('text' => 'ISBN : '))); ?>
 			</div>

@@ -14,7 +14,8 @@
 																'name' => 'name',
 																'style' => 'margin-left : 10px;',
 																'ng-model' => 'Typereglement.Typereglement.name',
-																'ng-pattern' =>'/^[a-zA-Z ]{1,}$/',
+																'ng-pattern' =>'/^[a-zA-Zéèêàâùûç\- ]{1,}$/',
+																'autocomplete' => 'off',
 																'label' => array('text' => 'Nom du réglement : '))); ?>
 			</div>
 			<div ng-show="form.name.$dirty && form.name.$invalid" class="erreur has-error">

@@ -14,6 +14,7 @@
 																		'name' => 'name',
 																		'style' => 'margin-left : 10px;',
 																		'ng-model' => 'Subject.Subject.name',
+																		'autocomplete' => 'off',
 																		'ng-pattern' =>'/^[a-zA-Zéèêàâùûç\- ]{3,}$/',
 																		'label' => array('text' => 'Nom de la matière : '))); ?>															
 			</div>

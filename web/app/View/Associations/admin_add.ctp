@@ -14,6 +14,7 @@
 																'name' =>'name',
 																'style' => 'margin-left : 10px;',
 																'ng-minLength' =>2, 'ng-maxLength' =>15,
+																'autocomplete' => 'off',
 																'ng-pattern' =>' /^[a-zA-Z0-9-\'@/:,«»!?&.éèêëïöôùçà ]{1,}$/',
 																'ng-model' => 'Associations.Association.name',
 																'autocomplete' => 'off',
