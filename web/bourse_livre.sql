@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4
+-- version 4.0.6
 -- http://www.phpmyadmin.net
 --
--- Client: localhost
--- Généré le: Mer 22 Janvier 2014 à 09:21
--- Version du serveur: 5.6.12-log
--- Version de PHP: 5.4.12
+-- Host: localhost
+-- Generation Time: Jan 22, 2014 at 03:57 PM
+-- Server version: 5.5.33
+-- PHP Version: 5.5.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,18 +17,16 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données: `bourse_livre`
+-- Database: `bourse_livre`
 --
-CREATE DATABASE IF NOT EXISTS `bourse_livre` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `bourse_livre`;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `associations`
+-- Table structure for table `associations`
 --
 
-CREATE TABLE IF NOT EXISTS `associations` (
+CREATE TABLE `associations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `houseNumber` varchar(10) NOT NULL,
@@ -41,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `associations` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
--- Contenu de la table `associations`
+-- Dumping data for table `associations`
 --
 
 INSERT INTO `associations` (`id`, `name`, `houseNumber`, `street`, `town_id`, `phone`, `email`) VALUES
@@ -53,10 +51,10 @@ INSERT INTO `associations` (`id`, `name`, `houseNumber`, `street`, `town_id`, `p
 -- --------------------------------------------------------
 
 --
--- Structure de la table `books`
+-- Table structure for table `books`
 --
 
-CREATE TABLE IF NOT EXISTS `books` (
+CREATE TABLE `books` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `prize` int(11) NOT NULL,
@@ -67,15 +65,15 @@ CREATE TABLE IF NOT EXISTS `books` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
--- Contenu de la table `books`
+-- Dumping data for table `books`
 --
 
 INSERT INTO `books` (`id`, `name`, `prize`, `ISBN`, `subject_id`) VALUES
-(11, 'Math en premiÃ¨re', 35, '9780101234030', 11),
-(12, 'FranÃ§ais pour tous S', 30, '9782344922304', 12),
+(11, 'Math en 1ère', 35, '9780101234030', 11),
+(12, 'Français pour tous S', 30, '9782344922304', 12),
 (13, 'Physique programme S', 40, '9782334944444', 13),
-(14, 'SVT PremiÃ¨re S', 45, '9786262237344', 14),
-(15, 'Histoire-GÃ©opgraphie PremiÃ¨re S', 32, '9783427739201', 15),
+(14, 'SVT 1ère S', 45, '9786262237344', 14),
+(15, 'Histoire-Géographie 1ère S', 32, '9783427739201', 15),
 (16, 'New Bridges First', 31, '9780355526123', 16),
 (17, 'Perspektiven Erste', 26, '9782221039302', 17),
 (18, 'Juntos S', 27, '9782225152623', 18),
@@ -84,10 +82,10 @@ INSERT INTO `books` (`id`, `name`, `prize`, `ISBN`, `subject_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `clients`
+-- Table structure for table `clients`
 --
 
-CREATE TABLE IF NOT EXISTS `clients` (
+CREATE TABLE `clients` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
@@ -100,15 +98,27 @@ CREATE TABLE IF NOT EXISTS `clients` (
   PRIMARY KEY (`id`),
   KEY `association_id` (`association_id`),
   KEY `town_id` (`town_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `clients`
+--
+
+INSERT INTO `clients` (`id`, `name`, `lastname`, `houseNumber`, `street`, `email`, `phone`, `town_id`, `association_id`) VALUES
+(1, 'Jean-Paul', 'Dupont', '7', ' rue du stade', 'alex@dupont.fr', '0356987452', 1817, 6),
+(2, 'Jean-Paul', 'Dupont', '7', ' rue du stade', 'alex@dupont.fr', '0356987452', 1817, 6),
+(3, 'Jean-Charles', 'Duff', '8', 'rue des marronniers', 'duff@orange.fr', '0382568987', 29529, 8),
+(4, 'Clin', 'Matthieu', '8', 'rue du stade', 'clindu57@hotmail.fr', '0382654654', 31820, NULL),
+(5, 'albert', 'tintin', '5', 'rue du cimetiere', 'albert@tintin.fr', '0375262445', 30720, 8),
+(6, 'Héléna', 'Despoux', '15-18', 'rue du général koby', 'despoux@orange.fr', '0382959695', 31270, 7);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `conditions`
+-- Table structure for table `conditions`
 --
 
-CREATE TABLE IF NOT EXISTS `conditions` (
+CREATE TABLE `conditions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `reducing` int(11) NOT NULL,
@@ -116,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `conditions` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
--- Contenu de la table `conditions`
+-- Dumping data for table `conditions`
 --
 
 INSERT INTO `conditions` (`id`, `name`, `reducing`) VALUES
@@ -127,43 +137,43 @@ INSERT INTO `conditions` (`id`, `name`, `reducing`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `grades`
+-- Table structure for table `grades`
 --
 
-CREATE TABLE IF NOT EXISTS `grades` (
+CREATE TABLE `grades` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `sector_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `sector_id` (`sector_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
 
 --
--- Contenu de la table `grades`
+-- Dumping data for table `grades`
 --
 
 INSERT INTO `grades` (`id`, `name`, `sector_id`) VALUES
-(23, 'PremiÃ¨re', 9),
+(23, 'Première', 9),
 (24, 'Terminale', 9),
-(25, 'PremiÃ¨re', 10),
+(25, 'Première', 10),
 (26, 'Terminale', 10),
-(27, 'PremiÃ¨re', 11),
+(27, 'Première', 11),
 (28, 'Terminale', 11),
-(29, 'PremiÃ¨re', 12),
+(29, 'Première', 12),
 (30, 'Terminale', 12),
-(31, 'PremiÃ¨re', 13),
+(31, 'Première', 13),
 (32, 'Terminale', 13),
-(33, 'PremiÃ¨re', 14),
+(33, 'Première', 14),
 (34, 'Terminale', 14),
 (35, 'Seconde', 15);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `records`
+-- Table structure for table `records`
 --
 
-CREATE TABLE IF NOT EXISTS `records` (
+CREATE TABLE `records` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `book_id` int(11) NOT NULL,
   `transaction_id` int(11) NOT NULL,
@@ -178,10 +188,10 @@ CREATE TABLE IF NOT EXISTS `records` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `rows`
+-- Table structure for table `rows`
 --
 
-CREATE TABLE IF NOT EXISTS `rows` (
+CREATE TABLE `rows` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `condition_id` int(11) DEFAULT NULL,
   `book_id` int(11) DEFAULT NULL,
@@ -197,22 +207,80 @@ CREATE TABLE IF NOT EXISTS `rows` (
   KEY `condition_id` (`condition_id`),
   KEY `book_id` (`book_id`),
   KEY `transaction_id` (`transaction_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=215 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=70 ;
+
+--
+-- Dumping data for table `rows`
+--
+
+INSERT INTO `rows` (`id`, `condition_id`, `book_id`, `transaction_id`, `name_book`, `name_subject`, `name_condition`, `reducing`, `amount`, `prize_unit`, `prize_total`) VALUES
+(5, 8, 18, 2, 'Juntos S', 'Espagnole', 'Bon', 30, 2, 27.00, 37.80),
+(6, 8, 18, 2, 'Juntos S', 'Espagnole', 'Bon', 15, 1, 27.00, 22.95),
+(7, 9, 19, 2, 'Azione', 'Italien', 'Moyen', 30, 2, 26.00, 36.40),
+(8, 10, 11, 2, 'Math en premiÃ¨re', 'MathÃ©matique', 'Mediocre', 45, 1, 35.00, 19.25),
+(9, 9, 16, 1, 'New Bridges First', 'Anglais', 'Moyen', 45, 1, 31.00, 17.05),
+(10, 8, 17, 1, 'Perspektiven Erste', 'Allemand', 'Bon', 15, 2, 26.00, 44.20),
+(11, 10, 11, 1, 'Math en premiÃ¨re', 'MathÃ©matique', 'Mediocre', 45, 1, 35.00, 19.25),
+(12, 8, 11, 1, 'Math en premiÃ¨re', 'MathÃ©matique', 'Bon', 15, 1, 35.00, 29.75),
+(13, 9, 12, 1, 'FranÃ§ais pour tous S', 'FranÃ§ais', 'Moyen', 30, 2, 30.00, 42.00),
+(14, 10, 11, 4, 'Math en premiÃ¨re', 'MathÃ©matique', 'Mediocre', 25, 1, 35.00, 26.25),
+(15, 8, 17, 4, 'Perspektiven Erste', 'Allemand', 'Bon', 15, 1, 26.00, 22.10),
+(16, 9, 19, 4, 'Azione', 'Italien', 'Moyen', 30, 1, 26.00, 18.20),
+(18, 8, 17, 3, 'Perspektiven Erste', 'Allemand', 'Bon', 1, 1, 26.00, 25.74),
+(19, 9, 19, 3, 'Azione', 'Italien', 'Moyen', 1, 1, 26.00, 25.74),
+(20, 8, 18, 3, 'Juntos S', 'Espagnole', 'Bon', 1, 1, 27.00, 26.73),
+(22, 8, 11, 3, 'Math en premiÃ¨re', 'MathÃ©matique', 'Bon', 1, 1, 35.00, 34.65),
+(23, 9, 12, 3, 'FranÃ§ais pour tous S', 'FranÃ§ais', 'Moyen', 30, 2, 30.00, 42.00),
+(28, 8, 16, 5, 'New Bridges First', 'Anglais', 'Bon', 15, 3, 31.00, 79.05),
+(29, 8, 17, 5, 'Perspektiven Erste', 'Allemand', 'Bon', 15, 3, 26.00, 66.30),
+(30, 8, 13, 5, 'Physique programme S', 'Physique', 'Bon', 15, 1, 40.00, 34.00),
+(31, 10, 14, 5, 'SVT PremiÃ¨re S', 'SVT', 'Mediocre', 45, 6, 45.00, 148.50),
+(32, 8, 12, 6, 'Français pour tous S', 'Français', 'Bon', 15, 2, 30.00, 51.00),
+(33, 8, 16, 6, 'New Bridges First', 'Anglais', 'Bon', 15, 2, 31.00, 52.70),
+(34, 8, 18, 6, 'Juntos S', 'Espagnole', 'Bon', 20, 5, 27.00, 108.00),
+(35, 9, 19, 6, 'Azione', 'Italien', 'Moyen', 50, 1, 26.00, 13.00),
+(36, 8, 12, 8, 'Français pour tous S', 'Français', 'Bon', 15, 2, 30.00, 51.00),
+(38, 10, 11, 8, 'Math en 1ère', 'Mathèmatique', 'Mediocre', 45, 1, 35.00, 19.25),
+(40, 8, 16, 8, 'New Bridges First', 'Anglais', 'Bon', 15, 5, 31.00, 131.75),
+(45, 9, 16, 8, 'New Bridges First', 'Anglais', 'Moyen', 30, 1, 31.00, 21.70),
+(46, 8, 18, 8, 'Juntos S', 'Espagnole', 'Bon', 15, 1, 27.00, 22.95),
+(47, 8, 13, 7, 'Physique programme S', 'Physique', 'Bon', 15, 1, 40.00, 34.00),
+(48, 8, 17, 7, 'Perspektiven Erste', 'Allemand', 'Bon', 15, 3, 26.00, 66.30),
+(49, 9, 19, 7, 'Azione', 'Italien', 'Moyen', 30, 1, 26.00, 18.20),
+(50, 8, 11, 9, 'Math en 1ère', 'Mathèmatique', 'Bon', 15, 1, 35.00, 29.75),
+(51, 8, 12, 9, 'Français pour tous S', 'Français', 'Bon', 15, 1, 30.00, 25.50),
+(52, 8, 13, 9, 'Physique programme S', 'Physique', 'Bon', 15, 1, 40.00, 34.00),
+(53, 8, 14, 9, 'SVT 1ère S', 'SVT', 'Bon', 15, 1, 45.00, 38.25),
+(54, 8, 15, 9, 'Histoire-Géographie 1ère S', 'Histoire-Géographie', 'Bon', 15, 1, 32.00, 27.20),
+(55, 8, 16, 9, 'New Bridges First', 'Anglais', 'Bon', 15, 1, 31.00, 26.35),
+(56, 8, 17, 9, 'Perspektiven Erste', 'Allemand', 'Bon', 15, 1, 26.00, 22.10),
+(57, 8, 18, 9, 'Juntos S', 'Espagnole', 'Bon', 15, 1, 27.00, 22.95),
+(58, 8, 19, 9, 'Azione', 'Italien', 'Bon', 15, 1, 26.00, 22.10),
+(60, 8, 11, 11, 'Math en 1ère', 'Mathèmatique', 'Bon', 15, 1, 35.00, 29.75),
+(61, 8, 11, 12, 'Math en 1ère', 'Mathèmatique', 'Bon', 15, 1, 35.00, 29.75),
+(62, 8, 12, 12, 'Français pour tous S', 'Français', 'Bon', 15, 1, 30.00, 25.50),
+(63, 8, 13, 12, 'Physique programme S', 'Physique', 'Bon', 15, 1, 40.00, 34.00),
+(64, 8, 14, 12, 'SVT 1ère S', 'SVT', 'Bon', 15, 1, 45.00, 38.25),
+(65, 8, 15, 12, 'Histoire-Géographie 1ère S', 'Histoire-Géographie', 'Bon', 15, 1, 32.00, 27.20),
+(66, 8, 16, 12, 'New Bridges First', 'Anglais', 'Bon', 15, 1, 31.00, 26.35),
+(67, 8, 17, 12, 'Perspektiven Erste', 'Allemand', 'Bon', 15, 1, 26.00, 22.10),
+(68, 8, 18, 12, 'Juntos S', 'Espagnole', 'Bon', 15, 1, 27.00, 22.95),
+(69, 8, 19, 12, 'Azione', 'Italien', 'Bon', 15, 1, 26.00, 22.10);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `sectors`
+-- Table structure for table `sectors`
 --
 
-CREATE TABLE IF NOT EXISTS `sectors` (
+CREATE TABLE `sectors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
--- Contenu de la table `sectors`
+-- Dumping data for table `sectors`
 --
 
 INSERT INTO `sectors` (`id`, `name`) VALUES
@@ -227,10 +295,10 @@ INSERT INTO `sectors` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `stocks`
+-- Table structure for table `stocks`
 --
 
-CREATE TABLE IF NOT EXISTS `stocks` (
+CREATE TABLE `stocks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `book_id` int(11) NOT NULL,
   `condition_id` int(11) NOT NULL,
@@ -242,45 +310,45 @@ CREATE TABLE IF NOT EXISTS `stocks` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=51 ;
 
 --
--- Contenu de la table `stocks`
+-- Dumping data for table `stocks`
 --
 
 INSERT INTO `stocks` (`id`, `book_id`, `condition_id`, `depot`, `vente`) VALUES
-(24, 11, 8, 0, 0),
+(24, 11, 8, 3, 2),
 (25, 11, 9, 0, 0),
-(26, 11, 10, 0, 0),
-(27, 12, 8, 0, 0),
-(28, 12, 9, 0, 0),
+(26, 11, 10, 2, 2),
+(27, 12, 8, 4, 2),
+(28, 12, 9, 2, 2),
 (29, 12, 10, 0, 0),
-(30, 13, 8, 0, 0),
+(30, 13, 8, 3, 1),
 (31, 13, 9, 0, 0),
 (32, 13, 10, 0, 0),
-(33, 14, 8, 0, 0),
+(33, 14, 8, 2, 0),
 (34, 14, 9, 0, 0),
-(35, 14, 10, 0, 0),
-(36, 15, 8, 0, 0),
+(35, 14, 10, 6, 0),
+(36, 15, 8, 2, 0),
 (37, 15, 9, 0, 0),
 (38, 15, 10, 0, 0),
-(39, 16, 8, 0, 0),
-(40, 16, 9, 0, 0),
+(39, 16, 8, 7, 5),
+(40, 16, 9, 1, 1),
 (41, 16, 10, 0, 0),
-(42, 17, 8, 0, 0),
+(42, 17, 8, 7, 5),
 (43, 17, 9, 0, 0),
 (44, 17, 10, 0, 0),
-(45, 18, 8, 0, 0),
+(45, 18, 8, 8, 2),
 (46, 18, 9, 0, 0),
 (47, 18, 10, 0, 0),
-(48, 19, 8, 0, 0),
-(49, 19, 9, 0, 0),
+(48, 19, 8, 2, 0),
+(49, 19, 9, 3, 3),
 (50, 19, 10, 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `subjects`
+-- Table structure for table `subjects`
 --
 
-CREATE TABLE IF NOT EXISTS `subjects` (
+CREATE TABLE `subjects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `grade_id` int(11) NOT NULL,
@@ -289,15 +357,15 @@ CREATE TABLE IF NOT EXISTS `subjects` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
 
 --
--- Contenu de la table `subjects`
+-- Dumping data for table `subjects`
 --
 
 INSERT INTO `subjects` (`id`, `name`, `grade_id`) VALUES
-(11, 'MathÃ©matique', 23),
-(12, 'FranÃ§ais', 23),
+(11, 'Mathèmatique', 23),
+(12, 'Français', 23),
 (13, 'Physique', 23),
 (14, 'SVT', 23),
-(15, 'Histoire-GÃ©ographie', 23),
+(15, 'Histoire-Géographie', 23),
 (16, 'Anglais', 23),
 (17, 'Allemand', 23),
 (18, 'Espagnole', 23),
@@ -324,10 +392,10 @@ INSERT INTO `subjects` (`id`, `name`, `grade_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `towns`
+-- Table structure for table `towns`
 --
 
-CREATE TABLE IF NOT EXISTS `towns` (
+CREATE TABLE `towns` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
   `zip_code` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
@@ -338,7 +406,7 @@ CREATE TABLE IF NOT EXISTS `towns` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34488 ;
 
 --
--- Contenu de la table `towns`
+-- Dumping data for table `towns`
 --
 
 INSERT INTO `towns` (`id`, `name`, `zip_code`) VALUES
@@ -34854,10 +34922,10 @@ INSERT INTO `towns` (`id`, `name`, `zip_code`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `transactions`
+-- Table structure for table `transactions`
 --
 
-CREATE TABLE IF NOT EXISTS `transactions` (
+CREATE TABLE `transactions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `date` date NOT NULL,
@@ -34869,15 +34937,32 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `client_id` (`client_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=66 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+
+--
+-- Dumping data for table `transactions`
+--
+
+INSERT INTO `transactions` (`id`, `user_id`, `date`, `type`, `close`, `completed`, `total`, `client_id`) VALUES
+(1, 20, '2014-01-22', 'depot', 1, 1, 152.25, 2),
+(2, 21, '2014-01-22', 'depot', 1, 1, 116.40, 3),
+(3, 20, '2014-01-22', 'achat', 1, 1, 154.86, 2),
+(4, 21, '2014-01-22', 'achat', 1, 1, 66.55, 4),
+(5, 21, '2014-01-22', 'depot', 1, 1, 327.85, 4),
+(6, 20, '2014-01-22', 'depot', 1, 1, 224.70, 5),
+(7, 20, '2014-01-22', 'achat', 1, 1, 118.50, 5),
+(8, 21, '2014-01-22', 'achat', 1, 1, 246.65, 6),
+(9, 1, '2014-01-22', 'depot', 1, 1, 248.20, 6),
+(11, 21, '2014-01-22', 'achat', 0, 0, 29.75, 6),
+(12, 1, '2014-01-22', 'depot', 0, 1, 248.20, 6);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `transactions_typereglements`
+-- Table structure for table `transactions_typereglements`
 --
 
-CREATE TABLE IF NOT EXISTS `transactions_typereglements` (
+CREATE TABLE `transactions_typereglements` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `transaction_id` int(11) NOT NULL,
   `typereglement_id` int(11) NOT NULL,
@@ -34885,83 +34970,107 @@ CREATE TABLE IF NOT EXISTS `transactions_typereglements` (
   PRIMARY KEY (`id`),
   KEY `transaction_id` (`transaction_id`,`typereglement_id`),
   KEY `typereglement_id` (`typereglement_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=58 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+
+--
+-- Dumping data for table `transactions_typereglements`
+--
+
+INSERT INTO `transactions_typereglements` (`id`, `transaction_id`, `typereglement_id`, `amount`) VALUES
+(5, 4, 9, 60.00),
+(6, 4, 10, 6.55),
+(7, 3, 10, 2.61),
+(8, 3, 13, 152.25),
+(9, 7, 9, 12.00),
+(10, 7, 10, 12.00),
+(11, 7, 11, 50.00),
+(12, 7, 12, 44.50),
+(15, 8, 9, 246.60),
+(16, 8, 10, 0.02),
+(17, 8, 11, 0.03),
+(18, 11, 13, 248.20),
+(19, 11, 14, 218.45);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `typereglements`
+-- Table structure for table `typereglements`
 --
 
-CREATE TABLE IF NOT EXISTS `typereglements` (
+CREATE TABLE `typereglements` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
--- Contenu de la table `typereglements`
+-- Dumping data for table `typereglements`
 --
 
 INSERT INTO `typereglements` (`id`, `name`) VALUES
 (9, 'cheque'),
 (10, 'espece'),
 (11, 'carte multipass'),
-(12, 'CB');
+(12, 'CB'),
+(13, 'Bon'),
+(14, 'Rendu');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `users`
+-- Table structure for table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 --
--- Contenu de la table `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `status`) VALUES
 (1, 'root', '577ea4df223bed7d8e6ab6d099eb3cbfbc00895a', 'admin'),
-(16, 'operateur', '9f3a070b1c3be5d726026c278211372c0424fbe6', 'operateur');
+(16, 'operateur', '9f3a070b1c3be5d726026c278211372c0424fbe6', 'operateur'),
+(20, 'hugo', '4aadf393a25baf9495dc2448ae1dc3d19eb6f5e3', 'operateur'),
+(21, 'dylan', 'fec0ad9800bcc2221075b1134a03e596eb4614b6', 'operateur'),
+(22, 'matthieu', '2195e1719910ab88f2ca44af6e3489a974fdcb9e', 'operateur');
 
 --
--- Contraintes pour les tables exportées
+-- Constraints for dumped tables
 --
 
 --
--- Contraintes pour la table `associations`
+-- Constraints for table `associations`
 --
 ALTER TABLE `associations`
   ADD CONSTRAINT `associations_ibfk_1` FOREIGN KEY (`town_id`) REFERENCES `towns` (`id`);
 
 --
--- Contraintes pour la table `books`
+-- Constraints for table `books`
 --
 ALTER TABLE `books`
   ADD CONSTRAINT `books_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE;
 
 --
--- Contraintes pour la table `clients`
+-- Constraints for table `clients`
 --
 ALTER TABLE `clients`
-  ADD CONSTRAINT `clients_ibfk_2` FOREIGN KEY (`town_id`) REFERENCES `towns` (`id`),
-  ADD CONSTRAINT `clients_ibfk_1` FOREIGN KEY (`association_id`) REFERENCES `associations` (`id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `clients_ibfk_1` FOREIGN KEY (`association_id`) REFERENCES `associations` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `clients_ibfk_2` FOREIGN KEY (`town_id`) REFERENCES `towns` (`id`);
 
 --
--- Contraintes pour la table `grades`
+-- Constraints for table `grades`
 --
 ALTER TABLE `grades`
   ADD CONSTRAINT `grades_ibfk_1` FOREIGN KEY (`sector_id`) REFERENCES `sectors` (`id`) ON DELETE CASCADE;
 
 --
--- Contraintes pour la table `records`
+-- Constraints for table `records`
 --
 ALTER TABLE `records`
   ADD CONSTRAINT `records_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`),
@@ -34969,7 +35078,7 @@ ALTER TABLE `records`
   ADD CONSTRAINT `records_ibfk_3` FOREIGN KEY (`condition_id`) REFERENCES `conditions` (`id`);
 
 --
--- Contraintes pour la table `rows`
+-- Constraints for table `rows`
 --
 ALTER TABLE `rows`
   ADD CONSTRAINT `rows_ibfk_1` FOREIGN KEY (`condition_id`) REFERENCES `conditions` (`id`) ON DELETE SET NULL,
@@ -34977,27 +35086,27 @@ ALTER TABLE `rows`
   ADD CONSTRAINT `rows_ibfk_3` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`) ON DELETE CASCADE;
 
 --
--- Contraintes pour la table `stocks`
+-- Constraints for table `stocks`
 --
 ALTER TABLE `stocks`
   ADD CONSTRAINT `stocks_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `stocks_ibfk_2` FOREIGN KEY (`condition_id`) REFERENCES `conditions` (`id`) ON DELETE CASCADE;
 
 --
--- Contraintes pour la table `subjects`
+-- Constraints for table `subjects`
 --
 ALTER TABLE `subjects`
   ADD CONSTRAINT `subjects_ibfk_1` FOREIGN KEY (`grade_id`) REFERENCES `grades` (`id`) ON DELETE CASCADE;
 
 --
--- Contraintes pour la table `transactions`
+-- Constraints for table `transactions`
 --
 ALTER TABLE `transactions`
   ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE SET NULL;
 
 --
--- Contraintes pour la table `transactions_typereglements`
+-- Constraints for table `transactions_typereglements`
 --
 ALTER TABLE `transactions_typereglements`
   ADD CONSTRAINT `transactions_typereglements_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`) ON DELETE CASCADE,
