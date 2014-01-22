@@ -14,6 +14,7 @@
 																'name' => 'name',
 																'style' => 'margin-left : 10px;',
 																'ng-model' => 'Sector.Sector.name',
+																'autocomplete' => 'off',
 																'ng-pattern' =>'/^[A-Z ]{1,}$/',
 																'label' => array('text' => 'Nom de la filière : '))); ?>
 			</div>

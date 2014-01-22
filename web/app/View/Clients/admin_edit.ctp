@@ -16,6 +16,7 @@
 																'ng-minLength' =>2, 'ng-maxLength' =>15,
 																'style' => 'margin-left : 10px;',
 																'ng-pattern' =>'/^[a-zA-Zéèêàâùûç\- ]+$/i',
+																'autocomplete' => 'off',
 																'ng-model' => 'Clients.Client.name',
 																'autocomplete' => 'off',
 																'label' => array('text' => 'Prénom : '))); ?>
@@ -33,6 +34,7 @@
 																'name' =>'lastname',
 																'style' => 'margin-left : 10px;',
 																'ng-minLength' =>2, 'ng-maxLength' =>15,
+																'autocomplete' => 'off',
 																'ng-pattern' =>'/^[a-zA-Zéèêàâùûç ]+$/i',
 																'ng-model' => 'Clients.Client.lastname',
 																'autocomplete' => 'off',
@@ -51,7 +53,7 @@
 																'name' =>'houseNumber',
 																'style' => 'margin-left : 10px;',
 																'ng-model' => 'Clients.Client.houseNumber',
-																'ng-pattern' => '/^[0-9]{1,3}$|^[0-9]{1,3} bis|ter$/',
+																'ng-pattern' => '/^[0-9]{1,3}$|^[0-9]{1,3} bis|ter$|^[0-9]{1,5}-[0-9]{1,5}$/',
 																'autocomplete' => 'off',
 																'label' => array('text' => 'N° rue : '))); ?>
 			</div>

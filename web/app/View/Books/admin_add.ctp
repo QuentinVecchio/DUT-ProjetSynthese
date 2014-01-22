@@ -15,7 +15,8 @@
 																					'name' => 'name',
 																					'style' => 'margin-left : 10px;',
 																					'ng-model' => 'Book.Book.name',
-																					'ng-pattern' =>'/^[a-zA-Z\'éèêëïöôùçà&\- ]{1,}$/',
+																					'autocomplete' => 'off',
+																					'ng-pattern' =>'/^[a-zA-Z0-9!?\'éèêëïöôùçà&\- ]{1,}$/',
 																					'label' => array('text' => 'Nom : '))); ?>
 			</div>
 			<div ng-show="form.name.$dirty && form.name.$invalid" class="erreur has-error">
@@ -43,6 +44,7 @@
 																					'name' => 'ISBN',
 																					'style' => 'margin-left : 10px;',
 																					'ng-model' => 'Book.Book.ISBN',
+																					'autocomplete' => 'off',
 																					'ng-pattern' =>'/^978[0-9]{10}$|^979[0-9]{10}$/',
 																					'label' => array('text' => 'ISBN : '))); ?>
 			</div>

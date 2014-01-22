@@ -14,6 +14,7 @@
 																'name' =>'name',
 																'style' => 'margin-left : 10px;',
 																'ng-minLength' =>2, 'ng-maxLength' =>15,
+																'autocomplete' => 'off',
 																'ng-pattern' =>' /^[a-zA-Z0-9-\'@/:,«»!?&.éèêëïöôùçà ]{1,}$/',
 																'ng-model' => 'Associations.Association.name',
 																'autocomplete' => 'off',
@@ -32,7 +33,7 @@
 																'name' =>'houseNumber',
 																'style' => 'margin-left : 10px;',
 																'ng-model' => 'Associations.Association.houseNumber',
-																'ng-pattern' => '/^[0-9]{1,3}$|^[0-9]{1,3} bis|ter$/',
+																'ng-pattern' => '/^[0-9]{1,3}$|^[0-9]{1,3} bis|ter$|^[0-9]{1,5}-[0-9]{1,5}$/',
 																'autocomplete' => 'off',
 																'label' => array('text' => 'N° rue : '))); ?>
 			</div>

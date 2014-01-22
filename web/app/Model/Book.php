@@ -10,7 +10,7 @@ class Book extends AppModel{
 						'message' => 'Le nom du livre doit être unique pour une matière donnée'
 					),
 				'correct' => array(
-						'rule' => '/^[a-zA-Zéèêàâùûç\- ]{3,}$/i',
+						'rule' => '/^[a-zA-Z0-9éèêàâùûç!?\- ]{3,}$/i',
 						'message' => 'Le nom du livre doit uniquement contenir des lettres'
 					)
 				),
