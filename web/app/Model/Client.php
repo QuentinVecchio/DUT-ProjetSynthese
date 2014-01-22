@@ -16,7 +16,7 @@ class Client extends AppModel{
 				'rule' => '/^0[1-9][0-9]{8}$|^[+]33[1-9][0-9]{8}$|^[+]352[0-9]{6,}$|^00352[0-9]{6,}$/',
 				'message' => 'Numéro de téléphone incorrect'),
 			'houseNumber' => array(
-				'rule' => '/^[0-9]{1,3}$|^[0-9]{1,3} bis|ter$/',
+				'rule' => '/^[0-9]{1,3}$|^[0-9]{1,3} bis|ter$|^[0-9]{1,5}-[0-9]{1,5}$/',
 				'message' => 'Numéro de rue incorrect')
 
 		);
