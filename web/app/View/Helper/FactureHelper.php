@@ -10,7 +10,9 @@
 				<div style="margin-left : 150px;">
   					<p>Facture : n°<?php echo $Transaction['id']?> du <?php echo date('d/m/Y', time())?></p>
   					<p><?php echo $parent['lastname'].' '.$parent['name']?></p>
-  					<p><?php echo $parent['houseNumber'].' '.$parent['street'].' '.$ville['name'].' '.$ville['zip_code']?></p>
+  					<p><?php echo $parent['houseNumber'].' '.$parent['street'].' ';
+  							if(!empty($ville)){ echo $ville['name'].' '.$ville['zip_code'];};?>
+  					</p>
 				</div>
 				<div style="text-align:center;">
 					<h3>Liste des livres</h3>
@@ -78,9 +80,11 @@
 			ob_start();?>
 				<br><br>
 				<h3 style="text-align:center;">Facture de <?php echo $parent['lastname'].' '.$parent['name']?>  </h3>
-  				<p>Facture : n°<?php echo $Transaction['id']?> du <?php echo date('d/m/Y', time())?></p>
+  				<p>Facture : n° <?php echo $Transaction['id']?> du <?php echo date('d/m/Y', time())?></p>
   				<p><?php echo $parent['lastname'].' '.$parent['name']?></p>
-  				<p><?php echo $parent['houseNumber'].' '.$parent['street'].' '.$ville['name'].' '.$ville['zip_code']?></p>
+				<p><?php echo $parent['houseNumber'].' '.$parent['street'].' ';
+						if(!empty($ville)){ echo $ville['name'].' '.$ville['zip_code'];};?>
+				</p>
 				<h3 style="text-align:center;">Liste des livres</h3>
 				<table style="margin :auto;">
   					<thead>
