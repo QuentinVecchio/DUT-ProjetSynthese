@@ -1,0 +1,57 @@
+<?php 
+	App::import('vendors','PDF'); 
+	//Génération du pdf
+		//Ajout de ce que l'on veut mettre dans le pdf
+			//Ajout du style
+				$corps = '
+					<style>
+						h4
+						{
+							margin : auto;
+							text-align : center;
+						}
+						table
+						{
+							border : 1px solid black;
+							padding : 5px;
+						}
+						th,td
+						{
+							text-align: center;
+							border : 1px solid black;
+						}
+					</style>
+				';
+			//Ajout du contenu
+			$corps .= 
+				'<br/><br/><br/><br/>
+				<h4>Liste des Etats</h4><br>
+					<table>
+						<thead>
+	  						<tr>
+			        			<th class="thNom">Nom</th>
+        						<th class="thNom">Réduction</th>
+	  						</tr>
+						</thead>
+   						<tbody>';
+						foreach ($listEtat as $k =>$v)
+						{
+							$corps .= 
+			      			'<tr>
+			        			<td>' . $v['Condition']['name'] . '</td>
+			        			<td>' .  $v['Condition']['reducing'] . '</td>
+			    			</tr>'; 
+						}
+			$corps .= 
+						'</tbody>
+					</table>
+			';
+			//Configuration du pdf
+			$nomPdf = 'listeEtats.pdf';
+			$titre = 'Liste des états';
+			$auteur = 'GBL';
+			$mode = 'I';
+			$pdf = new PDF($nomPdf,$titre,$auteur,$corps,$mode);
+			ob_end_clean();
+			$pdf->afficher();
+?>
