@@ -73,7 +73,7 @@
           <tr ng-repeat="c in Clients">
             <td >{{c.Client.name}} {{c.Client.lastname}}</td>
             <td >{{c.Client.houseNumber}} {{c.Client.street}} {{c.Town.name}}</td>
-            <td><a href="{{urlStep1}}/{{c.Client.id}}" class="btn btn-primary">Selectionner</a></td>
+            <td><a href="{{urlStep1}}/{{c.Client.id}}" class="btn btn-primary">Sélectionner</a></td>
           </tr>
       </tbody>
   </table>
