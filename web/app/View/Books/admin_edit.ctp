@@ -15,7 +15,7 @@
 																					'style' => 'margin-left : 10px;',
 																					'ng-model' => 'Book.Book.name',
 																					'autocomplete' => 'off',
-																					'ng-pattern' =>'/^[a-zA-Z\'éèêëïöôùçà&\- ]{1,}$/',
+																					'ng-pattern' =>'/^[a-zA-Z0-9\'éèêëïöôùçà&\- ]{1,}$/',
 																					'label' => array('text' => 'Nom : '))); ?>
 			</div>
 			<div ng-show="form.name.$dirty && form.name.$invalid" class="erreur has-error">
