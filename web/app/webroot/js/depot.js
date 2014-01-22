@@ -17,7 +17,6 @@ app.controller('CtrlLivresDepot', function($scope, filterFilter, $http, $locatio
 		console.log('oui');
 		$scope.mt = 0;
 		$scope.achats.forEach(function(achat){
-			//alert(achat.Row.prize_unit);
 			var tmp = (achat.Row.prize_unit- achat.Row.prize_unit*achat.Row.reducing / 100)*achat.Row.amount;
 			if(tmp != null){
 				$scope.mt += tmp;
@@ -31,43 +30,8 @@ app.controller('CtrlLivresDepot', function($scope, filterFilter, $http, $locatio
 		}
 	}, true)
 
-	/*if($location.path() == '')
-		{
-		 $location.path('/')
-		}
-	$scope.location = $location;
-	$scope.$watch('location.path()', function(path)
-	{
-		$scope.statusFilter =
-			(path == '/active') ? {completed : false} : null;
-			(path == '/done') ? {completed : true} : null;
-	});*/
-
 	$scope.VerifBook = function(){
 
-		/**
-		*	Matthieu:
-		*		- Pourquoi ne pas utiliser un filterFilter avec comme paramètre book_id : xxx ?
-		*/
-		/*var tmp = $scope.achats;
-		var tmp2 = $scope.achats;
-		var nbook ;
-			for(i in tmp){
-				nbook = 0;
-				//alert($tmp[i].book.etat.conditions.name);
-				for(j in tmp2){
-					if(tmp[i].book.name == tmp2[j].book.name && i != j){
-						//alert(tmp[i].book.name + i +' = ' + tmp2[j].book.name + j );
-						if(nbook == 1){
-							alert('Vous avez deux fois le livre' + tmp[i].book.name);
-							break;
-						}
-						nbook ++;
-						//break;
-					}
-				}
-					alert(nbook);
-			}*/
 		}
 
 	var anciens;
@@ -133,7 +97,7 @@ app.controller('CtrlLivresDepot', function($scope, filterFilter, $http, $locatio
 
 	$scope.checkAllTodo = function(allchecked){
 		$scope.livres.forEach(function(livre){
-			livre.completed = !allchecked;
+			livre.completed = allchecked;
 		})
 	}
 	
