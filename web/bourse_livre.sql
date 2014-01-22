@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 22, 2014 at 08:44 AM
+-- Generation Time: Jan 22, 2014 at 09:58 AM
 -- Server version: 5.5.33
 -- PHP Version: 5.5.3
 
@@ -52,14 +52,22 @@ CREATE TABLE `books` (
   `subject_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `subjet_id` (`subject_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `books`
 --
 
 INSERT INTO `books` (`id`, `name`, `prize`, `ISBN`, `subject_id`) VALUES
-(10, 'Meca pour tous', 100, '9780100000000', 10);
+(11, 'Math en premiÃ¨re', 35, '9780101234030', 11),
+(12, 'FranÃ§ais pour tous S', 30, '9782344922304', 12),
+(13, 'Physique programme S', 40, '9782334944444', 13),
+(14, 'SVT PremiÃ¨re S', 45, '9786262237344', 14),
+(15, 'Histoire-GÃ©opgraphie PremiÃ¨re S', 32, '9783427739201', 15),
+(16, 'New Bridges First', 31, '9780355526123', 16),
+(17, 'Perspektiven Erste', 26, '9782221039302', 17),
+(18, 'Juntos S', 27, '9782225152623', 18),
+(19, 'Azione', 26, '9782227333823', 19);
 
 -- --------------------------------------------------------
 
@@ -93,16 +101,16 @@ CREATE TABLE `conditions` (
   `name` varchar(255) NOT NULL,
   `reducing` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `conditions`
 --
 
 INSERT INTO `conditions` (`id`, `name`, `reducing`) VALUES
-(4, 'Bon', 10),
-(5, 'Moyen', 25),
-(6, 'Mauvais', 50);
+(8, 'Bon', 15),
+(9, 'Moyen', 30),
+(10, 'Mediocre', 45);
 
 -- --------------------------------------------------------
 
@@ -116,16 +124,26 @@ CREATE TABLE `grades` (
   `sector_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `sector_id` (`sector_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
 
 --
 -- Dumping data for table `grades`
 --
 
 INSERT INTO `grades` (`id`, `name`, `sector_id`) VALUES
-(20, 'Seconde', 7),
-(21, 'PremiÃ¨re', 7),
-(22, 'Terminale', 7);
+(23, 'PremiÃ¨re', 9),
+(24, 'Terminale', 9),
+(25, 'PremiÃ¨re', 10),
+(26, 'Terminale', 10),
+(27, 'PremiÃ¨re', 11),
+(28, 'Terminale', 11),
+(29, 'PremiÃ¨re', 12),
+(30, 'Terminale', 12),
+(31, 'PremiÃ¨re', 13),
+(32, 'Terminale', 13),
+(33, 'PremiÃ¨re', 14),
+(34, 'Terminale', 14),
+(35, 'Seconde', 15);
 
 -- --------------------------------------------------------
 
@@ -169,28 +187,6 @@ CREATE TABLE `rows` (
   KEY `transaction_id` (`transaction_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=215 ;
 
---
--- Dumping data for table `rows`
---
-
-INSERT INTO `rows` (`id`, `condition_id`, `book_id`, `transaction_id`, `name_book`, `name_subject`, `name_condition`, `reducing`, `amount`, `prize_unit`, `prize_total`) VALUES
-(191, 5, NULL, 51, 'Math pour tous', 'Math', 'Moyen', 25, 1, 45.00, 33.75),
-(192, 5, NULL, 50, 'Math pour tous', 'Math', 'Moyen', 25, 2, 45.00, 67.50),
-(193, 4, NULL, 49, 'Math pour tous', 'Math', 'Bon', 15, 1, 45.00, 38.25),
-(194, 5, NULL, 49, 'Math pour tous', 'Math', 'Moyen', 25, 1, 45.00, 33.75),
-(195, 4, 10, 54, 'Meca pour tous', 'MÃ©canique', 'Bon', 10, 2, 100.00, 180.00),
-(196, 4, 10, 55, 'Meca pour tous', 'MÃ©canique', 'Bon', 10, 1, 100.00, 90.00),
-(197, 4, 10, 56, 'Meca pour tous', 'MÃ©canique', 'Bon', 10, 3, 100.00, 270.00),
-(198, 4, 10, 57, 'Meca pour tous', 'MÃ©canique', 'Bon', 99, 4, 100.00, 4.00),
-(199, 6, 10, 59, 'Meca pour tous', 'MÃ©canique', 'Mauvais', 50, 4, 100.00, 200.00),
-(200, 6, 10, 58, 'Meca pour tous', 'MÃ©canique', 'Mauvais', 50, 4, 100.00, 200.00),
-(201, 4, 10, 62, 'Meca pour tous', 'MÃ©canique', 'Bon', 10, 3, 100.00, 270.00),
-(202, 5, 10, 62, 'Meca pour tous', 'MÃ©canique', 'Moyen', 25, 2, 100.00, 150.00),
-(203, NULL, 10, 61, 'Meca pour tous', 'MÃ©canique', 'voler', 35, 3, 100.00, 195.00),
-(212, 4, 10, 60, 'Meca pour tous', 'MÃ©canique', 'Bon', 10, 4, 100.00, 360.00),
-(213, 5, 10, 65, 'Meca pour tous', 'MÃ©canique', 'Moyen', 25, 1, 100.00, 75.00),
-(214, 5, 10, 60, 'Meca pour tous', 'MÃ©canique', 'Moyen', 25, 1, 100.00, 75.00);
-
 -- --------------------------------------------------------
 
 --
@@ -201,15 +197,20 @@ CREATE TABLE `sectors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `sectors`
 --
 
 INSERT INTO `sectors` (`id`, `name`) VALUES
-(7, 'SSI'),
-(8, 'STG');
+(9, 'S'),
+(10, 'SSI'),
+(11, 'L'),
+(12, 'ES'),
+(13, 'STG'),
+(14, 'STI'),
+(15, 'SECONDE GENERALE');
 
 -- --------------------------------------------------------
 
@@ -226,16 +227,40 @@ CREATE TABLE `stocks` (
   PRIMARY KEY (`id`),
   KEY `book_id` (`book_id`,`condition_id`),
   KEY `etat_id` (`condition_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=51 ;
 
 --
 -- Dumping data for table `stocks`
 --
 
 INSERT INTO `stocks` (`id`, `book_id`, `condition_id`, `depot`, `vente`) VALUES
-(20, 10, 4, 8, 8),
-(21, 10, 5, 2, 2),
-(22, 10, 6, 4, 4);
+(24, 11, 8, 0, 0),
+(25, 11, 9, 0, 0),
+(26, 11, 10, 0, 0),
+(27, 12, 8, 0, 0),
+(28, 12, 9, 0, 0),
+(29, 12, 10, 0, 0),
+(30, 13, 8, 0, 0),
+(31, 13, 9, 0, 0),
+(32, 13, 10, 0, 0),
+(33, 14, 8, 0, 0),
+(34, 14, 9, 0, 0),
+(35, 14, 10, 0, 0),
+(36, 15, 8, 0, 0),
+(37, 15, 9, 0, 0),
+(38, 15, 10, 0, 0),
+(39, 16, 8, 0, 0),
+(40, 16, 9, 0, 0),
+(41, 16, 10, 0, 0),
+(42, 17, 8, 0, 0),
+(43, 17, 9, 0, 0),
+(44, 17, 10, 0, 0),
+(45, 18, 8, 0, 0),
+(46, 18, 9, 0, 0),
+(47, 18, 10, 0, 0),
+(48, 19, 8, 0, 0),
+(49, 19, 9, 0, 0),
+(50, 19, 10, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -249,14 +274,40 @@ CREATE TABLE `subjects` (
   `grade_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `grade_id` (`grade_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
 
 --
 -- Dumping data for table `subjects`
 --
 
 INSERT INTO `subjects` (`id`, `name`, `grade_id`) VALUES
-(10, 'MÃ©canique', 20);
+(11, 'MathÃ©matique', 23),
+(12, 'FranÃ§ais', 23),
+(13, 'Physique', 23),
+(14, 'SVT', 23),
+(15, 'Histoire-GÃ©ographie', 23),
+(16, 'Anglais', 23),
+(17, 'Allemand', 23),
+(18, 'Espagnole', 23),
+(19, 'Italien', 23),
+(20, 'MathÃ©matique', 24),
+(21, 'Physique', 24),
+(22, 'SVT', 24),
+(23, 'Philosophie', 24),
+(24, 'Histoire-GÃ©opgraphie', 24),
+(25, 'Anglais', 24),
+(26, 'Allemand', 24),
+(27, 'Espagnole', 24),
+(28, 'Italien', 24),
+(29, 'MathÃ©matique', 25),
+(30, 'MÃ©canique', 25),
+(31, 'Electronique', 25),
+(32, 'Physique', 25),
+(33, 'FranÃ§ais', 25),
+(34, 'Histoire-GÃ©opgraphie', 25),
+(35, 'Anglais', 25),
+(36, 'Allemand', 25),
+(37, 'Espagnole', 25);
 
 -- --------------------------------------------------------
 
@@ -34808,26 +34859,6 @@ CREATE TABLE `transactions` (
   KEY `client_id` (`client_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=66 ;
 
---
--- Dumping data for table `transactions`
---
-
-INSERT INTO `transactions` (`id`, `user_id`, `date`, `type`, `close`, `completed`, `total`, `client_id`) VALUES
-(49, 18, '2014-01-21', 'depot', 1, 1, 72.00, NULL),
-(50, 19, '2014-01-21', 'depot', 1, 1, 67.50, NULL),
-(51, 17, '2014-01-21', 'depot', 0, 1, 33.75, NULL),
-(54, 19, '2014-01-21', 'depot', 1, 1, 180.00, NULL),
-(55, 19, '2014-01-21', 'achat', 1, 1, 90.00, NULL),
-(56, 17, '2014-01-21', 'depot', 1, 1, 270.00, NULL),
-(57, 18, '2014-01-21', 'achat', 1, 1, 4.00, NULL),
-(58, 17, '2014-01-21', 'achat', 1, 1, 200.00, NULL),
-(59, 19, '2014-01-21', 'depot', 1, 1, 200.00, NULL),
-(60, 18, '2014-01-21', 'achat', 0, 0, 0.00, NULL),
-(61, 19, '2014-01-21', 'depot', 1, 1, 195.00, NULL),
-(62, 18, '2014-01-21', 'depot', 0, 0, 420.00, NULL),
-(64, 19, '2014-01-21', 'achat', 0, 0, 0.00, NULL),
-(65, 17, '2014-01-21', 'achat', 0, 0, 0.00, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -34844,15 +34875,6 @@ CREATE TABLE `transactions_typereglements` (
   KEY `typereglement_id` (`typereglement_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=58 ;
 
---
--- Dumping data for table `transactions_typereglements`
---
-
-INSERT INTO `transactions_typereglements` (`id`, `transaction_id`, `typereglement_id`, `amount`) VALUES
-(55, 55, 4, 180.00),
-(56, 57, 6, 4.00),
-(57, 58, 4, 270.00);
-
 -- --------------------------------------------------------
 
 --
@@ -34864,17 +34886,6 @@ CREATE TABLE `typereglements` (
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
-
---
--- Dumping data for table `typereglements`
---
-
-INSERT INTO `typereglements` (`id`, `name`) VALUES
-(4, 'Bon'),
-(5, 'Rendu'),
-(6, 'Cheque'),
-(7, 'mamanHugo'),
-(8, 'Liquides');
 
 -- --------------------------------------------------------
 
@@ -34896,10 +34907,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `status`) VALUES
 (1, 'root', '577ea4df223bed7d8e6ab6d099eb3cbfbc00895a', 'admin'),
-(16, 'operateur', '9f3a070b1c3be5d726026c278211372c0424fbe6', 'operateur'),
-(17, 'hugo', '4aadf393a25baf9495dc2448ae1dc3d19eb6f5e3', 'operateur'),
-(18, 'matthieu', '2195e1719910ab88f2ca44af6e3489a974fdcb9e', 'operateur'),
-(19, 'dylan', 'fec0ad9800bcc2221075b1134a03e596eb4614b6', 'operateur');
+(16, 'operateur', '9f3a070b1c3be5d726026c278211372c0424fbe6', 'operateur');
 
 --
 -- Constraints for dumped tables
