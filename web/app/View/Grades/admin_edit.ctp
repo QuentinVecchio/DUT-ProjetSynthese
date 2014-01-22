@@ -1,4 +1,4 @@
-<a class="btn btn-primary btn-retour" href="<?php echo $this->Html->url( array('controller' => 'grades', 'action' => 'index', 'admin' => true, $idSector)) ?>">
+<a class="btn btn-primary btn-retour" href="<?php echo $this->Html->url( array('controller' => 'grades', 'action' => 'index', 'admin' => true, $this->data['Grade']['sector_id'])) ?>">
 
 <span class="glyphicon glyphicon-chevron-left"></span>
 	Retourner à la liste des classes</a>
@@ -10,6 +10,7 @@
 		<fieldset ng-init="Grade=<?php if(isset($this->data))echo htmlspecialchars(json_encode($this->data));?>">
 			<legend>Edition d'une classe</legend>	
 			<div class="form-group classForm corpsForm">
+				<input type="text" name="sector_id" style="display:none;" value="<?php echo $this->data['Grade']['sector_id']; ?>">
 				<?php echo $this->Form->input('name', array('placeholder' => 'Nom','input' => array('class' => 'form-control'),
 																		'name' => 'name',
 																		'style' => 'margin-left : 10px;',

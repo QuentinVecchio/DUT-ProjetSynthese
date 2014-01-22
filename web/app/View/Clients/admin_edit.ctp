@@ -79,7 +79,7 @@
 		
 			<br>		
 			<div class="form-group classForm corpsForm">
-				<?php echo $this->Form->input('zip_code', array('ng-model' => 'Associations.Town.zip_code',
+				<?php echo $this->Form->input('zip_code', array('ng-model' => 'Clients.Town.zip_code',
 																'placeholder' => 'Code postal',
 																'name' => 'zip_code',
 																'style' => 'margin-left : 10px;',

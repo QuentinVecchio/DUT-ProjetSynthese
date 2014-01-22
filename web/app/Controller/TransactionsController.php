@@ -534,7 +534,7 @@ class TransactionsController extends AppController {
 	
 		$this->Transaction->id = $this->Session->read('Transaction.depot.transaction_id');
 		if($this->Transaction->save(array('completed' => 1))){
-			$this->Session->setFlash('Dépôt terminée','message', array('type' => 'success'));
+			$this->Session->setFlash('Dépôt terminé','message', array('type' => 'success'));
 		}else{
 			$this->Session->setFlash('Erreur','message', array('type' => 'warning'));
 		}
