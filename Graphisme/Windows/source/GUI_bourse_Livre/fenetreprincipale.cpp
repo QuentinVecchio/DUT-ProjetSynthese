@@ -86,7 +86,7 @@ void fenetrePrincipale::on_actionDeveloppeurs_triggered()
                 "Matthieu Clin\n" \
                 "Hugo Czekala\n" \
                 "Dylan Koby\n" \
-                "Erreur 404\n" \
+                "Tribou Romain\n" \
                 "Quentin Vecchio\n");
 }
 
