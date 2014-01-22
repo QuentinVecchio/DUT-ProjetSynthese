@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.6
+-- version 4.0.4
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Jan 22, 2014 at 09:58 AM
--- Server version: 5.5.33
--- PHP Version: 5.5.3
+-- Client: localhost
+-- Généré le: Mer 22 Janvier 2014 à 09:21
+-- Version du serveur: 5.6.12-log
+-- Version de PHP: 5.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,16 +17,18 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `bourse_livre`
+-- Base de données: `bourse_livre`
 --
+CREATE DATABASE IF NOT EXISTS `bourse_livre` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `bourse_livre`;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `associations`
+-- Structure de la table `associations`
 --
 
-CREATE TABLE `associations` (
+CREATE TABLE IF NOT EXISTS `associations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `houseNumber` varchar(10) NOT NULL,
@@ -36,15 +38,25 @@ CREATE TABLE `associations` (
   `email` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `town_id` (`town_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Contenu de la table `associations`
+--
+
+INSERT INTO `associations` (`id`, `name`, `houseNumber`, `street`, `town_id`, `phone`, `email`) VALUES
+(5, 'FCPE', '108-110', 'avenue Ledru-Rollin', 20985, '0143571616', 'fcpe@wanadoo.fr'),
+(6, 'APEL', '277', ' rue Saint Jacques', 20985, '0153737390', 'apel@sfr.fr'),
+(7, 'APEC', '2', 'rue du paradis', 31098, '0387369122', 'apec@wanadoo.fr'),
+(8, 'PEEP', '12', 'rue Saint-Vincent', 31098, '0387300303', 'ce.0570054@ac-nancy-metz.fr');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `books`
+-- Structure de la table `books`
 --
 
-CREATE TABLE `books` (
+CREATE TABLE IF NOT EXISTS `books` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `prize` int(11) NOT NULL,
@@ -55,7 +67,7 @@ CREATE TABLE `books` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
--- Dumping data for table `books`
+-- Contenu de la table `books`
 --
 
 INSERT INTO `books` (`id`, `name`, `prize`, `ISBN`, `subject_id`) VALUES
@@ -72,10 +84,10 @@ INSERT INTO `books` (`id`, `name`, `prize`, `ISBN`, `subject_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `clients`
+-- Structure de la table `clients`
 --
 
-CREATE TABLE `clients` (
+CREATE TABLE IF NOT EXISTS `clients` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
@@ -93,10 +105,10 @@ CREATE TABLE `clients` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `conditions`
+-- Structure de la table `conditions`
 --
 
-CREATE TABLE `conditions` (
+CREATE TABLE IF NOT EXISTS `conditions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `reducing` int(11) NOT NULL,
@@ -104,7 +116,7 @@ CREATE TABLE `conditions` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
--- Dumping data for table `conditions`
+-- Contenu de la table `conditions`
 --
 
 INSERT INTO `conditions` (`id`, `name`, `reducing`) VALUES
@@ -115,10 +127,10 @@ INSERT INTO `conditions` (`id`, `name`, `reducing`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `grades`
+-- Structure de la table `grades`
 --
 
-CREATE TABLE `grades` (
+CREATE TABLE IF NOT EXISTS `grades` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `sector_id` int(11) NOT NULL,
@@ -127,7 +139,7 @@ CREATE TABLE `grades` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
 
 --
--- Dumping data for table `grades`
+-- Contenu de la table `grades`
 --
 
 INSERT INTO `grades` (`id`, `name`, `sector_id`) VALUES
@@ -148,10 +160,10 @@ INSERT INTO `grades` (`id`, `name`, `sector_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `records`
+-- Structure de la table `records`
 --
 
-CREATE TABLE `records` (
+CREATE TABLE IF NOT EXISTS `records` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `book_id` int(11) NOT NULL,
   `transaction_id` int(11) NOT NULL,
@@ -166,10 +178,10 @@ CREATE TABLE `records` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rows`
+-- Structure de la table `rows`
 --
 
-CREATE TABLE `rows` (
+CREATE TABLE IF NOT EXISTS `rows` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `condition_id` int(11) DEFAULT NULL,
   `book_id` int(11) DEFAULT NULL,
@@ -190,17 +202,17 @@ CREATE TABLE `rows` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sectors`
+-- Structure de la table `sectors`
 --
 
-CREATE TABLE `sectors` (
+CREATE TABLE IF NOT EXISTS `sectors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
--- Dumping data for table `sectors`
+-- Contenu de la table `sectors`
 --
 
 INSERT INTO `sectors` (`id`, `name`) VALUES
@@ -215,10 +227,10 @@ INSERT INTO `sectors` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stocks`
+-- Structure de la table `stocks`
 --
 
-CREATE TABLE `stocks` (
+CREATE TABLE IF NOT EXISTS `stocks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `book_id` int(11) NOT NULL,
   `condition_id` int(11) NOT NULL,
@@ -230,7 +242,7 @@ CREATE TABLE `stocks` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=51 ;
 
 --
--- Dumping data for table `stocks`
+-- Contenu de la table `stocks`
 --
 
 INSERT INTO `stocks` (`id`, `book_id`, `condition_id`, `depot`, `vente`) VALUES
@@ -265,10 +277,10 @@ INSERT INTO `stocks` (`id`, `book_id`, `condition_id`, `depot`, `vente`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `subjects`
+-- Structure de la table `subjects`
 --
 
-CREATE TABLE `subjects` (
+CREATE TABLE IF NOT EXISTS `subjects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `grade_id` int(11) NOT NULL,
@@ -277,7 +289,7 @@ CREATE TABLE `subjects` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
 
 --
--- Dumping data for table `subjects`
+-- Contenu de la table `subjects`
 --
 
 INSERT INTO `subjects` (`id`, `name`, `grade_id`) VALUES
@@ -312,10 +324,10 @@ INSERT INTO `subjects` (`id`, `name`, `grade_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `towns`
+-- Structure de la table `towns`
 --
 
-CREATE TABLE `towns` (
+CREATE TABLE IF NOT EXISTS `towns` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
   `zip_code` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
@@ -326,7 +338,7 @@ CREATE TABLE `towns` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34488 ;
 
 --
--- Dumping data for table `towns`
+-- Contenu de la table `towns`
 --
 
 INSERT INTO `towns` (`id`, `name`, `zip_code`) VALUES
@@ -34842,10 +34854,10 @@ INSERT INTO `towns` (`id`, `name`, `zip_code`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transactions`
+-- Structure de la table `transactions`
 --
 
-CREATE TABLE `transactions` (
+CREATE TABLE IF NOT EXISTS `transactions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `date` date NOT NULL,
@@ -34862,10 +34874,10 @@ CREATE TABLE `transactions` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transactions_typereglements`
+-- Structure de la table `transactions_typereglements`
 --
 
-CREATE TABLE `transactions_typereglements` (
+CREATE TABLE IF NOT EXISTS `transactions_typereglements` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `transaction_id` int(11) NOT NULL,
   `typereglement_id` int(11) NOT NULL,
@@ -34878,22 +34890,32 @@ CREATE TABLE `transactions_typereglements` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `typereglements`
+-- Structure de la table `typereglements`
 --
 
-CREATE TABLE `typereglements` (
+CREATE TABLE IF NOT EXISTS `typereglements` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+
+--
+-- Contenu de la table `typereglements`
+--
+
+INSERT INTO `typereglements` (`id`, `name`) VALUES
+(9, 'cheque'),
+(10, 'espece'),
+(11, 'carte multipass'),
+(12, 'CB');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Structure de la table `users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -34902,7 +34924,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
--- Dumping data for table `users`
+-- Contenu de la table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `status`) VALUES
@@ -34910,36 +34932,36 @@ INSERT INTO `users` (`id`, `username`, `password`, `status`) VALUES
 (16, 'operateur', '9f3a070b1c3be5d726026c278211372c0424fbe6', 'operateur');
 
 --
--- Constraints for dumped tables
+-- Contraintes pour les tables exportées
 --
 
 --
--- Constraints for table `associations`
+-- Contraintes pour la table `associations`
 --
 ALTER TABLE `associations`
   ADD CONSTRAINT `associations_ibfk_1` FOREIGN KEY (`town_id`) REFERENCES `towns` (`id`);
 
 --
--- Constraints for table `books`
+-- Contraintes pour la table `books`
 --
 ALTER TABLE `books`
   ADD CONSTRAINT `books_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `clients`
+-- Contraintes pour la table `clients`
 --
 ALTER TABLE `clients`
   ADD CONSTRAINT `clients_ibfk_2` FOREIGN KEY (`town_id`) REFERENCES `towns` (`id`),
   ADD CONSTRAINT `clients_ibfk_1` FOREIGN KEY (`association_id`) REFERENCES `associations` (`id`) ON DELETE SET NULL;
 
 --
--- Constraints for table `grades`
+-- Contraintes pour la table `grades`
 --
 ALTER TABLE `grades`
   ADD CONSTRAINT `grades_ibfk_1` FOREIGN KEY (`sector_id`) REFERENCES `sectors` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `records`
+-- Contraintes pour la table `records`
 --
 ALTER TABLE `records`
   ADD CONSTRAINT `records_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`),
@@ -34947,7 +34969,7 @@ ALTER TABLE `records`
   ADD CONSTRAINT `records_ibfk_3` FOREIGN KEY (`condition_id`) REFERENCES `conditions` (`id`);
 
 --
--- Constraints for table `rows`
+-- Contraintes pour la table `rows`
 --
 ALTER TABLE `rows`
   ADD CONSTRAINT `rows_ibfk_1` FOREIGN KEY (`condition_id`) REFERENCES `conditions` (`id`) ON DELETE SET NULL,
@@ -34955,27 +34977,27 @@ ALTER TABLE `rows`
   ADD CONSTRAINT `rows_ibfk_3` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `stocks`
+-- Contraintes pour la table `stocks`
 --
 ALTER TABLE `stocks`
   ADD CONSTRAINT `stocks_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `stocks_ibfk_2` FOREIGN KEY (`condition_id`) REFERENCES `conditions` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `subjects`
+-- Contraintes pour la table `subjects`
 --
 ALTER TABLE `subjects`
   ADD CONSTRAINT `subjects_ibfk_1` FOREIGN KEY (`grade_id`) REFERENCES `grades` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `transactions`
+-- Contraintes pour la table `transactions`
 --
 ALTER TABLE `transactions`
   ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE SET NULL;
 
 --
--- Constraints for table `transactions_typereglements`
+-- Contraintes pour la table `transactions_typereglements`
 --
 ALTER TABLE `transactions_typereglements`
   ADD CONSTRAINT `transactions_typereglements_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`) ON DELETE CASCADE,
