@@ -4,10 +4,10 @@ class Client extends AppModel{
 
 	public $validate = array(
 			'name' => array(
-				'rule' => '/^[a-zA-Zéèêàâùûç ]{3,}$/i',
+				'rule' => '/^[a-zA-Zéèêàâùûç\- ]+$/i',
 				'message' => 'Prénom incorrect'),
 			'lastname' => array(
-				'rule' => '/^[a-zA-Zéèêàâùûç ]{3,}$/i',
+				'rule' => '/^[a-zA-Zéèêàâùûç\- ]+$/i',
 				'message' => 'Nom incorrect'),
 			'email' => array(
 				'rule' => 'notEmpty',

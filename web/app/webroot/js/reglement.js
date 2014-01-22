@@ -44,12 +44,13 @@ gestionDemande.controller('ctrl', function FormCtrl($scope) {
 	};
 
 	/*
-	* Fonction qui gère quand le client 
+	* Fonction qui gère quand le client doit de l'argent
 	*/
 	$scope.$watch('reglement',function(){
 		if($scope.reste < 0)
 		{	
 			$scope.donne =  -($scope.total - $scope.reglement);
+			$scope.rendu = $scope.donne;
 		}
 	},true);
 
@@ -81,7 +82,6 @@ gestionDemande.controller('ctrl', function FormCtrl($scope) {
 	$scope.$watch('totalPaiement',function(){
 		if($scope.totalPaiement > $scope.total)
 		{	
-			alert('ok1');
 			$scope.totalPaiement = $scope.reglement = 0;
 			$scope.reste = $scope.total;
 			for(i=0;i<($scope.list.length);i++)
