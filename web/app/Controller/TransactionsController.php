@@ -231,9 +231,9 @@ class TransactionsController extends AppController {
 			}
 			if(isset($this->data['Transaction']) && !empty($this->data['Transaction'])){
 				$this->Session->write('Transaction.achat.oldTransaction', $this->data['Transaction']);
-				if(!$this->Transaction->saveMany($this->data['Transaction'])){
+				/*if(!$this->Transaction->saveMany($this->data['Transaction'])){
 					$this->Session->setFlash('Erreur: Mise à jour des transactions','message', array('type' => 'danger'));
-				}
+				}*/
 			}
 
 			unset($this->request->data['Transaction']);
@@ -320,13 +320,18 @@ class TransactionsController extends AppController {
 		$this->set('pred_for_progress_bar', $step_pred);
 		$this->set('suiv_for_progress_bar',  '#');
 
+				
+		if(!$this->Transaction->saveMany($this->Session->read('Transaction.achat.oldTransaction'))){
+			$this->Session->setFlash('Erreur: Mise à jour des transactions','message', array('type' => 'danger'));
+		}
+
 		$this->Transaction->id = $this->Session->read('Transaction.achat.transaction_id');
 		if($this->Transaction->save(array('completed' => 1, 'close' => 1))){
 			$this->Session->setFlash('Vente terminée','message', array('type' => 'success'));
 		}else{
 			$this->Session->setFlash('Erreur','message', array('type' => 'warning'));
 		}
-		$this->set('facture_id',$this->Session->read('Transaction.depot.transaction_id'));
+		$this->set('facture_id',$this->Session->read('Transaction.achat.transaction_id'));
 		$this->Session->delete('Transaction.achat');
 
 	}
