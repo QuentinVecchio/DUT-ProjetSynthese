@@ -73,7 +73,7 @@
 							</tbody>
 						</table>
 						<?php else: ?>
-							<?php if($Transaction['close'] === 1): ?>
+							<?php if($Transaction['close'] == 1): ?>
 								<p>Vous avez choisi de récupérer l'argent</p>
 							<?php else: ?>
 								<p>Ce bon est disponible lors de l'achat</p>
@@ -150,7 +150,7 @@
 					</tbody>
 				</table>
 				<?php else: ?>
-					<?php if($Transaction['close'] === 1): ?>
+					<?php if($Transaction['close'] == 1): ?>
 						<p>Vous avez choisi de récupérer l'argent</p>
 					<?php else: ?>
 						<p>Ce bon est disponible lors de l'achat</p>

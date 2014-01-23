@@ -41,7 +41,7 @@
 
 						<div ng-if="i.Typereglement.name == 'Rendu'" ng-show="bon > 0">
 							<label>{{i.Typereglement.name}} :</label>
-							<span name="data[{{$index}}][amount]" ng-model="rendu">{{rendu}}€</span>
+							<span name="data[{{$index}}][amount]" ng-model="rendu">{{rendu | number:2}}€</span>
 							<input style="display:none;"  ng-model="i.Typereglement.id" name="data[{{$index}}][typereglement_id]">
 							<input style="display:none;"  ng-model="rendu" name="data[{{$index}}][amount]">
 							<input style="display:none;" type="text" ng-model="i.Typereglement.transaction_id" ng-init="i.Typereglement.transaction_id = transactionId" name="data[{{$index}}][transaction_id]">
