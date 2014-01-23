@@ -6,10 +6,17 @@
 #include <QDialog>
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QWebSettings>
 #include <config.h>
 #include <aide.h>
 #include <QTextStream>
 #include <QProgressBar>
+#include <QNetworkReply>
+#include <QFileInfo>
+#include <QDir>
+#include <QProgressDialog>
+#include <QFileDialog>
+#include <QtWebKitWidgets>
 
 namespace Ui {
 class fenetrePrincipale;
@@ -55,6 +62,9 @@ private slots:
     void chargement();
 private:
     Ui::fenetrePrincipale *ui;
+    QFile fichierATelecharger;
+    QProgressDialog *dialogueTelechargement;
+    QNetworkReply *reponse;
     Config *c;
     aide *a;
     QString *lien;

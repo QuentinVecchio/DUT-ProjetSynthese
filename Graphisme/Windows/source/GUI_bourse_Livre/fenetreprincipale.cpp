@@ -8,6 +8,10 @@ fenetrePrincipale::fenetrePrincipale(QWidget *parent) :
     ui->setupUi(this);
     this->barreProgresse = new QProgressBar();
     ui->statusBar->addWidget(this->barreProgresse);
+    QWebSettings *defaultSettings = ui->pageWeb->settings();
+    defaultSettings = QWebSettings::globalSettings();
+    defaultSettings->setAttribute(QWebSettings::JavascriptEnabled, true);
+    defaultSettings->setAttribute(QWebSettings::PluginsEnabled, true);
 }
 
 fenetrePrincipale::~fenetrePrincipale()

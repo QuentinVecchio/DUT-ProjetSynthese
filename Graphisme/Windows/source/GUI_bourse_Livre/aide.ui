@@ -36,7 +36,7 @@
      <widget class="QWebView" name="viewTuto">
       <property name="url">
        <url>
-        <string>qrc:/icones/tuto.html</string>
+        <string>file:///Users/quentin.vecchio/GUI_bourse_Livre/tuto.html</string>
        </url>
       </property>
       <property name="renderHints">
